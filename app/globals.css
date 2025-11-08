@@ -1,24 +1,49 @@
-@import "tailwindcss";
-
-:root {
-  /* Additive3D Logo Match Perfect Colors */
-  --background: #1a1a1a;
-  --foreground: #f5f5f5;
-  --surface: #2d2d2d;
-  --primary: #ffc300;
-  --success: #00c896;
-  --error: #ff5252;
-  --warning: #ffb800;
+@import 'tailwindcss';
+@plugin 'daisyui';
+@plugin 'daisyui/theme' {
+  name: 'dark';
+  default: false;
+  prefersdark: false;
+  color-scheme: 'dark';
+  /* Background colors from Carbon Dark */
+  --color-base-100: #161616;
+  --color-base-200: #262626;
+  --color-base-300: #2d2d2d;
+  --color-base-content: #f5f5f5;
+  /* Primary colors from Amber Glow */
+  --color-primary: #ffd231;
+  --color-primary-content: #121212;
+  --color-secondary: #e8c547;
+  --color-secondary-content: #121212;
+  --color-accent: #f9e076;
+  --color-accent-content: #121212;
+  /* Neutral colors complementary to amber */
+  --color-neutral: #8b7355;
+  --color-neutral-content: #f5f5f5;
+  /* Info color */
+  --color-info: #7db9dc;
+  --color-info-content: #121212;
+  /* Success from Deep Amber */
+  --color-success: #40cf72;
+  --color-success-content: #121212;
+  /* Warning from Amber Muted */
+  --color-warning: #f1b724;
+  --color-warning-content: #4a4232;
+  /* Error from Mustard Seed */
+  --color-error: #e33636;
+  --color-error-content: #fafaf0;
+  /* Design elements */
+  --radius-selector: 0.75rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-primary: var(--primary);
-  --color-success: var(--success);
-  --color-error: var(--error);
-  --color-warning: var(--warning);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
@@ -35,9 +60,13 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+  font-family:
+    var(--font-sans),
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 /* Custom Container */

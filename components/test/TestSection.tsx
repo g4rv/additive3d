@@ -2,112 +2,56 @@
 /* @ts-nocheck */
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const themes = [
-  {
-    name: "Logo Match Perfect",
-    colors: {
-      primary: "#FFC300",
-      background: "#1A1A1A",
-      surface: "#2D2D2D",
-      text: "#F5F5F5",
-      success: "#00C896",
-      error: "#FF5252",
-      warning: "#FFB800"
-    }
-  }
-];
+const currentTheme = {
+  name: 'dark',
+  label: 'Custom Dark Theme',
+  description: 'Amber Glow with Carbon Dark background'
+};
 
 export default function TestSection() {
-  const [selectedTheme, setSelectedTheme] = useState(themes[0]);
   const [activeTab, setActiveTab] = useState('overview');
 
-  const applyTheme = (theme: typeof themes[0]) => {
-    return {
-      backgroundColor: theme.colors.background,
-      color: theme.colors.text,
-      primaryColor: theme.colors.primary,
-      surfaceColor: theme.colors.surface,
-      successColor: theme.colors.success,
-      errorColor: theme.colors.error,
-      warningColor: theme.colors.warning
-    };
-  };
-
-  const theme = applyTheme(selectedTheme);
+  // Set the theme when component mounts
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', currentTheme.name);
+  }, []);
 
   return (
-    <div style={{ backgroundColor: theme.backgroundColor, color: theme.color, minHeight: '100vh', padding: '20px' }}>
+    <div data-theme={currentTheme.name} className="min-h-screen p-5 bg-base-100 text-base-content">
 
-      {/* Theme Selector */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '16px',
-        borderRadius: '8px',
-        marginBottom: '32px',
-        border: `1px solid ${theme.primaryColor}33`
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      {/* Header */}
+      <div className="navbar bg-base-200 rounded-lg mb-8 border border-primary/20">
+        <div className="navbar-start">
+          <div className="flex items-center gap-4">
             {/* Logo in Header */}
             <img
               src="/logo.png"
               alt="Additive3D Logo"
-              style={{
-                width: '96px',
-                height: '30px',
-                objectFit: 'contain'
-              }}
+              className="w-24 h-8 object-contain"
             />
-            <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Additive3D Platform Test</h1>
+            <h1 className="text-2xl font-bold">Additive3D Platform Test</h1>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <label style={{ fontSize: '14px', fontWeight: '500' }}>Theme:</label>
-            <select
-              value={selectedTheme.name}
-              onChange={(e) => setSelectedTheme(themes.find(t => t.name === e.target.value) || themes[0])}
-              style={{
-                backgroundColor: theme.backgroundColor,
-                color: theme.color,
-                border: `1px solid ${theme.primaryColor}`,
-                padding: '8px 12px',
-                borderRadius: '4px',
-                fontSize: '14px'
-              }}
-            >
-              {themes.map((theme) => (
-                <option key={theme.name} value={theme.name}>{theme.name}</option>
-              ))}
-            </select>
+        </div>
+        <div className="navbar-end">
+          <div className="flex items-center gap-3">
+            <div className="badge badge-primary">
+              {currentTheme.label}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div style={{
-        display: 'flex',
-        gap: '4px',
-        marginBottom: '24px',
-        backgroundColor: theme.surfaceColor,
-        padding: '4px',
-        borderRadius: '8px'
-      }}>
+      <div className="tabs tabs-boxed bg-base-200 mb-6">
         {['overview', 'calculator', 'materials', 'account', 'components'].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            style={{
-              backgroundColor: activeTab === tab ? theme.primaryColor : 'transparent',
-              color: activeTab === tab ? theme.backgroundColor : theme.color,
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: '4px',
-              fontSize: '14px',
-              fontWeight: activeTab === tab ? '600' : '400',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className={`tab tab-md ${
+              activeTab === tab ? 'tab-active' : ''
+            }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
@@ -115,58 +59,43 @@ export default function TestSection() {
       </div>
 
       {/* Content Area */}
-      {activeTab === 'overview' && <OverviewSection theme={theme} />}
-      {activeTab === 'calculator' && <CalculatorSection theme={theme} />}
-      {activeTab === 'materials' && <MaterialsSection theme={theme} />}
-      {activeTab === 'account' && <AccountSection theme={theme} />}
-      {activeTab === 'components' && <ComponentsTest theme={theme} />}
+      {activeTab === 'overview' && <OverviewSection />}
+      {activeTab === 'calculator' && <CalculatorSection />}
+      {activeTab === 'materials' && <MaterialsSection />}
+      {activeTab === 'account' && <AccountSection />}
+      {activeTab === 'components' && <ComponentsTest />}
 
     </div>
   );
 }
 
-function OverviewSection({ theme }: { theme: any }) {
+function OverviewSection() {
   return (
-    <div style={{ display: 'grid', gap: '24px' }}>
+    <div className="space-y-6">
 
       {/* Hero Section */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '48px',
-        borderRadius: '12px',
-        textAlign: 'center'
-      }}>
-        {/* Logo in Hero */}
-        <img
-          src="/logo.png"
-          alt="Additive3D Logo"
-          style={{
-            width: '280px',
-            height: '88px',
-            margin: '0 auto 32px auto',
-            objectFit: 'contain'
-          }}
-        />
-        <h2 style={{ fontSize: '36px', margin: '0 0 16px 0' }}>Precision Manufacturing Excellence</h2>
-        <p style={{ fontSize: '18px', opacity: 0.8, marginBottom: '24px' }}>
-          Transform your digital designs into high-precision physical parts with our advanced additive manufacturing solutions
-        </p>
-        <button style={{
-          backgroundColor: theme.primaryColor,
-          color: theme.backgroundColor,
-          border: 'none',
-          padding: '12px 24px',
-          borderRadius: '6px',
-          fontSize: '16px',
-          fontWeight: '600',
-          cursor: 'pointer'
-        }}>
-          Get Instant Quote
-        </button>
+      <div className="hero bg-base-200 rounded-xl text-center">
+        <div className="hero-content text-center py-16">
+          <div className="max-w-2xl">
+            {/* Logo in Hero */}
+            <img
+              src="/logo.png"
+              alt="Additive3D Logo"
+              className="w-70 h-22 mx-auto mb-8 object-contain"
+            />
+            <h2 className="text-4xl font-bold mb-4">Precision Manufacturing Excellence</h2>
+            <p className="text-lg opacity-80 mb-6">
+              Transform your digital designs into high-precision physical parts with our advanced additive manufacturing solutions
+            </p>
+            <button className="btn btn-primary btn-lg">
+              Get Instant Quote
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Feature Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {[
           {
             title: 'Precision Engineering',
@@ -184,24 +113,12 @@ function OverviewSection({ theme }: { theme: any }) {
             icon: '🚀'
           }
         ].map((feature, idx) => (
-          <div key={idx} style={{
-            backgroundColor: theme.surfaceColor,
-            padding: '24px',
-            borderRadius: '8px',
-            border: `1px solid ${theme.primaryColor}22`
-          }}>
-            {/* Logo Icon */}
-            <img
-              src="/logo.png"
-              alt="Additive3D Logo"
-              style={{
-                width: '84px',
-                height: '26px',
-                marginBottom: '16px'
-              }}
-            />
-            <h3 style={{ margin: '0 0 12px 0', color: theme.primaryColor }}>{feature.title}</h3>
-            <p style={{ margin: 0, opacity: 0.8, lineHeight: '1.5' }}>{feature.desc}</p>
+          <div key={idx} className="card bg-base-200 shadow-xl border border-primary/20">
+            <div className="card-body">
+              <div className="text-4xl mb-4">{feature.icon}</div>
+              <h3 className="card-title text-primary">{feature.title}</h3>
+              <p className="opacity-80">{feature.desc}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -209,627 +126,357 @@ function OverviewSection({ theme }: { theme: any }) {
   );
 }
 
-function CalculatorSection({ theme }: { theme: any }) {
+function CalculatorSection() {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '32px',
-        borderRadius: '12px'
-      }}>
-        <h2 style={{ margin: '0 0 24px 0' }}>Instant Cost Calculator</h2>
+    <div className="max-w-2xl mx-auto">
+      <div className="card bg-base-200 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title mb-6">Instant Cost Calculator</h2>
 
-        {/* Upload Area */}
-        <div style={{
-          border: `2px dashed ${theme.primaryColor}`,
-          padding: '40px',
-          borderRadius: '8px',
-          textAlign: 'center',
-          marginBottom: '24px'
-        }}>
-          <p style={{ margin: '0 0 16px 0' }}>Drop your 3D model files here</p>
-          <button style={{
-            backgroundColor: theme.primaryColor,
-            color: theme.backgroundColor,
-            border: 'none',
-            padding: '10px 20px',
-            borderRadius: '6px',
-            cursor: 'pointer'
-          }}>
-            Browse Files
-          </button>
-        </div>
-
-        {/* Cost Breakdown */}
-        <div style={{ backgroundColor: theme.backgroundColor, padding: '20px', borderRadius: '8px', marginBottom: '24px' }}>
-          <h3 style={{ margin: '0 0 16px 0' }}>Cost Breakdown</h3>
-          <div style={{ display: 'grid', gap: '12px' }}>
-            {[
-              { item: 'Material Cost (PLA)', amount: '$12.50' },
-              { item: 'Print Time (2.5 hours @ $8/hr)', amount: '$20.00' },
-              { item: 'Post-Processing', amount: '$5.00' },
-              { item: 'Service Fee', amount: '$7.50' },
-              { item: 'Total', amount: '$45.00', bold: true }
-            ].map((line, idx) => (
-              <div key={idx} style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '8px 0',
-                borderTop: idx > 0 ? `1px solid ${theme.surfaceColor}` : 'none'
-              }}>
-                <span style={{ fontWeight: line.bold ? 'bold' : 'normal' }}>{line.item}</span>
-                <span style={{
-                  fontWeight: line.bold ? 'bold' : 'normal',
-                  color: line.bold ? theme.primaryColor : theme.color
-                }}>{line.amount}</span>
-              </div>
-            ))}
+          {/* Upload Area */}
+          <div className="border-2 border-dashed border-primary p-10 rounded-lg text-center mb-6">
+            <p className="mb-4">Drop your 3D model files here</p>
+            <button className="btn btn-primary">
+              Browse Files
+            </button>
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '16px' }}>
-          <button style={{
-            backgroundColor: theme.primaryColor,
-            color: theme.backgroundColor,
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            flex: 1
-          }}>
-            Proceed to Order
-          </button>
-          <button style={{
-            backgroundColor: 'transparent',
-            color: theme.color,
-            border: `1px solid ${theme.color}`,
-            padding: '12px 24px',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            flex: 1
-          }}>
-            Save Quote
-          </button>
+          {/* Cost Breakdown */}
+          <div className="bg-base-100 p-5 rounded-lg mb-6">
+            <h3 className="font-semibold mb-4">Cost Breakdown</h3>
+            <div className="space-y-3">
+              {[
+                { item: 'Material Cost (PLA)', amount: '$12.50' },
+                { item: 'Print Time (2.5 hours @ $8/hr)', amount: '$20.00' },
+                { item: 'Post-Processing', amount: '$5.00' },
+                { item: 'Service Fee', amount: '$7.50' },
+                { item: 'Total', amount: '$45.00', bold: true }
+              ].map((line, idx) => (
+                <div key={idx} className={`flex justify-between items-center py-2 ${
+                  idx > 0 ? 'border-t border-base-300' : ''
+                }`}>
+                  <span className={line.bold ? 'font-bold' : 'font-normal'}>{line.item}</span>
+                  <span className={`${
+                    line.bold ? 'font-bold text-primary' : 'font-normal'
+                  }`}>{line.amount}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-4">
+            <button className="btn btn-primary flex-1">
+              Proceed to Order
+            </button>
+            <button className="btn btn-outline flex-1">
+              Save Quote
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function MaterialsSection({ theme }: { theme: any }) {
+function MaterialsSection() {
   return (
     <div>
-      <h2 style={{ marginBottom: '24px' }}>Material Specifications</h2>
+      <h2 className="text-2xl font-bold mb-6">Material Specifications</h2>
 
       {/* Material Comparison Table */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '24px',
-        borderRadius: '12px',
-        overflowX: 'auto'
-      }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ borderBottom: `2px solid ${theme.primaryColor}` }}>
-              <th style={{ padding: '12px', textAlign: 'left' }}>Material</th>
-              <th style={{ padding: '12px', textAlign: 'left' }}>Strength</th>
-              <th style={{ padding: '12px', textAlign: 'left' }}>Temperature</th>
-              <th style={{ padding: '12px', textAlign: 'left' }}>Cost/kg</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { material: 'PLA', strength: 'High', temp: '60°C', cost: '$25' },
-              { material: 'ABS', strength: 'Very High', temp: '100°C', cost: '$35' },
-              { material: 'PETG', strength: 'Very High', temp: '80°C', cost: '$30' },
-              { material: 'Carbon Fiber', strength: 'Ultra High', temp: '120°C', cost: '$120' }
-            ].map((row, idx) => (
-              <tr key={idx} style={{ borderBottom: `1px solid ${theme.primaryColor}33` }}>
-                <td style={{ padding: '12px', fontWeight: '600' }}>{row.material}</td>
-                <td style={{ padding: '12px' }}>{row.strength}</td>
-                <td style={{ padding: '12px' }}>{row.temp}</td>
-                <td style={{ padding: '12px', color: theme.primaryColor, fontWeight: '500' }}>{row.cost}</td>
+      <div className="card bg-base-200 shadow-xl overflow-x-auto">
+        <div className="card-body p-6">
+          <table className="table table-zebra w-full">
+            <thead>
+              <tr className="border-b-2 border-primary">
+                <th className="text-left p-3">Material</th>
+                <th className="text-left p-3">Strength</th>
+                <th className="text-left p-3">Temperature</th>
+                <th className="text-left p-3">Cost/kg</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {[
+                { material: 'PLA', strength: 'High', temp: '60°C', cost: '$25' },
+                { material: 'ABS', strength: 'Very High', temp: '100°C', cost: '$35' },
+                { material: 'PETG', strength: 'Very High', temp: '80°C', cost: '$30' },
+                { material: 'Carbon Fiber', strength: 'Ultra High', temp: '120°C', cost: '$120' }
+              ].map((row, idx) => (
+                <tr key={idx} className="border-b border-primary/20">
+                  <td className="p-3 font-semibold">{row.material}</td>
+                  <td className="p-3">{row.strength}</td>
+                  <td className="p-3">{row.temp}</td>
+                  <td className="p-3 text-primary font-medium">{row.cost}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Status Messages */}
-      <div style={{ marginTop: '24px', display: 'grid', gap: '16px' }}>
-        <div style={{
-          backgroundColor: `${theme.successColor}22`,
-          border: `1px solid ${theme.successColor}`,
-          padding: '16px',
-          borderRadius: '6px',
-          color: theme.successColor
-        }}>
-          ✓ Material in stock - Ready to print
+      <div className="mt-6 space-y-4">
+        <div className="alert alert-success">
+          <span>✓ Material in stock - Ready to print</span>
         </div>
-        <div style={{
-          backgroundColor: `${theme.warningColor}22`,
-          border: `1px solid ${theme.warningColor}`,
-          padding: '16px',
-          borderRadius: '6px',
-          color: theme.warningColor
-        }}>
-          ⚠ Limited quantity available - Order soon
+        <div className="alert alert-warning">
+          <span>⚠ Limited quantity available - Order soon</span>
         </div>
-        <div style={{
-          backgroundColor: `${theme.errorColor}22`,
-          border: `1px solid ${theme.errorColor}`,
-          padding: '16px',
-          borderRadius: '6px',
-          color: theme.errorColor
-        }}>
-          ✗ Currently out of stock - Expected delivery: 2 weeks
+        <div className="alert alert-error">
+          <span>✗ Currently out of stock - Expected delivery: 2 weeks</span>
         </div>
       </div>
     </div>
   );
 }
 
-function AccountSection({ theme }: { theme: any }) {
+function AccountSection() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px' }}>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
       {/* Sidebar */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '24px',
-        borderRadius: '12px'
-      }}>
-        {/* Logo in Sidebar */}
-        <img
-          src="/logo.png"
-          alt="Additive3D Logo"
-          style={{
-            width: '140px',
-            height: '44px',
-            margin: '0 auto 24px auto',
-            objectFit: 'contain'
-          }}
-        />
-        <h3 style={{ margin: '0 0 20px 0', textAlign: 'center' }}>Account Menu</h3>
-        <div style={{ display: 'grid', gap: '8px' }}>
-          {[
-            { icon: '👤', label: 'Profile Settings', active: true },
-            { icon: '📁', label: 'My Projects' },
-            { icon: '📦', label: 'Order History' },
-            { icon: '💳', label: 'Billing' },
-            { icon: '⚙️', label: 'Preferences' }
-          ].map((item, idx) => (
-            <button
-              key={idx}
-              style={{
-                backgroundColor: item.active ? theme.primaryColor : 'transparent',
-                color: item.active ? theme.backgroundColor : theme.color,
-                border: 'none',
-                padding: '12px 16px',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                width: '100%'
-              }}
-            >
-              <span>{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
-          ))}
+      <div className="lg:col-span-1">
+        <div className="card bg-base-200 shadow-xl">
+          <div className="card-body">
+            {/* Logo in Sidebar */}
+            <img
+              src="/logo.png"
+              alt="Additive3D Logo"
+              className="w-35 h-11 mx-auto mb-6 object-contain"
+            />
+            <h3 className="card-title text-center mb-5">Account Menu</h3>
+            <div className="space-y-2">
+              {[
+                { icon: '👤', label: 'Profile Settings', active: true },
+                { icon: '📁', label: 'My Projects' },
+                { icon: '📦', label: 'Order History' },
+                { icon: '💳', label: 'Billing' },
+                { icon: '⚙️', label: 'Preferences' }
+              ].map((item, idx) => (
+                <button
+                  key={idx}
+                  className={`btn btn-block justify-start ${
+                    item.active ? 'btn-primary' : 'btn-ghost'
+                  }`}
+                >
+                  <span className="mr-3">{item.icon}</span>
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '32px',
-        borderRadius: '12px'
-      }}>
-        <h3 style={{ margin: '0 0 24px 0' }}>Current Orders</h3>
+      <div className="lg:col-span-2">
+        <div className="card bg-base-200 shadow-xl">
+          <div className="card-body">
+            <h3 className="card-title mb-6">Current Orders</h3>
 
-        <div style={{ display: 'grid', gap: '16px' }}>
-          {[
-            { id: 'AM-2024-0876', status: 'printing', progress: 65, material: 'PLA' },
-            { id: 'AM-2024-0875', status: 'completed', progress: 100, material: 'ABS' },
-            { id: 'AM-2024-0874', status: 'quality-check', progress: 95, material: 'PETG' }
-          ].map((order, idx) => (
-            <div key={idx} style={{
-              backgroundColor: theme.backgroundColor,
-              padding: '20px',
-              borderRadius: '8px',
-              border: `1px solid ${theme.primaryColor}33`
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <h4 style={{ margin: 0, color: theme.primaryColor }}>{order.id}</h4>
-                <span style={{
-                  backgroundColor: order.status === 'completed' ? `${theme.successColor}22` :
-                                 order.status === 'printing' ? `${theme.warningColor}22` :
-                                 `${theme.primaryColor}22`,
-                  color: order.status === 'completed' ? theme.successColor :
-                         order.status === 'printing' ? theme.warningColor :
-                         theme.primaryColor,
-                  padding: '4px 12px',
-                  borderRadius: '4px',
-                  fontSize: '12px',
-                  fontWeight: '600'
-                }}>
-                  {order.status.toUpperCase()}
-                </span>
-              </div>
+            <div className="space-y-4">
+              {[
+                { id: 'AM-2024-0876', status: 'printing', progress: 65, material: 'PLA' },
+                { id: 'AM-2024-0875', status: 'completed', progress: 100, material: 'ABS' },
+                { id: 'AM-2024-0874', status: 'quality-check', progress: 95, material: 'PETG' }
+              ].map((order, idx) => (
+                <div key={idx} className="card bg-base-100 border border-primary/20">
+                  <div className="card-body p-5">
+                    <div className="flex justify-between items-center mb-3">
+                      <h4 className="text-primary font-semibold">{order.id}</h4>
+                      <div className={`badge ${
+                        order.status === 'completed' ? 'badge-success' :
+                        order.status === 'printing' ? 'badge-warning' :
+                        'badge-info'
+                      }`}>
+                        {order.status.toUpperCase()}
+                      </div>
+                    </div>
 
-              <div style={{ marginBottom: '12px' }}>
-                <div style={{
-                  width: '100%',
-                  height: '8px',
-                  backgroundColor: theme.surfaceColor,
-                  borderRadius: '4px',
-                  overflow: 'hidden'
-                }}>
-                  <div style={{
-                    width: `${order.progress}%`,
-                    height: '100%',
-                    backgroundColor: theme.primaryColor,
-                    transition: 'width 0.3s ease'
-                  }} />
+                    <div className="mb-3">
+                      <div className="w-full bg-base-200 rounded-full h-2">
+                        <div
+                          className="bg-primary h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${order.progress}%` }}
+                        />
+                      </div>
+                      <p className="text-sm opacity-70 mt-2">
+                        {order.progress}% Complete • {order.material}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p style={{ margin: '8px 0 0 0', fontSize: '14px', opacity: 0.7 }}>
-                  {order.progress}% Complete • {order.material}
-                </p>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function ComponentsTest({ theme }: { theme: any }) {
+function ComponentsTest() {
   return (
-    <div style={{ display: 'grid', gap: '24px' }}>
+    <div className="space-y-6">
 
       {/* Form Elements */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '24px',
-        borderRadius: '12px'
-      }}>
-        <h3 style={{ margin: '0 0 20px 0' }}>Form Elements</h3>
+      <div className="card bg-base-200 shadow-xl">
+        <div className="card-body">
+          <h3 className="card-title mb-5">Form Elements</h3>
 
-        <div style={{ display: 'grid', gap: '16px' }}>
-          {/* Text Input */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Text Input</label>
-            <input
-              type="text"
-              placeholder="Enter your name..."
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                backgroundColor: theme.backgroundColor,
-                color: theme.color,
-                border: `1px solid ${theme.primaryColor}33`,
-                borderRadius: '6px',
-                fontSize: '14px'
-              }}
-            />
-          </div>
+          <div className="space-y-4">
+            {/* Text Input */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Text Input</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Enter your name..."
+                className="input input-bordered w-full"
+              />
+            </div>
 
-          {/* Select Dropdown */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Material Selection</label>
-            <select
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                backgroundColor: theme.backgroundColor,
-                color: theme.color,
-                border: `1px solid ${theme.primaryColor}33`,
-                borderRadius: '6px',
-                fontSize: '14px',
-                cursor: 'pointer'
-              }}
-            >
-              <option value="">Select material...</option>
-              <option value="pla">PLA - Eco-friendly</option>
-              <option value="abs">ABS - Durable</option>
-              <option value="petg">PETG - Chemical resistant</option>
-              <option value="tpu">TPU - Flexible</option>
-              <option value="carbon">Carbon Fiber - Ultra strong</option>
-            </select>
-          </div>
+            {/* Select Dropdown */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Material Selection</span>
+              </label>
+              <select className="select select-bordered w-full">
+                <option value="" disabled selected>Select material...</option>
+                <option value="pla">PLA - Eco-friendly</option>
+                <option value="abs">ABS - Durable</option>
+                <option value="petg">PETG - Chemical resistant</option>
+                <option value="tpu">TPU - Flexible</option>
+                <option value="carbon">Carbon Fiber - Ultra strong</option>
+              </select>
+            </div>
 
-          {/* Multi-Select */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Post-Processing Options</label>
-            <select
-              multiple
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                backgroundColor: theme.backgroundColor,
-                color: theme.color,
-                border: `1px solid ${theme.primaryColor}33`,
-                borderRadius: '6px',
-                fontSize: '14px',
-                minHeight: '100px',
-                cursor: 'pointer'
-              }}
-            >
-              <option value="sanding">Surface Sanding</option>
-              <option value="polishing">Polishing</option>
-              <option value="painting">Painting</option>
-              <option value="coating">Protective Coating</option>
-              <option value="assembly">Assembly</option>
-            </select>
-          </div>
+            {/* Multi-Select */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Post-Processing Options</span>
+              </label>
+              <select className="select select-bordered w-full h-24" multiple>
+                <option value="sanding">Surface Sanding</option>
+                <option value="polishing">Polishing</option>
+                <option value="painting">Painting</option>
+                <option value="coating">Protective Coating</option>
+                <option value="assembly">Assembly</option>
+              </select>
+            </div>
 
-          {/* Textarea */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Special Requirements</label>
-            <textarea
-              placeholder="Enter any special requirements..."
-              rows={4}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                backgroundColor: theme.backgroundColor,
-                color: theme.color,
-                border: `1px solid ${theme.primaryColor}33`,
-                borderRadius: '6px',
-                fontSize: '14px',
-                resize: 'vertical'
-              }}
-            />
+            {/* Textarea */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Special Requirements</span>
+              </label>
+              <textarea
+                className="textarea textarea-bordered h-24"
+                placeholder="Enter any special requirements..."
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Buttons & States */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '24px',
-        borderRadius: '12px'
-      }}>
-        <h3 style={{ margin: '0 0 20px 0' }}>Button Variations</h3>
+      <div className="card bg-base-200 shadow-xl">
+        <div className="card-body">
+          <h3 className="card-title mb-5">Button Variations</h3>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-          {/* Primary Button */}
-          <button style={{
-            backgroundColor: theme.primaryColor,
-            color: theme.backgroundColor,
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}>
-            Primary Action
-          </button>
-
-          {/* Secondary Button */}
-          <button style={{
-            backgroundColor: 'transparent',
-            color: theme.color,
-            border: `1px solid ${theme.color}`,
-            padding: '12px 24px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}>
-            Secondary Action
-          </button>
-
-          {/* Success Button */}
-          <button style={{
-            backgroundColor: theme.successColor,
-            color: theme.backgroundColor,
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}>
-            ✓ Success
-          </button>
-
-          {/* Warning Button */}
-          <button style={{
-            backgroundColor: theme.warningColor,
-            color: theme.backgroundColor,
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}>
-            ⚠ Warning
-          </button>
-
-          {/* Error Button */}
-          <button style={{
-            backgroundColor: theme.errorColor,
-            color: theme.backgroundColor,
-            border: 'none',
-            padding: '12px 24px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer'
-          }}>
-            ✗ Delete
-          </button>
-
-          {/* Disabled Button */}
-          <button disabled style={{
-            backgroundColor: `${theme.color}22`,
-            color: `${theme.color}66`,
-            border: `1px solid ${theme.color}11`,
-            padding: '12px 24px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'not-allowed'
-          }}>
-            Disabled
-          </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <button className="btn btn-primary">Primary Action</button>
+            <button className="btn btn-secondary">Secondary Action</button>
+            <button className="btn btn-success">✓ Success</button>
+            <button className="btn btn-warning">⚠ Warning</button>
+            <button className="btn btn-error">✗ Delete</button>
+            <button className="btn btn-disabled" disabled>Disabled</button>
+          </div>
         </div>
       </div>
 
       {/* Toggle and Checkbox */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '24px',
-        borderRadius: '12px'
-      }}>
-        <h3 style={{ margin: '0 0 20px 0' }}>Toggle & Selection</h3>
+      <div className="card bg-base-200 shadow-xl">
+        <div className="card-body">
+          <h3 className="card-title mb-5">Toggle & Selection</h3>
 
-        <div style={{ display: 'grid', gap: '16px' }}>
-          {/* Toggle Switch */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <label style={{ fontSize: '14px', cursor: 'pointer' }}>Enable notifications</label>
-            <div style={{
-              width: '48px',
-              height: '24px',
-              backgroundColor: `${theme.primaryColor}33`,
-              borderRadius: '12px',
-              position: 'relative',
-              cursor: 'pointer'
-            }}>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                backgroundColor: theme.primaryColor,
-                borderRadius: '50%',
-                position: 'absolute',
-                top: '2px',
-                left: '2px',
-                transition: 'transform 0.2s ease'
-              }} />
+          <div className="space-y-4">
+            {/* Toggle Switch */}
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Enable notifications</span>
+                <input type="checkbox" className="toggle toggle-primary" defaultChecked />
+              </label>
             </div>
-          </div>
 
-          {/* Radio Buttons */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '12px', fontSize: '14px', fontWeight: '500' }}>Print Quality</label>
-            <div style={{ display: 'flex', gap: '20px' }}>
-              {['Standard', 'High', 'Ultra'].map((option) => (
-                <label key={option} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                  <div style={{
-                    width: '16px',
-                    height: '16px',
-                    border: `2px solid ${theme.primaryColor}`,
-                    borderRadius: '50%',
-                    position: 'relative'
-                  }}>
-                    <div style={{
-                      width: '8px',
-                      height: '8px',
-                      backgroundColor: theme.primaryColor,
-                      borderRadius: '50%',
-                      position: 'absolute',
-                      top: '2px',
-                      left: '2px'
-                    }} />
-                  </div>
-                  <span style={{ fontSize: '14px' }}>{option}</span>
-                </label>
-              ))}
+            {/* Radio Buttons */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Print Quality</span>
+              </label>
+              <div className="flex gap-4">
+                {['Standard', 'High', 'Ultra'].map((option, idx) => (
+                  <label key={option} className="label cursor-pointer">
+                    <input
+                      type="radio"
+                      name="quality"
+                      className="radio radio-primary"
+                      defaultChecked={idx === 0}
+                    />
+                    <span className="label-text ml-2">{option}</span>
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Checkboxes */}
-          <div>
-            <label style={{ display: 'block', marginBottom: '12px', fontSize: '14px', fontWeight: '500' }}>Additional Services</label>
-            <div style={{ display: 'grid', gap: '12px' }}>
-              {[
-                'Express processing',
-                'Quality certification',
-                'Design review',
-                'Technical support'
-              ].map((option) => (
-                <label key={option} style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
-                  <div style={{
-                    width: '16px',
-                    height: '16px',
-                    border: `2px solid ${theme.primaryColor}`,
-                    borderRadius: '3px',
-                    position: 'relative',
-                    backgroundColor: theme.primaryColor
-                  }}>
-                    <span style={{
-                      position: 'absolute',
-                      top: '-2px',
-                      left: '2px',
-                      color: theme.backgroundColor,
-                      fontSize: '12px',
-                      fontWeight: 'bold'
-                    }}>✓</span>
-                  </div>
-                  <span style={{ fontSize: '14px' }}>{option}</span>
-                </label>
-              ))}
+            {/* Checkboxes */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Additional Services</span>
+              </label>
+              <div className="space-y-2">
+                {[
+                  'Express processing',
+                  'Quality certification',
+                  'Design review',
+                  'Technical support'
+                ].map((option) => (
+                  <label key={option} className="label cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-primary"
+                      defaultChecked={option === 'Express processing'}
+                    />
+                    <span className="label-text ml-2">{option}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Status Indicators */}
-      <div style={{
-        backgroundColor: theme.surfaceColor,
-        padding: '24px',
-        borderRadius: '12px'
-      }}>
-        <h3 style={{ margin: '0 0 20px 0' }}>Status Indicators</h3>
+      <div className="card bg-base-200 shadow-xl">
+        <div className="card-body">
+          <h3 className="card-title mb-5">Status Indicators</h3>
 
-        <div style={{ display: 'grid', gap: '16px' }}>
-          {[
-            { label: 'Order Confirmed', status: 'success' },
-            { label: 'Processing', status: 'warning' },
-            { label: 'Payment Required', status: 'error' },
-            { label: 'Shipped', status: 'success' },
-            { label: 'Quality Check', status: 'warning' }
-          ].map((item, idx) => (
-            <div key={idx} style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              padding: '12px',
-              backgroundColor: `${item.status === 'success' ? theme.successColor :
-                              item.status === 'warning' ? theme.warningColor :
-                              theme.errorColor}22`,
-              border: `1px solid ${item.status === 'success' ? theme.successColor :
-                            item.status === 'warning' ? theme.warningColor :
-                            theme.errorColor}44`,
-              borderRadius: '6px'
-            }}>
-              <div style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                backgroundColor: item.status === 'success' ? theme.successColor :
-                              item.status === 'warning' ? theme.warningColor :
-                              theme.errorColor
-              }} />
-              <span style={{
-                color: item.status === 'success' ? theme.successColor :
-                      item.status === 'warning' ? theme.warningColor :
-                      theme.errorColor,
-                fontSize: '14px',
-                fontWeight: '500'
-              }}>
-                {item.label}
-              </span>
-            </div>
-          ))}
+          <div className="space-y-3">
+            {[
+              { label: 'Order Confirmed', type: 'success' },
+              { label: 'Processing', type: 'warning' },
+              { label: 'Payment Required', type: 'error' },
+              { label: 'Shipped', type: 'success' },
+              { label: 'Quality Check', type: 'warning' }
+            ].map((item, idx) => (
+              <div key={idx} className={`alert alert-${item.type}`}>
+                <div className="w-2 h-2 rounded-full bg-current mr-2" />
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
