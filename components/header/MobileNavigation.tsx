@@ -1,11 +1,13 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import { ChevronDown as ChevronDownIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
+import useBodyLock from '@/hooks/useBodyLock';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import type { NavItem } from './Header.types';
 
@@ -13,18 +15,38 @@ interface MobileNavigationProps {
   navItems: NavItem[];
 }
 
-const MobileNavigation = ({ navItems }: MobileNavigationProps) => {
+export interface MobileNavigationRef {
+  closeBurger: () => void;
+}
+
+const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(({ navItems }, ref) => {
   const pathname = usePathname();
   const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set());
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  useBodyLock(isBurgerOpen);
+
+  const closeBurger = () => {
+    setIsBurgerOpen(false);
+  };
+
+  useImperativeHandle(ref, () => ({
+    closeBurger,
+  }), []);
 
   const isTablet = useMediaQuery('above', 640);
 
-  const onClose = () => setIsBurgerOpen(false);
+  const handleClose = () => {
+    setIsBurgerOpen(false);
+  };
 
   const isActive = (href: string): boolean => {
     return pathname === href;
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOpenDropdowns(new Set());
+  }, [isBurgerOpen]);
 
   const toggleDropdown = (label: string) => {
     setOpenDropdowns((prev) => {
@@ -40,71 +62,11 @@ const MobileNavigation = ({ navItems }: MobileNavigationProps) => {
     });
   };
 
-  const renderMobileNavItem = (item: NavItem) => {
-    const hasChildren = item.children && item.children.length > 0;
-    const isOpen = openDropdowns.has(item.label);
-
-    return (
-      <div key={item.label} className="mb-2">
-        <div className="border-base-300 flex w-full rounded-lg border">
-          <Link
-            href={item.href}
-            className={cn(
-              'block grow rounded-l-lg p-3.5 text-base font-medium transition-all duration-200',
-              isActive(item.href)
-                ? 'text-warning bg-warning/10'
-                : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
-            )}
-            onClick={onClose}
-          >
-            {item.label}
-          </Link>
-
-          {hasChildren && (
-            <button
-              onClick={() => toggleDropdown(item.label)}
-              className={cn(
-                'border-base-300 flex cursor-pointer items-center justify-center rounded-r-lg border-l p-3.5 text-left text-base font-medium transition-all duration-200',
-                isOpen
-                  ? 'bg-base-200'
-                  : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
-              )}
-              aria-expanded={isOpen}
-              aria-haspopup="true"
-            >
-              <ChevronDownIcon size={20} className={cn('duration-200', !isOpen && '-rotate-90')} />
-            </button>
-          )}
-        </div>
-
-        {isOpen && (
-          <div className="border-base-300 my-4 ml-4 border-l-2 pl-4">
-            {item.children?.map((child) => (
-              <Link
-                key={child.href}
-                href={child.href}
-                className={cn(
-                  'mb-2 block rounded-lg p-3 text-sm font-medium transition-all duration-150',
-                  isActive(child.href)
-                    ? 'text-warning bg-warning/10'
-                    : 'text-base-content/50 hover:text-base-content hover:bg-base-200'
-                )}
-                onClick={onClose}
-              >
-                {child.label}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   return (
     <>
       <button
         className="border-base-300 text-base-content hover:bg-base-200 hover:border-base-content/70 relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border bg-transparent transition-all duration-200"
-        onClick={() => setIsBurgerOpen(!isBurgerOpen)}
+        onClick={() => setIsBurgerOpen((prev) => !prev)}
         aria-expanded={isBurgerOpen}
         aria-label="Toggle navigation menu"
       >
@@ -134,30 +96,119 @@ const MobileNavigation = ({ navItems }: MobileNavigationProps) => {
         />
       </button>
 
-      <div
+      <motion.div
+        initial={{ height: 0 }}
+        animate={{
+          height: isBurgerOpen ? 'calc(100vh - 64px)' : 0,
+        }}
+        transition={{
+          type: 'tween',
+          duration: 0.4,
+        }}
         className={cn(
-          'bg-base-100 animate-in fade-in absolute top-full right-0 left-0 duration-300',
-          isTablet &&
-            'border-base-300 left-auto w-full max-w-[50vw] rounded-bl-2xl border border-r-0',
-          isBurgerOpen ? 'block' : 'hidden'
+          'bg-base-100 absolute top-[calc(100%+1px)] right-0 left-0 overflow-hidden',
+          isTablet && 'border-base-300 left-auto w-full max-w-[50vw] border-l'
         )}
       >
-        <div className={cn('px-4 py-4 lg:px-8', isTablet && 'pb-6')}>
-          {navItems.map((item) => renderMobileNavItem(item))}
+        <div
+          className={cn('flex h-full flex-col gap-4 py-4 pr-1 pl-4 lg:px-8', isTablet && 'pb-6')}
+        >
+          <ul className="overflow-y-scroll flex flex-col pr-3">
+            {navItems.map((item) => {
+              const hasChildren = item.children && item.children.length > 0;
+              const isOpen = openDropdowns.has(item.label);
 
-          <div className="border-base-300 mt-6 border-t pt-6">
+              return (
+                <li key={item.label}>
+                  <div className="border-base-300 flex w-full overflow-clip rounded-lg border">
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        'block grow p-3.5 text-base font-medium',
+                        isActive(item.href)
+                          ? 'text-warning bg-warning/10'
+                          : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
+                      )}
+                      onClick={handleClose}
+                    >
+                      {item.label}
+                    </Link>
+
+                    {hasChildren && (
+                      <motion.button
+                        onClick={() => toggleDropdown(item.label)}
+                        className={cn(
+                          'border-base-300 flex cursor-pointer items-center justify-center border-l p-3.5 text-left text-base font-medium',
+                          isOpen
+                            ? 'bg-base-200 text-base-content'
+                            : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
+                        )}
+                        aria-expanded={isOpen}
+                        aria-haspopup="true"
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <motion.div
+                          animate={{ rotate: isOpen ? 90 : 0 }}
+                          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                        >
+                          <ChevronRightIcon size={20} />
+                        </motion.div>
+                      </motion.button>
+                    )}
+                  </div>
+
+                  <motion.div
+                    animate={{
+                      opacity: isBurgerOpen && isOpen ? 1 : 0,
+                      height: isBurgerOpen && isOpen ? 'auto' : 0,
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 30,
+                      duration: 0.3,
+                    }}
+                    className="my-2 overflow-hidden"
+                  >
+                    <ul className="border-base-300 my-2 ml-4 flex flex-col gap-1 border-l-2 pl-2">
+                      {item.children?.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            className={cn(
+                              'block rounded-lg p-3 text-sm font-medium',
+                              isActive(child.href)
+                                ? 'text-warning bg-warning/10'
+                                : 'text-base-content/50 hover:text-base-content hover:bg-base-200'
+                            )}
+                            onClick={handleClose}
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="border-base-300 mt-auto mr-3 border-t pt-6">
             <Link
               href="/login"
-              className="bg-warning text-warning-content hover:bg-warning/90 flex w-full items-center justify-center rounded-lg px-6 py-3.5 text-base font-semibold transition-all duration-200"
-              onClick={onClose}
+              className="bg-warning text-warning-content hover:bg-warning/90 flex w-full items-center justify-center rounded-lg px-6 py-3.5 text-base font-semibold"
+              onClick={handleClose}
             >
               Вхід
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
-};
+});
+
+MobileNavigation.displayName = 'MobileNavigation';
 
 export default MobileNavigation;
