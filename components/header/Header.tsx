@@ -4,6 +4,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import { cn } from '@/utils/cn';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLayoutEffect, useState } from 'react';
 import DesktopNavigation from './DesktopNavigation';
 import headerNav from './headerNavigationList';
 import MobileNavigation from './MobileNavigation';
@@ -13,6 +14,12 @@ interface HeaderProps {
 }
 const Header = ({ className }: HeaderProps) => {
   const isDesktop = useMediaQuery('above', 1060);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useLayoutEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
 
   return (
     <header className={cn('bg-base-100 border-base-300 sticky top-0 z-50 border-b', className)}>
@@ -30,8 +37,8 @@ const Header = ({ className }: HeaderProps) => {
             <Image src="/logo.png" alt="Additive3D Logo" width={140} height={44} />
           </Link>
 
-          {isDesktop && <DesktopNavigation navItems={headerNav} />}
-          {!isDesktop && <MobileNavigation navItems={headerNav} />}
+          {isDesktop && isMounted && <DesktopNavigation navItems={headerNav} />}
+          {!isDesktop && isMounted && <MobileNavigation navItems={headerNav} />}
         </nav>
       </div>
     </header>

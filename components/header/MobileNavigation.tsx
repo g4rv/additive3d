@@ -23,7 +23,6 @@ const MobileNavigation = ({ navItems }: MobileNavigationProps) => {
   const onClose = () => setIsBurgerOpen(false);
 
   const isActive = (href: string): boolean => {
-    console.log({ pathname, href });
     return pathname === href;
   };
 
