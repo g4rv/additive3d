@@ -1,3 +1,4 @@
+import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import { cn } from '@/utils/cn';
 import type { Metadata } from 'next';
@@ -26,9 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(geistSans.variable, geistMono.variable, 'antialiased h-[600vh]')} data-theme="dark">
+      <body className={cn(geistSans.variable, geistMono.variable, 'antialiased h-[200vh] flex flex-col')} data-theme="dark">
         <Header />
-        {children}
+        <main className='grow'>{children}</main>
+        <Footer />
       </body>
     </html>
   );
