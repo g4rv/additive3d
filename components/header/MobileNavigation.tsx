@@ -99,7 +99,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
       <motion.div
         initial={{ height: 0 }}
         animate={{
-          height: isBurgerOpen ? 'calc(100vh - 64px)' : 0,
+          height: isBurgerOpen ? 'calc(100dvh - 64px)' : 0,
         }}
         transition={{
           type: 'tween',
