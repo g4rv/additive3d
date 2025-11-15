@@ -1,255 +1,615 @@
-# Create Component
+Create a complete React component for the Additive3D project following your tech stack and design system.
 
-Interactive component generator that creates React components with DaisyUI styling following the Additive3D design principles and style guide.
+## Component Creation Wizard
 
-## Usage
-```
-/create-component
-```
+You will create a new React component following these steps:
 
-Starts an interactive wizard that guides you through creating the perfect component for your needs.
+### 1. Gather Information
 
-## Interactive Creation Wizard
+First, ask the user for these details if not provided:
 
-The command will ask questions one at a time, waiting for your response before continuing to the next step:
+**Question 1:** What would you like to name your component? (PascalCase, e.g., "QuoteCalculator" or "MaterialCard")
 
-### Step 1: Component Name & Purpose
-**Question 1:** What would you like to name your component? (PascalCase)
-*Waits for user input*
-
-**Question 2:** What should this component do?
-*Waits for user input*
+**Question 2:** What should this component do? (brief description)
 
 **Question 3:** Where will this component be used in the application?
-*Waits for user input*
 
-### Step 2: Component Type Selection
-**Question 4:** Select the component type that best fits your needs:
-1. **header** - Navigation headers, menus, breadcrumbs
-2. **card** - Content cards, panels, feature sections
-3. **form** - Input forms, controls, validation
-4. **cta** - Call-to-action buttons, conversion elements
-5. **table** - Data tables, specifications, comparisons
-6. **calculator** - Cost calculators, pricing tools
-7. **upload** - File upload, 3D model submission
-8. **dashboard** - Analytics dashboards, status panels
-9. **timeline** - Order tracking, progress visualization
-10. **modal** - Dialogs, overlays, confirmations
-11. **custom** - Something else not listed
+**Question 4:** What props does it need? (max 3 - following your codebase patterns)
 
-Please enter a number (1-11):
-*Waits for user input*
+**Question 5:** Does it need client interactivity? (decides if 'use client' is needed)
 
-### Step 3: Key Features & Content
-**Question 5:** What data will the component display/handle?
-*Waits for user input*
+**Question 6:** Does it need motion animations? (framer-motion integration)
 
-**Question 6:** What interactions should users be able to perform?
-*Waits for user input*
+**Question 7:** Does it need responsive behavior? (useMediaQuery hook)
 
-**Question 7:** Any specific manufacturing data or technical specs?
-*Waits for user input*
+### 2. Component Type Analysis
 
-**Question 8:** Any integration needs (3D viewers, APIs, etc.)?
-*Waits for user input*
+Based on the answers, analyze and categorize the component:
 
-### Step 4: Styling & Design Preferences
-**Question 9:** What is the primary purpose? (information display, user input, conversion, etc.)
-*Waits for user input*
+**Available Component Categories:**
+- **header** - Navigation headers, menus, mobile navigation
+- **card** - Content cards, panels, feature sections
+- **form** - Input forms, controls, validation
+- **calculator** - Cost calculators, pricing tools (3D printing specific)
+- **upload** - File upload, 3D model submission
+- **table** - Data tables, specifications, comparisons
+- **modal** - Dialogs, overlays, confirmations
+- **cta** - Call-to-action buttons, conversion elements
+- **timeline** - Order tracking, progress visualization
+- **custom** - Something else not listed
 
-**Question 10:** How important is the visual hierarchy? (high, medium, low)
-*Waits for user input*
+**Component Location Mapping:**
+- Header components → `components/header/`
+- UI components → `components/ui/`
+- Business logic → `components/[category]/`
+- Shared components → `components/shared/`
 
-**Question 11:** What are your animation preferences? (minimal, standard, rich)
-*Waits for user input*
+### 3. File Structure Creation
 
-**Question 12:** What are the mobile requirements? (simple, moderate, complex)
-*Waits for user input*
+Generate the appropriate file structure based on component type:
 
-### Step 5: Technical Requirements
-**Question 13:** Any external dependencies needed?
-*Waits for user input*
+**Standard Component Structure:**
+```
+components/[category]/[ComponentName]/
+├── [ComponentName].tsx          # Main component
+├── [ComponentName].types.ts     # TypeScript interfaces (if complex)
+├── [ComponentName].stories.tsx  # Storybook stories (if needed)
+├── [ComponentName].test.tsx     # Jest tests (if needed)
+└── index.ts                     # Barrel export
+```
 
-**Question 14:** Any special accessibility requirements?
-*Waits for user input*
+**Hook Components (if needed):**
+```
+hooks/use[ComponentName].ts      # Custom hooks
+```
 
-**Question 15:** Any performance considerations?
-*Waits for user input*
+### 4. Component Implementation
 
-**Question 16:** Any testing requirements?
-*Waits for user input*
+Generate a TypeScript React component with:
 
-## Component Generation Process
+#### Technical Requirements:
+- ✅ **'use client' directive** only if client interactivity is needed
+- ✅ **TypeScript interfaces** following your patterns (max 3 props per ESLint)
+- ✅ **JSDoc comments** with description and @example
+- ✅ **DaisyUI + Tailwind CSS v4** styling
+- ✅ **Semantic HTML** with accessibility
+- ✅ **Motion animations** using framer-motion (if requested)
+- ✅ **Responsive behavior** using useMediaQuery hook (if requested)
+- ✅ **ForwardRef pattern** for parent communication (if needed)
 
-After gathering your requirements, the wizard will:
+#### Design System Integration:
+Use your established color palette from `globals.css`:
+- **Primary actions:** `bg-primary`, `hover:bg-primary-focus`, `text-primary-content`
+- **Secondary actions:** `bg-secondary`, `hover:bg-secondary-focus`, `text-secondary-content`
+- **Warning states:** `bg-warning`, `text-warning-content`
+- **Error states:** `bg-error`, `text-error-content`
+- **Success states:** `bg-success`, `text-success-content`
+- **Base colors:** `base-100`, `base-200`, `base-300`, `base-content`
 
-### 1. Component Structure Analysis
-- Analyze your answers to determine optimal TypeScript interfaces
-- Identify appropriate design patterns based on component purpose
-- Consider accessibility and responsive requirements
+#### Component Patterns:
 
-### 2. Design System Implementation
-- Apply Additive3D color palette using DaisyUI theme tokens
-- Implement typography following your technical & geometric font system
-- Use your 4px spacing scale and grid system
-- Apply motion standards with proper easing functions
+**Pattern 1: Server Component (default)**
+```tsx
+import { cn } from '@/utils/cn';
 
-### 3. Manufacturing-Specific UX Patterns
-Based on your component type, implement appropriate B2B manufacturing UX patterns:
+interface ComponentNameProps {
+  title: string;
+  description?: string;
+  className?: string;
+}
 
-**For header components**: B2B account integration, conversion-first architecture
-**For card components**: Professional manufacturing aesthetics, technical data display
-**For form components**: Trust-centered design, low cognitive load, error prevention
-**For CTA components**: Risk-mitigation language, strategic placement
-**For table components**: Technical data presentation, specification comparison
-**For calculator components**: Transparent cost breakdown, engineering-grade estimation
-**For upload components**: Security-first UX, IP protection assurances
-**For dashboard components**: Manufacturing workflow integration, real-time status
-**For timeline components**: Manufacturing process visualization, status communication
+/**
+ * ComponentName - Brief description
+ *
+ * @example
+ * <ComponentName title="Hello" description="World" />
+ */
+export default function ComponentName({
+  title,
+  description,
+  className,
+}: ComponentNameProps) {
+  return (
+    <div className={cn('card bg-base-100 shadow-xl', className)}>
+      <div className="card-body">
+        <h2 className="card-title text-primary">{title}</h2>
+        {description && <p className="text-base-content/80">{description}</p>}
+      </div>
+    </div>
+  );
+}
+```
 
-### 4. File Creation
-Create component files in the appropriate directory structure:
-- **Component file**: `src/components/<category>/<ComponentName>.tsx`
-- **Styles file**: `src/components/<category>/<ComponentName>.module.css` (if needed)
-- **Types file**: `src/components/<category>/<ComponentName>.types.ts` (if complex)
-- **Story file**: `src/components/<category>/<ComponentName>.stories.tsx` (documentation)
+**Pattern 2: Client Component with Motion**
+```tsx
+'use client';
 
-### 5. Component Implementation Features
-- **TypeScript**: Full type safety with proper interfaces and prop validation
-- **Accessibility**: WCAG 2.1 AA compliance with ARIA labels and keyboard navigation
-- **Responsive**: Mobile-first design with appropriate breakpoints
-- **Dark Mode**: Automatic theme switching using DaisyUI dark theme
-- **Performance**: Optimized for manufacturing data visualization and 3D content
-- **Internationalization**: Support for multiple languages if required
+import { cn } from '@/utils/cn';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
-### 6. Design Principles Compliance
-Ensure component follows the core design mandate:
-- **Digital Performance = Physical Precision**: Accurate data visualization
-- **Manufacturing Efficiency**: Minimize steps, support bulk operations
-- **Trust-Centered Design**: Clear confirmations, actionable feedback
-- **Visualizing Technical Capability**: 3D quality focus and hyperrealistic rendering
+interface ComponentNameProps {
+  title: string;
+  isOpen?: boolean;
+  onToggle?: () => void;
+  className?: string;
+}
 
-### 7. Style Guide Integration
-- **Color System**: Use Brand-Primary-Gold (#FEDA6A) and Surface-Dark-Base (#1D1E22)
-- **Typography**: Geometric sans-serif for headings, clean sans-serif for body
-- **Layout**: 12-column grid system, proper spacing scale
-- **Motion**: Proper easing functions and duration standards
-- **Interactive States**: Hover, focus, active, and disabled states
+/**
+ * ComponentName - Interactive component with animations
+ *
+ * @example
+ * <ComponentName title="Interactive" isOpen={true} />
+ */
+export default function ComponentName({
+  title,
+  isOpen = false,
+  onToggle,
+  className,
+}: ComponentNameProps) {
+  return (
+    <motion.div
+      animate={{ height: isOpen ? 'auto' : 0 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      className={cn('overflow-hidden bg-base-200', className)}
+    >
+      <div className="p-4">
+        <h3 className="text-lg font-semibold text-primary">{title}</h3>
+      </div>
+    </motion.div>
+  );
+}
+```
 
-## Generated Component Features
+**Pattern 3: Component with Custom Hook**
+```tsx
+'use client';
 
-### Built-in Accessibility
+import { cn } from '@/utils/cn';
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { useState } from 'react';
+
+interface ComponentNameProps {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+/**
+ * ComponentName - Responsive component with custom hook
+ *
+ * @example
+ * <ComponentName title="Responsive">Content</ComponentName>
+ */
+export default function ComponentName({
+  title,
+  children,
+  className,
+}: ComponentNameProps) {
+  const isTablet = useMediaQuery('above', 640);
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className={cn(
+      'collapse bg-base-100',
+      isTablet && 'collapse-open',
+      className
+    )}>
+      <input
+        type="checkbox"
+        checked={isOpen}
+        onChange={(e) => setIsOpen(e.target.checked)}
+      />
+      <div className="collapse-title text-xl font-medium text-primary">
+        {title}
+      </div>
+      <div className="collapse-content">
+        {children}
+      </div>
+    </div>
+  );
+}
+```
+
+**Pattern 4: ForwardRef Component (for parent control)**
+```tsx
+'use client';
+
+import { cn } from '@/utils/cn';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+
+export interface ComponentNameRef {
+  close: () => void;
+  open: () => void;
+}
+
+interface ComponentNameProps {
+  title: string;
+  className?: string;
+}
+
+/**
+ * ComponentName - Component with parent control via ref
+ *
+ * @example
+ * const ref = useRef<ComponentNameRef>(null);
+ * <ComponentName ref={ref} title="Controlled" />
+ */
+export default forwardRef<ComponentNameRef, ComponentNameProps>(
+  ({ title, className }, ref) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const close = () => setIsOpen(false);
+    const open = () => setIsOpen(true);
+
+    useImperativeHandle(ref, () => ({
+      close,
+      open,
+    }), []);
+
+    return (
+      <div className={cn('modal', !isOpen && 'modal-open', className)}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg text-primary">{title}</h3>
+        </div>
+      </div>
+    );
+  }
+);
+
+ComponentName.displayName = 'ComponentName';
+```
+
+### 5. TypeScript Patterns
+
+Follow your existing patterns:
+
+**Simple Props Interface:**
+```tsx
+interface ComponentNameProps {
+  title: string;
+  variant?: 'default' | 'primary' | 'secondary';
+  className?: string;
+}
+```
+
+**Complex Props with Types File:**
+```tsx
+// ComponentName.types.ts
+export interface ComponentData {
+  id: string;
+  name: string;
+  value: number;
+}
+
+export interface ComponentNameProps {
+  data: ComponentData[];
+  onSelect?: (item: ComponentData) => void;
+  className?: string;
+}
+```
+
+### 6. Storybook Stories
+
+Generate comprehensive Storybook stories:
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import ComponentName from './ComponentName';
+
+const meta: Meta<typeof ComponentName> = {
+  title: 'Components/[ComponentName]',
+  component: ComponentName,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['default', 'primary', 'secondary'],
+    },
+    className: {
+      control: 'text',
+    },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof ComponentName>;
+
+export const Default: Story = {
+  args: {
+    title: 'Default Component',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    title: 'Primary Component',
+    variant: 'primary',
+  },
+};
+
+export const Interactive: Story = {
+  args: {
+    title: 'Interactive Component',
+    variant: 'secondary',
+  },
+  render: (args) => {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+      <div>
+        <button
+          className="btn btn-primary mb-4"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          Toggle Component
+        </button>
+        <ComponentName {...args} isOpen={isOpen} />
+      </div>
+    );
+  },
+};
+```
+
+### 7. Jest Tests
+
+Generate comprehensive tests:
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import ComponentName from './ComponentName';
+
+describe('ComponentName', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('Rendering', () => {
+    it('should render with default props', () => {
+      render(<ComponentName title="Test Title" />);
+
+      expect(screen.getByText('Test Title')).toBeInTheDocument();
+    });
+
+    it('should apply custom className', () => {
+      render(<ComponentName title="Test" className="custom-class" />);
+
+      const element = screen.getByText('Test').closest('.custom-class');
+      expect(element).toBeInTheDocument();
+    });
+  });
+
+  describe('Interactions', () => {
+    it('should handle user interactions', async () => {
+      const user = userEvent.setup();
+      const mockHandler = jest.fn();
+
+      render(<ComponentName title="Interactive" onAction={mockHandler} />);
+
+      const button = screen.getByRole('button');
+      await user.click(button);
+
+      expect(mockHandler).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Accessibility', () => {
+    it('should have proper ARIA attributes', () => {
+      render(<ComponentName title="Accessible" />);
+
+      const element = screen.getByRole('region');
+      expect(element).toBeInTheDocument();
+    });
+
+    it('should be keyboard navigable', () => {
+      render(<ComponentName title="Keyboard" />);
+
+      const element = screen.getByRole('button');
+      element.focus();
+      expect(element).toHaveFocus();
+    });
+  });
+});
+```
+
+### 8. Barrel Export
+
+Create clean import structure:
+
+```tsx
+// index.ts
+export { default } from './ComponentName';
+export type { ComponentNameProps, ComponentNameRef } from './ComponentName';
+```
+
+## Specialized 3D Printing Components
+
+### Calculator Components:
+- Integration with material pricing
+- Support for 3D file analysis
+- Cost breakdown visualization
+- Manufacturing time estimation
+
+### Upload Components:
+- 3D file validation
+- Progress indicators
+- Error handling for invalid formats
+- Preview capabilities
+
+### Material Selection:
+- Material properties display
+- Visual comparison tools
+- Technical specifications
+- Availability status
+
+## Component Best Practices
+
+### 1. Performance:
+- Use React.memo for expensive components
+- Implement proper loading states
+- Lazy load heavy components
+- Optimize re-renders
+
+### 2. Accessibility:
 - Semantic HTML structure
-- ARIA labels and descriptions
+- ARIA labels where needed
 - Keyboard navigation support
 - Screen reader compatibility
 - Focus management
-- Motion preference respect
 
-### Manufacturing-Ready UX
-- Input validation with helpful error messages
-- Loading states appropriate for manufacturing data
-- Success/error feedback with clear next steps
-- Progress indicators for long-running operations
-- Data security indicators where appropriate
+### 3. Motion:
+- Use framer-motion for animations
+- Respect prefers-reduced-motion
+- Smooth transitions (300-500ms)
+- Spring animations for natural feel
 
-### Performance Optimized
-- Lazy loading for heavy components
-- Efficient re-render patterns
-- Optimized for 3D model integration
-- Proper component memoization where needed
+### 4. Responsive:
+- Mobile-first design
+- Breakpoint-based layouts
+- Touch-friendly interactions
+- Adaptive content
 
-## Example Interactive Session
-```
-/create-component
+### 5. State Management:
+- Local state for UI
+- Lift state when needed
+- Custom hooks for complex logic
+- Proper prop drilling
 
-🚀 Let's create your component step by step!
+## Integration Examples
 
-**Question 1:** What would you like to name your component? (PascalCase)
-> QuoteCalculator
+### Import and Usage:
+```tsx
+// Simple import
+import ComponentName from '@/components/category/ComponentName';
 
-**Question 2:** What should this component do?
-> Calculate instant quotes for 3D printing projects with transparent pricing
+// With types
+import ComponentName, { ComponentNameProps } from '@/components/category/ComponentName';
 
-**Question 3:** Where will this component be used in the application?
-> On the homepage and pricing page
-
-**Question 4:** Select the component type that best fits your needs:
-1. header - Navigation headers, menus, breadcrumbs
-2. card - Content cards, panels, feature sections
-3. form - Input forms, controls, validation
-4. cta - Call-to-action buttons, conversion elements
-5. table - Data tables, specifications, comparisons
-6. calculator - Cost calculators, pricing tools
-7. upload - File upload, 3D model submission
-8. dashboard - Analytics dashboards, status panels
-9. timeline - Order tracking, progress visualization
-10. modal - Dialogs, overlays, confirmations
-11. custom - Something else not listed
-Please enter a number (1-11):
-> 6
-
-✅ Great! A calculator component with transparent cost breakdown and engineering-grade estimation.
-
-**Question 5:** What data will the component display/handle?
-> Material cost, print time, support structures, post-processing, quantity
-
-**Question 6:** What interactions should users be able to perform?
-> Upload 3D files, select materials, adjust quantity, compare options
-
-**Question 7:** Any specific manufacturing data or technical specs?
-> Yes - material density, machine hourly rates, post-processing costs
-
-**Question 8:** Any integration needs (3D viewers, APIs, etc.)?
-> 3D file viewer, material database, shipping calculator API
-
-**Question 9:** What is the primary purpose? (information display, user input, conversion, etc.)
-> User input and conversion
-
-**Question 10:** How important is the visual hierarchy? (high, medium, low)
-> High - it's the main conversion tool
-
-**Question 11:** What are your animation preferences? (minimal, standard, rich)
-> Standard - smooth transitions for calculations
-
-**Question 12:** What are the mobile requirements? (simple, moderate, complex)
-> Moderate - responsive with simplified view
-
-**Question 13:** Any external dependencies needed?
-> Three.js for 3D viewer, file validation library
-
-**Question 14:** Any special accessibility requirements?
-> WCAG 2.1 AA compliance required
-
-**Question 15:** Any performance considerations?
-> Handle large 3D files efficiently
-
-**Question 16:** Any testing requirements?
-> Unit tests for calculations, E2E for user flow
-
-✅ Component Summary:
-Name: QuoteCalculator
-Type: calculator
-Features: Cost breakdown, 3D file upload, material selection
-Styling: High hierarchy, standard animations, mobile responsive
-Technical: Three.js integration, WCAG AA, performance optimized
-
-📁 Ready to create component files? (y/n)
-> y
-
-🎉 Creating QuoteCalculator component...
-Created: src/components/calculator/QuoteCalculator.tsx
-Created: src/components/calculator/QuoteCalculator.types.ts
-Created: src/components/calculator/QuoteCalculator.module.css
-Created: src/components/calculator/QuoteCalculator.test.tsx
-
-✅ Component created successfully!
+// Usage
+<ComponentName
+  title="3D Printing Calculator"
+  variant="primary"
+  className="w-full max-w-md"
+/>
 ```
 
-## Post-Creation Checklist
-After component creation, the wizard will provide:
-1. **Code Review**: Summary of generated files and key features
-2. **Integration Steps**: How to import and use the component
-3. **Customization Guide**: Where to modify styles and functionality
-4. **Testing Instructions**: How to test accessibility and functionality
-5. **Next Steps**: Recommendations for further enhancements
+### Advanced Usage with Ref:
+```tsx
+import { useRef } from 'react';
+import ComponentName, { ComponentNameRef } from '@/components/category/ComponentName';
+
+export default function ParentComponent() {
+  const componentRef = useRef<ComponentNameRef>(null);
+
+  const handleClose = () => {
+    componentRef.current?.close();
+  };
+
+  return (
+    <div>
+      <ComponentName ref={componentRef} title="Controlled Component" />
+      <button onClick={handleClose}>Close Component</button>
+    </div>
+  );
+}
+```
+
+## Summary Generation
+
+After creating all files, provide:
+
+**For Basic Components:**
+```
+✅ Created ComponentName with:
+   - ComponentName.tsx (XX lines)
+   - ComponentName.types.ts (XX lines) [if needed]
+   - ComponentName.stories.tsx (XX lines) [if needed]
+   - ComponentName.test.tsx (XX lines) [if needed]
+   - index.ts
+
+📁 Location: components/[category]/ComponentName/
+
+🚀 Features:
+   - TypeScript interfaces with proper typing
+   - DaisyUI + Tailwind CSS v4 styling
+   - Accessibility compliant
+   - Mobile responsive
+   - Motion animations (if requested)
+
+📖 Next steps:
+   - Import: import ComponentName from '@/components/category/ComponentName'
+   - Storybook: npm run storybook
+   - Tests: npm test ComponentName.test.tsx
+```
+
+**For Advanced Components:**
+```
+✅ Created ComponentName with advanced features:
+
+🎨 Main Component:
+   - components/[category]/ComponentName/ComponentName.tsx (XX lines)
+   - Client-side interactivity with 'use client'
+   - Framer Motion animations
+   - useMediaQuery responsive behavior
+   - ForwardRef for parent control
+
+🔧 Supporting Files:
+   - ComponentName.types.ts - TypeScript interfaces
+   - ComponentName.stories.tsx - Storybook documentation
+   - ComponentName.test.tsx - Jest test coverage
+   - index.ts - Clean barrel exports
+
+📁 Location: components/[category]/ComponentName/
+
+✨ Advanced Features:
+   - Custom hooks integration
+   - Parent-child communication via ref
+   - Motion animations with spring physics
+   - Responsive breakpoints
+   - Full accessibility compliance
+
+🚀 Usage Examples:
+   - Basic: <ComponentName title="Example" />
+   - Advanced: <ComponentName ref={ref} title="Controlled" />
+   - Import: import ComponentName from '@/components/category/ComponentName'
+```
+
+## Component Creation Workflow
+
+```
+User provides: Component details
+    ↓
+Analyze: Component type and requirements
+    ↓
+Generate: File structure and implementation
+    ↓
+Implement: Following Additive3D patterns
+    ↓
+Test: Jest test coverage
+    ↓
+Document: Storybook stories
+    ↓
+Export: Clean barrel exports
+    ↓
+Summary: Usage instructions and next steps
+```
+
+**Key Features:**
+- ✅ Tailored to Additive3D tech stack (Next.js 16, React 19, TypeScript)
+- ✅ DaisyUI + Tailwind CSS v4 integration
+- ✅ Framer Motion animations
+- ✅ Custom hooks support (useMediaQuery, useBodyLock)
+- ✅ ForwardRef patterns for parent control
+- ✅ Comprehensive test coverage
+- ✅ Storybook documentation
+- ✅ ESLint compliant (max 3 props, clean code)
+- ✅ Accessibility built-in
+- ✅ Mobile-first responsive design
+- ✅ 3D printing business logic support
+
+---
+
+**Remember:** This command creates production-ready components following Additive3D standards. Components integrate seamlessly with your existing codebase, use your design system, and follow your established patterns for hooks, motion, and component architecture.
