@@ -58,7 +58,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
 
     const closeBurger = () => {
       setIsBurgerOpen(false);
-      setOpenDropdowns(new Set()); // Clear dropdowns when closing
+      setOpenDropdowns(new Set());
     };
 
     useImperativeHandle(
@@ -73,6 +73,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
 
     const handleClose = () => {
       setIsBurgerOpen(false);
+      setOpenDropdowns(new Set());
     };
 
     const isActive = (href: string): boolean => {
