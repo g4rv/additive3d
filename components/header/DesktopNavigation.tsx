@@ -1,112 +1,85 @@
 'use client';
 
 import { ChevronDown as ChevronDownIcon } from 'lucide-react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
-import { cn } from '@/utils/cn';
-import type { NavItem } from './Header.types';
+import { NavItem } from '@/lib/types';
+import ButtonLink from '../ui/button-link';
 
 interface DesktopNavigationProps {
   navItems: NavItem[];
 }
 
+const resetFocus = () => {
+  // Reset focus when header re-renders (e.g., on navigation)
+  if (typeof document !== 'undefined' && document.activeElement && 'blur' in document.activeElement) {
+    (document.activeElement as HTMLElement).blur();
+  }
+};
+
 const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
   const pathname = usePathname();
-  const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(null);
-
-  const isActive = (href: string): boolean => {
-    return pathname === href;
-  };
-
-  const closeDropdown = () => {
-    setOpenDropdownIndex(null);
-  };
 
   return (
     <>
-      <ul className="flex items-center gap-2">
-        {navItems.map((item, index) => {
+      {/* Tailwind CSS Group-based Navigation */}
+      <ul className="flex items-center gap-2 px-1">
+        {navItems.map((item) => {
           const hasChildren = item.children && item.children.length > 0;
 
-          return (
-            <li
-              key={item.label}
-              className="relative"
-              onMouseEnter={() => hasChildren && setOpenDropdownIndex(index)}
-              onMouseLeave={closeDropdown}
-            >
-              <Link
-                href={item.href}
-                className={cn(
-                  'flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-300',
-                  isActive(item.href)
-                    ? 'text-warning bg-warning/10'
-                    : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
-                )}
-                onClick={closeDropdown}
-                aria-haspopup={hasChildren}
-                aria-expanded={hasChildren ? openDropdownIndex === index : undefined}
-              >
-                {item.label}
-
-                {hasChildren && (
+          if (hasChildren) {
+            // Menu item with dropdown using Tailwind group
+            return (
+              <li key={item.label} className="group focus-within relative">
+                <ButtonLink
+                  href={item.href}
+                  active={pathname === item.href}
+                  className="inline-flex items-center gap-2"
+                  onMouseOver={resetFocus}
+                  onClick={resetFocus}
+                >
+                  {item.label}
                   <ChevronDownIcon
                     size={16}
-                    className={cn(
-                      'text-base-content/70 transition-transform duration-300',
-                      openDropdownIndex === index && 'rotate-180'
-                    )}
+                    className="text-current transition-transform duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
                   />
-                )}
-              </Link>
+                </ButtonLink>
 
-              {hasChildren && (
-                <ul
-                  className={cn(
-                    'absolute top-full left-0 z-50 pt-2 transition-all duration-300',
-                    openDropdownIndex === index ? 'visible opacity-100' : 'invisible opacity-0'
-                  )}
-                >
-                  <li
-                    className={cn(
-                      'bg-base-100 border-base-300 min-w-72 rounded-xl border shadow-2xl backdrop-blur-md'
-                    )}
-                    role="menu"
-                  >
-                    <div className="p-2">
-                      {item.children?.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          onClick={closeDropdown}
-                          className={cn(
-                            'mb-1 block rounded-lg p-3 text-sm font-medium transition-all duration-300',
-                            isActive(child.href)
-                              ? 'text-warning bg-warning/10'
-                              : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
-                          )}
-                          role="menuitem"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
+                {/* Tailwind Dropdown Menu */}
+                <ul className="invisible absolute top-full left-0 z-50 pt-2 opacity-0 transition-all duration-300 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  <li className="bg-base-100 border-base-300 flex min-w-50 flex-col gap-1 rounded-xl border p-2 shadow-2xl">
+                    {item.children?.map((child) => (
+                      <ButtonLink
+                        key={child.href}
+                        href={child.href}
+                        active={pathname === child.href}
+                        className="p-3"
+                        onMouseOver={resetFocus}
+                        onClick={resetFocus}
+                      >
+                        {child.label}
+                      </ButtonLink>
+                    ))}
                   </li>
                 </ul>
-              )}
-            </li>
-          );
+              </li>
+            );
+          } else {
+            // Simple menu item without dropdown
+            return (
+              <li key={item.label}>
+                <ButtonLink href={item.href} active={pathname === item.href}>
+                  {item.label}
+                </ButtonLink>
+              </li>
+            );
+          }
         })}
       </ul>
 
-      <Link
-        href="/login"
-        className="bg-warning text-warning-content hover:bg-warning/90 inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-semibold transition-all duration-200"
-      >
+      <ButtonLink href="/login" variant="secondary">
         Вхід
-      </Link>
+      </ButtonLink>
     </>
   );
 };
