@@ -132,6 +132,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
           initial={{ height: 0 }}
           animate={{
             height: isBurgerOpen ? 'calc(100dvh - var(--header-height))' : 0,
+            opacity: isBurgerOpen ? 1 : 0,
           }}
           transition={{
             type: 'tween',
@@ -142,7 +143,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
             isTablet && 'border-base-300 left-auto w-full max-w-[50vw] border-l'
           )}
         >
-          <nav className={cn('flex h-full flex-col', isTablet && 'pb-8')}>
+          <nav className={cn('flex h-full flex-col pb-6', isTablet && 'pb-8')}>
             <ul className="flex flex-col overflow-y-scroll px-8 pt-6">
               {navItems.map((item) => {
                 const hasChildren = item.children && item.children.length > 0;
