@@ -41,6 +41,9 @@
   --border: 1px;
   --depth: 0;
   --noise: 0;
+
+  /* Layout dimensions */
+  --header-height: 64px;
 }
 
 @theme inline {
@@ -67,6 +70,11 @@ body {
     system-ui,
     -apple-system,
     sans-serif;
+}
+
+/* Custom utilities */
+.h-header {
+  height: var(--header-height);
 }
 
 /* Custom Container */
