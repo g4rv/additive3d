@@ -12,7 +12,11 @@ interface DesktopNavigationProps {
 
 const resetFocus = () => {
   // Reset focus when header re-renders (e.g., on navigation)
-  if (typeof document !== 'undefined' && document.activeElement && 'blur' in document.activeElement) {
+  if (
+    typeof document !== 'undefined' &&
+    document.activeElement &&
+    'blur' in document.activeElement
+  ) {
     (document.activeElement as HTMLElement).blur();
   }
 };
@@ -53,7 +57,7 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
                         key={child.href}
                         href={child.href}
                         active={pathname === child.href}
-                        className="p-3"
+                        className="p-3 text-left"
                         onMouseOver={resetFocus}
                         onClick={resetFocus}
                       >
