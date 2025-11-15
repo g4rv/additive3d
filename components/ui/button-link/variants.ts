@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 export const buttonLinkVariants = cva(
-  'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none duration-300 transition-colors rounded-lg text-sm font-medium inline-block',
+  'focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none duration-300 transition-colors rounded-lg text-sm font-medium inline-block text-center',
   {
     variants: {
       variant: {

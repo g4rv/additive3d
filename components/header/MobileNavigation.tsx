@@ -3,7 +3,6 @@
 import { cn } from '@/utils/cn';
 import { motion } from 'framer-motion';
 import { ChevronRightIcon } from 'lucide-react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
@@ -98,7 +97,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
       <div ref={focusTrapContainerRef}>
         <button
           ref={burgerButtonRef}
-          className="border-base-300 text-base-content hover:bg-base-200 hover:border-base-content/70 relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border bg-transparent transition-all duration-200"
+          className="border-base-300 text-base-content hover:bg-base-200 hover:border-base-content/70 focus-visible:ring-base-content relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border bg-transparent transition-all duration-200 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none"
           onClick={() => setIsBurgerOpen((prev) => !prev)}
           aria-expanded={isBurgerOpen}
           aria-label={`${isBurgerOpen ? 'Закрити' : 'Відкрити'} мобільне меню`}
@@ -143,47 +142,45 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
             isTablet && 'border-base-300 left-auto w-full max-w-[50vw] border-l'
           )}
         >
-          <nav
-            className={cn('flex h-full flex-col gap-4 py-4 pr-1 pl-4 lg:px-8', isTablet && 'pb-6')}
-          >
-            <ul className="flex flex-col overflow-y-scroll pr-3">
+          <nav className={cn('flex h-full flex-col', isTablet && 'pb-8')}>
+            <ul className="flex flex-col overflow-y-scroll px-8 pt-6">
               {navItems.map((item) => {
                 const hasChildren = item.children && item.children.length > 0;
                 const isOpen = openDropdowns.has(item.label);
 
                 return (
                   <li key={item.label}>
-                    <div className="border-base-300 flex w-full overflow-clip rounded-lg border">
-                      <Link
+                    <div className="flex w-full">
+                      <ButtonLink
                         href={item.href}
                         className={cn(
-                          'block grow p-3.5 text-base font-medium',
-                          isActive(item.href)
-                            ? 'text-warning bg-warning/10'
-                            : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
+                          'border-base-300 grow border p-4 text-left text-base',
+                          hasChildren && 'rounded-r-none'
                         )}
+                        active={isActive(item.href)}
                         onClick={handleClose}
                       >
                         {item.label}
-                      </Link>
+                      </ButtonLink>
 
                       {hasChildren && (
+                        // Epand/collapse button
                         <motion.button
                           onClick={() => toggleDropdown(item.label)}
                           className={cn(
-                            'border-base-300 flex cursor-pointer items-center justify-center border-l p-3.5 text-left text-base font-medium',
+                            'border-base-300 focus-visible:ring-base-content flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 p-3.5 text-left text-base font-medium transition-colors duration-300 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none',
                             isOpen
                               ? 'bg-base-200 text-base-content'
                               : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
                           )}
                           aria-expanded={isOpen}
                           aria-haspopup="true"
-                          whileTap={{ scale: 0.95 }}
                           aria-label={`Відкрити список: ${item.label}`}
                         >
                           <motion.div
                             animate={{ rotate: isOpen ? 90 : 0 }}
                             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            aria-hidden
                           >
                             <ChevronRightIcon size={20} />
                           </motion.div>
@@ -204,22 +201,18 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
                       }}
                       className="my-2 overflow-hidden"
                     >
-                      <ul className="border-base-300 my-2 ml-4 flex flex-col gap-1 border-l-2 pl-2">
+                      <ul className="border-base-300 my-2 ml-4 flex flex-col gap-1 border-l-2 pr-4 pl-2">
                         {item.children?.map((child) => (
                           <li key={child.href}>
-                            <Link
+                            <ButtonLink
                               href={child.href}
-                              className={cn(
-                                'block rounded-lg p-3 text-sm font-medium',
-                                isActive(child.href)
-                                  ? 'text-warning bg-warning/10'
-                                  : 'text-base-content/50 hover:text-base-content hover:bg-base-200'
-                              )}
                               onClick={handleClose}
+                              className="w-full text-left"
+                              active={isActive(child.href)}
                               tabIndex={isBurgerOpen && isOpen ? 0 : -1}
                             >
                               {child.label}
-                            </Link>
+                            </ButtonLink>
                           </li>
                         ))}
                       </ul>
@@ -229,10 +222,11 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
               })}
             </ul>
 
-            <div className="border-base-300 mt-auto mr-3 border-t pt-6">
+            <div className="border-base-300 mx-8 mt-auto border-t pt-6">
               <ButtonLink
                 href="/login"
-                className="bg-warning text-warning-content hover:bg-warning/90 flex w-full items-center justify-center rounded-lg px-6 py-3.5 text-base font-semibold"
+                variant="secondary"
+                className="w-full py-3 text-base"
                 onClick={handleClose}
               >
                 Вхід
