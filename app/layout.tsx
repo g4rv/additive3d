@@ -27,9 +27,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(geistSans.variable, geistMono.variable, 'antialiased h-[200vh] flex flex-col')} data-theme="dark">
+      <body
+        className={cn(
+          geistSans.variable,
+          geistMono.variable,
+          'flex h-[200vh] flex-col antialiased'
+        )}
+        data-theme="dark"
+      >
+        <a href="#main-content" className="sr-only">
+          До головного контенту
+        </a>
         <Header />
-        <main className='grow'>{children}</main>
+        <main className="grow" id="main-content">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
