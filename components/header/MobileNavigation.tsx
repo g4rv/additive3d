@@ -136,8 +136,15 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
             opacity: isBurgerOpen ? 1 : 0,
           }}
           transition={{
-            type: 'tween',
-            duration: 0.4,
+            height: {
+              type: 'tween',
+              duration: 0.3,
+            },
+            opacity: {
+              type: 'tween',
+              duration: 0.2,
+              delay: 0.1,
+            },
           }}
           className={cn(
             'bg-base-100 absolute top-[calc(100%+1px)] right-0 left-0 overflow-hidden',
