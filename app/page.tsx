@@ -7,11 +7,13 @@ export default function Home() {
     <>
       <HeroMain />
       <FAQ
+        title="Часті питання"
         items={[
-          { question: 'Gay?', answer: 'Gay', id: '1' },
-          { question: 'Gay?', answer: 'Gay', id: '1' },
-          { question: 'Gay?', answer: 'Gay', id: '1' },
-          { question: 'Gay?', answer: 'Gay', id: '1' },
+          { question: 'Gay?', answer: 'yes', id: '1' },
+          { question: 'Gay?', answer: 'yes', id: '2' },
+          { question: 'Gay?', answer: 'yes', id: '3' },
+          { question: 'Gay?', answer: 'yes', id: '4' },
+          { question: 'Gay?', answer: 'yes', id: '5' },
         ]}
       />
       <CTA

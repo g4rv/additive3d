@@ -1,2 +1,2 @@
 export { default } from './FAQ';
-export { default as FAQItem } from './FAQItem';
+export type { FAQProps, FAQItem } from './FAQ.types';
