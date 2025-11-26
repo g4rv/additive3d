@@ -1,5 +1,3 @@
-
-import { FadeIn } from '@/components/animations';
 import ButtonLink from '@/components/ui/button-link';
 import { cn } from '@/utils/cn';
 import { ArrowRight, Gauge, Thermometer, Zap } from 'lucide-react';
@@ -57,7 +55,7 @@ export default function Hero3({
   return (
     <section
       className={cn(
-        'relative bg-base-100 pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden',
+        'bg-base-100 relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24',
         className
       )}
       role="banner"
@@ -68,70 +66,66 @@ export default function Hero3({
       </div>
 
       {/* Animated accent line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+      <div className="via-primary absolute top-0 right-0 left-0 h-1 bg-linear-to-r from-transparent to-transparent opacity-50" />
 
       <div className="custom-container relative z-10">
-        <div className="max-w-4xl mx-auto">
+        <div className="mx-auto max-w-4xl">
           {/* Header */}
-          <div className="text-center mb-12">
+          <div className="mb-12 text-center">
             {subtitle && (
-              <FadeIn direction="up" delay={0.1}>
-                <p className="text-primary text-sm font-semibold uppercase tracking-wider mb-4">
+              <div>
+                <p className="text-primary mb-4 text-sm font-semibold tracking-wider uppercase">
                   {subtitle}
                 </p>
-              </FadeIn>
+              </div>
             )}
 
-            <FadeIn direction="up" delay={0.2}>
-              <h1 className="text-base-content text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            <div>
+              <h1 className="text-base-content mb-6 text-4xl leading-tight font-bold md:text-5xl lg:text-6xl">
                 {title}
               </h1>
-            </FadeIn>
+            </div>
 
             {description && (
-              <FadeIn direction="up" delay={0.3}>
-                <p className="text-base-content/80 text-lg leading-relaxed max-w-2xl mx-auto">
+              <div>
+                <p className="text-base-content/80 mx-auto max-w-2xl text-lg leading-relaxed">
                   {description}
                 </p>
-              </FadeIn>
+              </div>
             )}
           </div>
 
           {/* Material Properties Grid */}
           {properties.length > 0 && (
-            <FadeIn direction="up" delay={0.4}>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div>
+              <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {properties.map((property, index) => {
                   const IconComponent = property.icon ? iconMap[property.icon] : Gauge;
 
                   return (
                     <div
                       key={index}
-                      className="bg-base-200 rounded-xl p-6 border border-base-content/10 hover:border-primary/30 transition-all duration-300"
+                      className="bg-base-200 border-base-content/10 hover:border-primary/30 rounded-xl border p-6 transition-all duration-300"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="p-3 bg-primary/10 rounded-lg">
-                          <IconComponent className="w-6 h-6 text-primary" />
+                        <div className="bg-primary/10 rounded-lg p-3">
+                          <IconComponent className="text-primary h-6 w-6" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-base-content/70 text-sm mb-1">
-                            {property.label}
-                          </p>
-                          <p className="text-base-content text-xl font-bold">
-                            {property.value}
-                          </p>
+                          <p className="text-base-content/70 mb-1 text-sm">{property.label}</p>
+                          <p className="text-base-content text-xl font-bold">{property.value}</p>
                         </div>
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </FadeIn>
+            </div>
           )}
 
           {/* CTA */}
           {cta && (
-            <FadeIn direction="up" delay={0.5}>
+            <div>
               <div className="text-center">
                 <ButtonLink
                   href={cta.href}
@@ -139,16 +133,16 @@ export default function Hero3({
                   className="group inline-flex items-center gap-2"
                 >
                   {cta.text}
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </ButtonLink>
               </div>
-            </FadeIn>
+            </div>
           )}
         </div>
       </div>
 
       {/* Bottom decorative element */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <div className="via-primary/30 absolute right-0 bottom-0 left-0 h-px bg-linear-to-r from-transparent to-transparent" />
     </section>
   );
 }

@@ -1,9 +1,7 @@
-import { FadeIn } from '@/components/animations';
 import { Hero2 } from '@/components/hero';
-import Section from '@/components/ui/Section';
 import ButtonLink from '@/components/ui/button-link';
-import type { Metadata } from 'next';
 import { Award, CheckCircle, Factory, Gauge, Layers, Package, Zap } from 'lucide-react';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'HP Jet Fusion 5200 | Additive3D',
@@ -30,16 +28,16 @@ export default function MJFEquipmentPage() {
       />
 
       {/* Key Advantages */}
-      <Section>
-        <FadeIn direction="up">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3">Ключові переваги MJF технології</h2>
-            <p className="text-base-content/70 max-w-2xl mx-auto">
+      <section>
+        <div>
+          <div className="mb-12 text-center">
+            <h2 className="mb-3 text-3xl font-bold">Ключові переваги MJF технології</h2>
+            <p className="text-base-content/70 mx-auto max-w-2xl">
               Революційна технологія Multi Jet Fusion для промислового виробництва
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 icon: Zap,
@@ -68,8 +66,7 @@ export default function MJFEquipmentPage() {
               {
                 icon: Package,
                 title: 'Однорідність деталей',
-                description:
-                  'Ізотропні механічні властивості. Однакова міцність у всіх напрямках.',
+                description: 'Ізотропні механічні властивості. Однакова міцність у всіх напрямках.',
               },
               {
                 icon: Award,
@@ -80,29 +77,29 @@ export default function MJFEquipmentPage() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="bg-base-200 rounded-xl p-6 border border-base-content/10 hover:border-primary/30 transition-all duration-300"
+                className="bg-base-200 border-base-content/10 hover:border-primary/30 rounded-xl border p-6 transition-all duration-300"
               >
-                <div className="p-3 bg-primary/10 rounded-lg w-fit mb-4">
-                  <item.icon className="w-8 h-8 text-primary" />
+                <div className="bg-primary/10 mb-4 w-fit rounded-lg p-3">
+                  <item.icon className="text-primary h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <h3 className="mb-3 text-xl font-bold">{item.title}</h3>
                 <p className="text-base-content/70">{item.description}</p>
               </div>
             ))}
           </div>
-        </FadeIn>
-      </Section>
+        </div>
+      </section>
 
       {/* Technical Specifications */}
-      <Section className="bg-base-200">
-        <FadeIn direction="up">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12 text-center">Технічні характеристики</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="bg-base-200">
+        <div>
+          <div className="mx-auto max-w-5xl">
+            <h2 className="mb-12 text-center text-3xl font-bold">Технічні характеристики</h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {/* Print Parameters */}
-              <div className="bg-base-100 rounded-xl p-8 border border-base-content/10">
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                  <Layers className="w-6 h-6 text-primary" />
+              <div className="bg-base-100 border-base-content/10 rounded-xl border p-8">
+                <h3 className="mb-6 flex items-center gap-2 text-xl font-bold">
+                  <Layers className="text-primary h-6 w-6" />
                   Параметри друку
                 </h3>
                 <div className="space-y-4">
@@ -115,9 +112,9 @@ export default function MJFEquipmentPage() {
                   ].map((spec, i) => (
                     <div
                       key={i}
-                      className="flex justify-between items-center py-3 border-b border-base-content/10 last:border-0"
+                      className="border-base-content/10 flex items-center justify-between border-b py-3 last:border-0"
                     >
-                      <span className="font-semibold text-base-content/70">{spec.label}</span>
+                      <span className="text-base-content/70 font-semibold">{spec.label}</span>
                       <span className="text-base-content">{spec.value}</span>
                     </div>
                   ))}
@@ -125,9 +122,9 @@ export default function MJFEquipmentPage() {
               </div>
 
               {/* Materials & Accuracy */}
-              <div className="bg-base-100 rounded-xl p-8 border border-base-content/10">
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                  <Gauge className="w-6 h-6 text-primary" />
+              <div className="bg-base-100 border-base-content/10 rounded-xl border p-8">
+                <h3 className="mb-6 flex items-center gap-2 text-xl font-bold">
+                  <Gauge className="text-primary h-6 w-6" />
                   Матеріали та точність
                 </h3>
                 <div className="space-y-4">
@@ -140,9 +137,9 @@ export default function MJFEquipmentPage() {
                   ].map((spec, i) => (
                     <div
                       key={i}
-                      className="flex justify-between items-center py-3 border-b border-base-content/10 last:border-0"
+                      className="border-base-content/10 flex items-center justify-between border-b py-3 last:border-0"
                     >
-                      <span className="font-semibold text-base-content/70">{spec.label}</span>
+                      <span className="text-base-content/70 font-semibold">{spec.label}</span>
                       <span className="text-base-content">{spec.value}</span>
                     </div>
                   ))}
@@ -150,25 +147,25 @@ export default function MJFEquipmentPage() {
               </div>
             </div>
           </div>
-        </FadeIn>
-      </Section>
+        </div>
+      </section>
 
       {/* Applications */}
-      <Section>
-        <FadeIn direction="up">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold mb-3 text-center">Застосування</h2>
-            <p className="text-base-content/70 text-center mb-12 max-w-2xl mx-auto">
+      <section>
+        <div>
+          <div className="mx-auto max-w-5xl">
+            <h2 className="mb-3 text-center text-3xl font-bold">Застосування</h2>
+            <p className="text-base-content/70 mx-auto mb-12 max-w-2xl text-center">
               HP Jet Fusion 5200 ідеально підходить для різноманітних галузей промисловості
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               {[
                 {
                   icon: '🚗',
                   title: 'Автомобільна промисловість',
                   items: [
                     'Корпуси приладів панелі',
-                    'Кріплення та з\'єднувачі',
+                    "Кріплення та з'єднувачі",
                     'Функціональні компоненти',
                     'Прототипи та випробування',
                   ],
@@ -178,7 +175,7 @@ export default function MJFEquipmentPage() {
                   title: 'Електроніка',
                   items: [
                     'Корпуси електронних пристроїв',
-                    'Конектори та роз\'єми',
+                    "Конектори та роз'єми",
                     'Захисні кожухи',
                     'Малі серії споживчих товарів',
                   ],
@@ -196,15 +193,15 @@ export default function MJFEquipmentPage() {
               ].map((app, i) => (
                 <div
                   key={i}
-                  className="bg-base-200 rounded-xl p-8 border border-base-content/10 hover:border-primary/30 transition-all duration-300"
+                  className="bg-base-200 border-base-content/10 hover:border-primary/30 rounded-xl border p-8 transition-all duration-300"
                 >
-                  <div className="text-5xl mb-4">{app.icon}</div>
-                  <h3 className="text-xl font-bold mb-4">{app.title}</h3>
+                  <div className="mb-4 text-5xl">{app.icon}</div>
+                  <h3 className="mb-4 text-xl font-bold">{app.title}</h3>
                   <ul className="space-y-2">
                     {app.items.map((item, j) => (
                       <li key={j} className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-1" />
-                        <span className="text-sm text-base-content/80">{item}</span>
+                        <CheckCircle className="text-primary mt-1 h-4 w-4 flex-shrink-0" />
+                        <span className="text-base-content/80 text-sm">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -212,21 +209,21 @@ export default function MJFEquipmentPage() {
               ))}
             </div>
           </div>
-        </FadeIn>
-      </Section>
+        </div>
+      </section>
 
       {/* CTA */}
-      <Section className="bg-primary text-primary-content">
-        <FadeIn direction="up">
-          <div className="text-center max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="bg-primary text-primary-content">
+        <div>
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="mb-6 text-3xl font-bold md:text-4xl">
               Потрібне серійне виробництво високої якості?
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="mb-8 text-xl opacity-90">
               HP Jet Fusion 5200 — оптимальне рішення для промислового адитивного виробництва з
               неперевершеною продуктивністю та якістю
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <ButtonLink
                 href="/contact"
                 variant="secondary"
@@ -236,14 +233,14 @@ export default function MJFEquipmentPage() {
               </ButtonLink>
               <ButtonLink
                 href="/services/3d-printing/calculator"
-                className="border-2 border-primary-content/30 hover:border-primary-content hover:bg-primary-content/10"
+                className="border-primary-content/30 hover:border-primary-content hover:bg-primary-content/10 border-2"
               >
                 Розрахувати вартість
               </ButtonLink>
             </div>
           </div>
-        </FadeIn>
-      </Section>
+        </div>
+      </section>
     </>
   );
 }

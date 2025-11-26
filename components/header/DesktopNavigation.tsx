@@ -3,7 +3,6 @@
 import { ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
-import { FadeIn, StaggerChildren } from '@/components/animations';
 import { NavItem } from '@/lib/types';
 import ButtonLink from '../ui/button-link';
 
@@ -28,7 +27,7 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
   return (
     <>
       {/* Animated Navigation Items */}
-      <StaggerChildren staggerDelay={0.1} as='ul' childDelay={0.2} direction="down" distance={20} className="flex items-center gap-2">
+      <ul className="flex items-center gap-2">
         {navItems.map((item) => {
           const hasChildren = item.children && item.children.length > 0;
 
@@ -46,19 +45,19 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
                   {item.label}
                   <ChevronDownIcon
                     size={16}
-                    className="text-current transition-all duration-300 group-focus-within:rotate-180 group-hover:rotate-180 group-hover:text-primary"
+                    className="group-hover:text-primary text-current transition-all duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
                   />
                 </ButtonLink>
 
                 {/* Enhanced Dropdown Menu */}
                 <ul className="invisible absolute top-full left-0 z-50 pt-2 opacity-0 transition-all duration-300 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
                   <li className="bg-base-100 border-base-300 flex min-w-50 flex-col gap-1 rounded-xl border p-2 shadow-2xl">
-                    {item.children?.map((child  ) => (
+                    {item.children?.map((child) => (
                       <ButtonLink
                         key={child.href}
                         href={child.href}
                         active={pathname === child.href}
-                        className="p-3 text-left transition-all duration-200 hover:bg-base-200"
+                        className="hover:bg-base-200 p-3 text-left transition-all duration-200"
                         onMouseOver={resetFocus}
                         onClick={resetFocus}
                       >
@@ -73,20 +72,17 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
             // Simple menu item without dropdown
             return (
               <li key={item.label}>
-                <ButtonLink
-                  href={item.href}
-                  active={pathname === item.href}
-                >
+                <ButtonLink href={item.href} active={pathname === item.href}>
                   {item.label}
                 </ButtonLink>
               </li>
             );
           }
         })}
-      </StaggerChildren>
+      </ul>
 
       {/* Animated Login Button */}
-      <FadeIn delay={0.8} direction="left">
+      <div>
         <ButtonLink
           href="/login"
           variant="secondary"
@@ -94,7 +90,7 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
         >
           Вхід
         </ButtonLink>
-      </FadeIn>
+      </div>
     </>
   );
 };
