@@ -21,6 +21,10 @@ const MAIN_NAVIGATION_LIST: NavItem[] = [
         label: 'FDM',
         href: '/services/3d-printing/fdm',
       },
+      {
+        label: 'LFAM',
+        href: '/services/3d-printing/lfam',
+      },
     ],
   },
   {
@@ -65,6 +69,10 @@ const MAIN_NAVIGATION_LIST: NavItem[] = [
         label: 'FDM',
         href: '/materials/fdm',
       },
+      {
+        label: 'LFAM',
+        href: '/materials/lfam',
+      },
     ],
   },
   {
@@ -78,6 +86,10 @@ const MAIN_NAVIGATION_LIST: NavItem[] = [
       {
         label: 'FDM',
         href: '/equipment/fdm',
+      },
+      {
+        label: 'LFAM',
+        href: '/equipment/lfam',
       },
     ],
   },
@@ -168,6 +180,12 @@ const NAVIGATION = {
     parent: '3d-printing',
     order: 3,
   },
+  '3d-print-lfam': {
+    label: 'LFAM',
+    href: '/services/3d-printing/lfam',
+    parent: '3d-printing',
+    order: 4,
+  },
 
   // Materials sublinks
   'materials-mjf': {
@@ -182,6 +200,12 @@ const NAVIGATION = {
     parent: 'materials',
     order: 2,
   },
+  'materials-lfam': {
+    label: 'LFAM',
+    href: '/materials/lfam',
+    parent: 'materials',
+    order: 3,
+  },
 
   // Equipment sublinks
   'equipment-mjf': {
@@ -195,6 +219,12 @@ const NAVIGATION = {
     href: '/equipment/fdm',
     parent: 'equipment',
     order: 2,
+  },
+  'equipment-lfam': {
+    label: 'LFAM',
+    href: '/equipment/lfam',
+    parent: 'equipment',
+    order: 3,
   },
   contact: {
     label: 'Контакти',

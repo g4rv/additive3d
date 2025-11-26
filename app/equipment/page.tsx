@@ -1,14 +1,8 @@
-import { HeroFancy } from '@/components/hero';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Наше обладнання | Additive3D',
-  description:
-    'Промислове 3D-друкарське обладнання Stratasys та HP для серійного виробництва та прототипування.',
-};
-
 export default function EquipmentPage() {
-  return <>
-    <HeroFancy />
-  </>;  
+  return (
+    <div className="custom-container py-12">
+      <h1 className="text-4xl font-bold mb-4">Обладнання</h1>
+      <p className="text-base-content/80">Сторінка в розробці</p>
+    </div>
+  );
 }
