@@ -1,4 +1,6 @@
+import CTA from '@/components/cta';
 import EquipmentShowcase from '@/components/equipment-showcase';
+import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 
 export default function EquipmentPage() {
   const equipmentData = [
@@ -59,10 +61,17 @@ export default function EquipmentPage() {
   ];
 
   return (
-    <EquipmentShowcase
-      title="Наше обладнання"
-      description="Професійні 3D принтери для промислового виробництва та прототипування"
-      equipment={equipmentData}
-    />
+    <>
+      <HeroFancy
+        title="Наше обладнання"
+        description="Професійні 3D принтери для промислового виробництва та прототипування"
+      />
+      <EquipmentShowcase
+        title="Наше обладнання"
+        description="Професійні 3D принтери для промислового виробництва та прототипування"
+        equipment={equipmentData}
+      />
+      <CTA />
+    </>
   );
 }
