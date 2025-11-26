@@ -5,39 +5,39 @@
   default: true;
   prefersdark: true;
   color-scheme: 'dark';
-  
+
   /* Background colors - Dark Slate Foundation */
   --color-base-100: #161616; /* Deep Matte Dark Slate */
   --color-base-200: #262626; /* Slate - Secondary Surface */
   --color-base-300: #2d2d2d; /* Tertiary */
-  --color-base-content: #F5F5F5; /* Whitish - High Contrast Text */
-  
+  --color-base-content: #f5f5f5; /* Whitish - High Contrast Text */
+
   /* Primary colors - Gold Standard */
   --color-primary: #ffd231; /* Brand Primary Gold */
   --color-primary-content: #161616; /* Dark text on gold */
-  
+
   /* Secondary - Transparent/Border based usually, but defining a solid fallback */
   --color-secondary: #262626;
-  --color-secondary-content: #F5F5F5;
-  
+  --color-secondary-content: #f5f5f5;
+
   /* Accent */
   --color-accent: #ffd231;
   --color-accent-content: #161616;
-  
+
   /* Neutral */
   --color-neutral: #8b7355;
   --color-neutral-content: #f5f5f5;
-  
+
   /* Functional Colors */
   --color-info: #7db9dc;
   --color-info-content: #121212;
-  
+
   --color-success: #40cf72;
   --color-success-content: #121212;
-  
+
   --color-warning: #f1b724;
   --color-warning-content: #4a4232;
-  
+
   --color-error: #e33636;
   --color-error-content: #fafaf0;
 
@@ -88,11 +88,11 @@
   --duration-slowest: 800ms;
 
   /* Animation System - Easing Functions */
-  --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
-  --ease-entrance: cubic-bezier(0.2, 0.0, 0.0, 1.0);
-  --ease-exit: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0, 0, 0.2, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --ease-smooth: cubic-bezier(0.4, 0.0, 0.6, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 body {
@@ -101,7 +101,12 @@ body {
   font-family: var(--font-sans);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
 }
 
@@ -112,10 +117,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Custom Container */
 .custom-container {
-  width: 100%;
-  max-width: 1400px;
+  width: min(calc(100% - 2rem), 1400px);
   margin-inline: auto;
-  padding-inline: 1rem;
 }
 
 /* Animations */
