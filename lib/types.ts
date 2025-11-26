@@ -8,3 +8,7 @@ export interface NavItem {
   href: string;
   children?: NavLink[];
 }
+
+export interface SlugPageProps {
+  params: Promise<{ slug: string }>;
+}
