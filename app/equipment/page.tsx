@@ -71,7 +71,12 @@ export default function EquipmentPage() {
         description="Професійні 3D принтери для промислового виробництва та прототипування"
         equipment={equipmentData}
       />
-      <CTA />
+      <CTA
+        title="Готові почати роботу з нашим обладнанням?"
+        description="Отримайте консультацію щодо вибору оптимальної технології для вашого проєкту"
+        cta1={{ text: 'Розрахувати вартість', href: '/services/3d-printing/calculator' }}
+        cta2={{ text: "Зв'язатися з нами", href: '/contact' }}
+      />
     </>
   );
 }

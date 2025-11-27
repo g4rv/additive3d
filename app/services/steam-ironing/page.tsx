@@ -1,8 +1,480 @@
+import CTA from '@/components/cta';
+import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
+import Image from 'next/image';
+
+export const metadata = {
+  title: 'Парове зварювання 3D-друкованих деталей | Additive3D',
+  description: 'Професійне парове зварювання для підвищення міцності та зносостійкості 3D-друкованих деталей. Підвищення щільності та стабілізація розмірів.',
+};
+
 export default function SteamIroningPage() {
   return (
-    <div className="custom-container py-12">
-      <h1 className="text-4xl font-bold mb-4">Парове прасування</h1>
-      <p className="text-base-content/80">Сторінка в розробці</p>
-    </div>
+    <>
+      {/* Hero Section */}
+      <HeroFancy
+        title="Парове зварювання 3D-деталей"
+        description="Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Підвищення щільності та стабілізація розмірів."
+        cta1={{ text: 'Розрахувати вартість', href: '/services/3d-printing/calculator' }}
+        cta2={{ text: 'Отримати консультацію', href: '/contact' }}
+      />
+
+      <div className="custom-container py-12">
+        {/* Service Overview */}
+        <div className="mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-primary mb-6">
+                Ми спеціалізуємося на паровому зварюванні деталей
+              </h2>
+              <p className="text-base-content/80 text-lg leading-relaxed mb-8">
+                Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Підвищення щільності та стабілізація розмірів.
+              </p>
+              <div className="flex gap-4 mb-8">
+                <div className="badge badge-primary badge-lg">
+                  Підвищення міцності
+                </div>
+                <div className="badge badge-secondary badge-lg">
+                  Стабілізація розмірів
+                </div>
+                <div className="badge badge-outline badge-lg">
+                  FDM та MJF
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <Image
+                src="/Services/post-processing/post-processing.jpg"
+                alt="Парове зварювання 3D-деталей"
+                width={600}
+                height={400}
+                className="rounded-lg shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Process Benefits */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-primary mb-12 text-center">
+            Переваги парового зварювання
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="card bg-base-200 border border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <div className="card-body p-6 text-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-primary mb-3">Підвищення щільності</h3>
+                <p className="text-base-content/80 text-sm leading-relaxed">
+                  Видалення внутрішньої пористості та мікротріщин в полімерних деталях
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-200 border border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <div className="card-body p-6 text-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-primary mb-3">Стабілізація розмірів</h3>
+                <p className="text-base-content/80 text-sm leading-relaxed">
+                  Усадка матеріалу для досягнення стабільних та точних розмірів
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-200 border border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <div className="card-body p-6 text-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a6 6 0 00-3-5.197M9 3h6a2 2 0 012 2v4a6 6 0 01-3 5.197M9 3v6a6 6 0 003 5.197" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-primary mb-3">Підвищення міцності</h3>
+                <p className="text-base-content/80 text-sm leading-relaxed">
+                  Збільшення механічної міцності та стійкості до деформацій
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-200 border border-primary/20 hover:border-primary/40 transition-all duration-300">
+              <div className="card-body p-6 text-center">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m0-6l-3 3m6 0l-3-3m-6 0l-3-3" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-bold text-primary mb-3">Покращення поверхні</h3>
+                <p className="text-base-content/80 text-sm leading-relaxed">
+                  Створення гладкої та однорідної поверхні без видимих дефектів
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Technology Process */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-primary mb-12 text-center">
+            Технологія процесу
+          </h2>
+
+          <div className="card bg-primary/5 border border-primary/20">
+            <div className="card-body p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-xl font-bold text-primary mb-4">Процес зварювання</h3>
+                    <p className="text-base-content/80 leading-relaxed mb-6">
+                      Контрольоване нагрівання деталей у паровій среді з точним регулюванням температури та часу обробки.
+                    </p>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <div className="font-medium text-base-content">Точна температура</div>
+                          <div className="text-sm text-base-content/60">Контрольована до 1°C</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <div className="font-medium text-base-content">Рівномірна обробка</div>
+                          <div className="text-sm text-base-content/60">Однорідне пропікання всієї поверхні</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <div className="font-medium text-base-content">Автоматизація</div>
+                          <div className="text-sm text-base-content/60">Програмоване керування процесом</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-bold text-primary mb-4">Матеріали для обробки</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <div className="font-medium text-base-content">PA12 (Nylon 12)</div>
+                          <div className="text-sm text-base-content/60">Ідеальний для MJF деталей</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <div className="font-medium text-base-content">ABS-M30</div>
+                          <div className="text-sm text-base-content/60">Підходить для FDM деталей</div>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <div className="font-medium text-base-content">Polycarbonate</div>
+                          <div className="text-sm text-base-content/60">Високотемпературний матеріал</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <Image
+                    src="/Services/post-processing/dyeing-mjf.jpg"
+                    alt="Технологія парового зварювання"
+                    width={500}
+                    height={400}
+                    className="rounded-lg shadow-xl"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Applications */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-primary mb-12 text-center">
+            Застосування технології
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-6">
+                <h3 className="text-lg font-bold text-primary mb-2">Функціональні прототипи</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Підвищення міцності прототипів для тестування та валідації конструкцій
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-6">
+                <h3 className="text-lg font-bold text-primary mb-2">Серійне виробництво</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Стабілізація розмірів та властивостей для масового виробництва деталей
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-6">
+                <h3 className="text-lg font-bold text-primary mb-2">Інженерні деталі</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Покращення механічних характеристик для відповідності технічним вимогам
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-6">
+                <h3 className="text-lg font-bold text-primary mb-2">Медичні вироби</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Забезпечення біосумісності та стерильності медичних компонентів
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-6">
+                <h3 className="text-lg font-bold text-primary mb-2">Автомобільні запчастини</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Підвищення зносостійкості та довговічності функціональних елементів
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Technical Specifications */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-primary mb-12 text-center">
+            Технічні специфікації
+          </h2>
+
+          <div className="card bg-base-200 border border-base-300">
+            <div className="card-body p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-4">Параметри процесу</h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Температура:</span>
+                      <span className="font-medium">120-180°C</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Час обробки:</span>
+                      <span className="font-medium">5-30 хвилин</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Тиск пари:</span>
+                      <span className="font-medium">0.5-2.0 МПа</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Основа матеріалу:</span>
+                      <span className="font-medium">PA12, ABS, PC</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-4">Результати обробки</h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Підвищення щільності:</span>
+                      <span className="font-medium">5-15%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Стабільність розмірів:</span>
+                      <span className="font-medium">±0.1%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Підвищення міцності:</span>
+                      <span className="font-medium">10-25%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Зниження пористості:</span>
+                      <span className="font-medium">до 90%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-4">Якість поверхні</h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Шорсткість:</span>
+                      <span className="font-medium">Ra 1.6-3.2 мкм</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Однорідність:</span>
+                      <span className="font-medium">Висока</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Колір:</span>
+                      <span className="font-medium">Без змін</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-base-content/60">Дефекти:</span>
+                      <span className="font-medium">Відсутні</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quality Control */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-primary mb-12 text-center">
+            Контроль якості
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-8 text-center">
+                <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-primary mb-4">Вхідний контроль</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Перевірка вихідних параметрів 3D-друку перед обробкою
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-8 text-center">
+                <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-primary mb-4">Процесний моніторинг</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Контроль температури та часу обробки в реальному часі
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 border border-base-300 hover:border-primary/30 transition-all duration-300">
+              <div className="card-body p-8 text-center">
+                <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h2m0 0a2 2 0 002 2v5a2 2 0 002-2V7a2 2 0 00-2-2H9z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-primary mb-4">Вихідний контроль</h3>
+                <p className="text-base-content/80 leading-relaxed">
+                  Вимірювання розмірів та перевірка відповідності технічним вимогам
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Advantages */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-primary mb-12 text-center">
+            Переваги технології
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-2">Інноваційний підхід</h4>
+                  <p className="text-base-content/80 leading-relaxed">
+                    Використання сучасних технологій для досягнення максимальної ефективності процесу зварювання.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-2">Висока точність</h4>
+                  <p className="text-base-content/80 leading-relaxed">
+                    Стабільні результати з мінімальними відхиленнями розмірів та властивостей матеріалу.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m0-6l-3 3m6 0l-3-3m-6 0l-3-3" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-2">Екологічність</h4>
+                  <p className="text-base-content/80 leading-relaxed">
+                    Відсутність хімічних речовин та безпечність для використання у різних галузях.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a6 6 0 00-3-5.197M9 3h6a2 2 0 012 2v4a6 6 0 01-3 5.197M9 3v6a6 6 0 003 5.197" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-2">Надійність</h4>
+                  <p className="text-base-content/80 leading-relaxed">
+                    Прогнозовані результати з гарантованою якістю та стабільністю характеристик.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold text-primary mb-2">Економічна ефективність</h4>
+                  <p className="text-base-content/80 leading-relaxed">
+                    Оптимізація виробничих процесів та зменшення витрат на додаткову обробку.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <CTA
+        title="Потрібна консультація з паровим зварюванням?"
+        description="Наші інженери допоможуть обрати оптимальні параметри обробки та розрахують вартість для вашого проєкту"
+        cta1={{ text: 'Розрахувати вартість', href: '/services/3d-printing/calculator' }}
+        cta2={{ text: "Зв'язатися з нами", href: '/contact' }}
+      />
+    </>
   );
 }

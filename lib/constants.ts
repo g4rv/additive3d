@@ -60,20 +60,6 @@ const MAIN_NAVIGATION_LIST: NavItem[] = [
   {
     label: 'Матеріали',
     href: '/materials',
-    children: [
-      {
-        label: 'MJF',
-        href: '/materials/mjf',
-      },
-      {
-        label: 'FDM',
-        href: '/materials/fdm',
-      },
-      {
-        label: 'LFAM',
-        href: '/materials/lfam',
-      },
-    ],
   },
   {
     label: 'Обладнання',
@@ -257,7 +243,7 @@ const CONTACT_INFO = {
   },
 };
 
-const COMPANY_NAME = 'Additive';
+const COMPANY_NAME = 'Additive3D';
 
 // ============================================================================
 // SCREEN BREAKPOINTS
@@ -388,6 +374,13 @@ const EQUIPMENT_DATA = [
       accuracy: '±0.2 мм або ±0.3%',
       printSpeed: 'До 5058 см³/год',
     },
+    image: '/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-with-build-unit.png',
+    images: [
+      '/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-with-build-unit.png',
+      '/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200.jpg',
+      '/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-process.jpg',
+      '/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-collection.png',
+    ],
     url: '/equipment/hp-jet-fusion-5200',
   },
 
@@ -414,6 +407,13 @@ const EQUIPMENT_DATA = [
       accuracy: '±0,09 мм або ±0,0015 мм/мм',
       supportSystem: 'Розчинні підтримки SR-30 / SR-100',
     },
+    image: '/Technology/FDM/Fortus 400mc/fortus-400mc.png',
+    images: [
+      '/Technology/FDM/Fortus 400mc/fortus-400mc.png',
+      '/Technology/FDM/Fortus 400mc/fortus-400mc.jpg',
+      '/Technology/FDM/Fortus 400mc/fortus-400mc-oven.jpg',
+      '/Technology/FDM/Fortus 400mc/fortus-400mc-cartridge.jpg',
+    ],
     url: '/equipment/stratasys-fortus-400mc',
   },
   {
@@ -439,7 +439,46 @@ const EQUIPMENT_DATA = [
       heatedChamber: true,
       heatedBed: true,
     },
+    image: '/Technology/FDM/Fortus 250/fortus-250.png',
+    images: [
+      '/Technology/FDM/Fortus 250/fortus-250.png',
+      '/Technology/FDM/Fortus 250/fortus-250-printing.jpg',
+      '/Technology/FDM/Fortus 250/fortus-250-cartridge.jpg',
+    ],
     url: '/equipment/stratasys-fortus-250mc',
+  },
+
+  // LFAM Technology Equipment
+  {
+    name: 'HERON 300 HV',
+    title: 'Великоформатний LFAM принтер',
+    description:
+      'Великоформатний адитивний принтер для виготовлення великих деталей, корпусів і форм — ідеальний для масштабного виробництва без потреби у литті. Використовує композитні гранули для створення міцних великогабаритних конструкцій.',
+    benefits: [
+      'Великий обсяг побудови (3000 × 2000 × 1000 мм)',
+      'Висока швидкість нанесення матеріалу (до 50 кг/год)',
+      'Використання композитних гранул',
+      'Економічно вигідне виробництво великих деталей',
+      'Підходить для форм та оснастки',
+      'Швидке виробництво прототипів великого розміру',
+    ],
+    bestFor: 'Великоформатні корпуси, виробничі форми, будівельні компоненти, оснастка',
+    technology: 'LFAM',
+    specifications: {
+      buildChamber: '3000 × 2000 × 1000 мм',
+      printSpeed: 'До 50 кг/год',
+      materials: ['PP + 35% GF', 'ABS + 30% GF', 'ABS + 20% CF', 'BioPLA'],
+      layerThickness: 'Варіюється залежно від застосування',
+    },
+    image: '/Technology/LFAM/HERON 300 HV/heron-300-hv-no-bg.png',
+    images: [
+      '/Technology/LFAM/HERON 300 HV/heron-300-hv-no-bg.png',
+      '/Technology/LFAM/HERON 300 HV/heron-300-hv.jpg',
+      '/Technology/LFAM/HERON 300 HV/heron-300-hv-printing.jpg',
+      '/Technology/LFAM/HERON 300 HV/heron-300-hv-printing-2.jpg',
+      '/Technology/LFAM/HERON 300 HV/heron-300-hv-extruder.jpg',
+    ],
+    url: '/equipment/heron-300-hv',
   },
 ];
 

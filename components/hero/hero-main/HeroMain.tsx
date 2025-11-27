@@ -14,7 +14,7 @@ export default function HeroMain() {
     >
       <BgPattern />
 
-      <div className="custom-container grid min-h-[min(var(--height-no-header-screen),900px)] items-center gap-8 2xl:grid-cols-[1.25fr_1fr]">
+      <div className="custom-container grid min-h-no-header-screen items-center gap-8 2xl:grid-cols-[1.25fr_1fr]">
         <div className="flex flex-col items-center gap-8 text-center lg:gap-12 lg:text-left 2xl:items-start">
           <div className="w-full text-center 2xl:text-left">
             <h1 className="text-base-content 5xl:text-6xl mb-4 text-4xl leading-tight font-extrabold md:text-5xl">

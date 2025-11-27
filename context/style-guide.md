@@ -38,6 +38,20 @@ The palette is built on deep, sophisticated dark tones and the brand's signature
 
 ## III. Typography: Technical & Geometric
 
+### Icon System
+
+*   [ ] **Never Generate Custom Icons:** Unless explicitly requested, never create custom SVG icons manually. Always use the established icon library.
+*   [ ] **Use Lucide React:** Use `lucide-react` for all icon needs. Import individual icons as needed:
+    ```tsx
+    import { Scan, Zap, Target, Cog, Building2, Users, Package } from 'lucide-react';
+    ```
+*   [ ] **Icon Consistency:** All icons must follow the same visual weight, style, and sizing patterns established by lucide-react.
+*   [ ] **Icon Sizing:** Use consistent sizing classes:
+    * `size-4` for small icons (16px)
+    * `size-5` for medium icons (20px)
+    * `size-6` for large icons (24px)
+    * Custom sizes with width/height classes only when specifically needed
+
 A font pairing that projects a technical, structured, and modern industrial feel is required, prioritizing readability in both large headings and dense specification tables.
 
 *   [ ] **Font Pairing Strategy:** Utilize a strong, geometric sans-serif for headings (to emphasize structure) and a lighter, highly legible sans-serif for body copy (to ensure flow and scannability).

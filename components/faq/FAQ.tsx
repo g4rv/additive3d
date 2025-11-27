@@ -1,8 +1,8 @@
 'use client';
 
 import { cn } from '@/utils/cn';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import type { FAQProps } from './FAQ.types';
 
 /**
@@ -22,7 +22,7 @@ export default function FAQ({ title, description, items, className }: FAQProps) 
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
 
   const toggleItem = (id: string) => {
-    setOpenItems(prev => {
+    setOpenItems((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(id)) {
         newSet.delete(id);
@@ -38,30 +38,25 @@ export default function FAQ({ title, description, items, className }: FAQProps) 
       <div className="custom-container">
         {/* Header */}
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-primary lg:text-3xl">{title}</h2>
-          {description && (
-            <p className="mt-2 text-base-content/80 lg:text-lg">{description}</p>
-          )}
+          <h2 className="text-primary text-2xl font-bold lg:text-3xl">{title}</h2>
+          {description && <p className="text-base-content/80 mt-2 lg:text-lg">{description}</p>}
         </div>
 
         {/* FAQ Items */}
         <div className="mx-auto max-w-4xl space-y-4">
-          {items.map((item, index) => (
-            <div
-              key={item.id}
-              className="card bg-base-200 border-base-300 border shadow-sm"
-            >
-              <div className="card-body p-4 lg:p-6">
+          {items.map((item) => (
+            <div key={item.id} className="card bg-base-200 border-base-300 border p-0 shadow-sm">
+              <div className="card-body p-0 lg:p-6">
                 <button
                   onClick={() => toggleItem(item.id)}
-                  className="flex w-full items-start justify-between text-left hover:text-primary transition-colors duration-300 focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-offset-base-200 focus-visible:outline-none focus:text-primary rounded-lg p-2 -m-2"
+                  className="hover:text-primary focus-visible:ring-offset-base-200 focus:text-primary -m-2 flex w-full items-start justify-between rounded-lg p-6 text-left transition-colors duration-300 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none"
                   aria-expanded={openItems.has(item.id)}
                   aria-controls={`faq-answer-${item.id}`}
                 >
-                  <h3 className="text-base-content pr-4 text-lg font-medium leading-tight">
+                  <h3 className="text-base-content pr-4 text-lg leading-tight font-medium">
                     {item.question}
                   </h3>
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <motion.svg
                       className="text-primary size-6"
                       animate={{ rotate: openItems.has(item.id) ? 180 : 0 }}
@@ -91,9 +86,7 @@ export default function FAQ({ title, description, items, className }: FAQProps) 
                       className="overflow-hidden"
                     >
                       <div className="pt-4">
-                        <p className="text-base-content/90 leading-relaxed">
-                          {item.answer}
-                        </p>
+                        <p className="text-base-content/90 leading-relaxed">{item.answer}</p>
                       </div>
                     </motion.div>
                   )}

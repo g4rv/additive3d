@@ -12,8 +12,8 @@ export default function Footer() {
   return (
     <footer className="bg-base-100 border-base-300 border-t">
       <div className="custom-container pt-8">
-        <div className="grid lg:grid-cols-2 grid-rows-[auto_1fr] gap-x-6 gap-y-6 lg:gap-y-0 pb-10">
-          <div className="text-base-content/80 lg:mb-6 max-w-sm text-sm font-medium">
+        <div className="grid grid-rows-[auto_1fr] gap-x-6 gap-y-6 pb-10 lg:grid-cols-2 lg:gap-y-0">
+          <div className="text-base-content/80 max-w-sm text-sm font-medium lg:mb-6">
             <Link href="/" aria-label="Additive3D - Головна" className="mb-2 inline-block w-fit">
               <Image
                 loading="lazy"
@@ -29,7 +29,9 @@ export default function Footer() {
 
           <nav aria-label="Додаткова навігація" className="row-span-2 lg:mt-14">
             <ul className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-2 2xl:grid-cols-3">
-              {MAIN_NAVIGATION_LIST.map((item) => (
+              {MAIN_NAVIGATION_LIST.toSorted(
+                (a, b) => (b.children?.length ?? 0) - (a.children?.length ?? 0)
+              ).map((item) => (
                 <li key={item.href}>
                   <ButtonLink
                     variant="string"
