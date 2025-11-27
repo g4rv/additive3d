@@ -6,6 +6,8 @@ interface BaseButtonLinkProps extends ButtonLinkVariants {
   active?: boolean;
   className?: string;
   disabled?: boolean;
+  startAdornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
 }
 
 interface ButtonAsButtonProps

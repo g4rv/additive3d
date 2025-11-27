@@ -18,7 +18,10 @@ export default function TestSection() {
   }, []);
 
   return (
-    <div data-theme={currentTheme.name} className="bg-base-100 text-base-content min-h-screen p-5">
+    <div
+      data-theme={currentTheme.name}
+      className="bg-base-100 text-base-content min-h-no-header-screen p-5"
+    >
       {/* Header */}
       <div className="navbar bg-base-200 border-primary/20 mb-8 rounded-lg border">
         <div className="navbar-start">

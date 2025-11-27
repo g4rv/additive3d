@@ -21,11 +21,11 @@ The palette is built on deep, sophisticated dark tones and the brand's signature
 
 *   [ ] **Primary Brand Accent (Gold):** Used sparingly for high-value action items, key data highlights, hero text accents, and interactive element states.
     *   **Token:** Brand-Primary-Gold
-    *   **Target Hex:** #FEDA6A (A rich, high-contrast gold/amber)
+    *   **Target Hex:** #ffd231 (A rich, high-contrast gold/amber)
 *   [ ] **Neutral Palette (The Foundation):**
     *   [ ] **Primary Background:** A deep, near-black slate for the main canvas, maximizing contrast and minimizing eye strain.
         *   **Token:** Surface-Dark-Base
-        *   **Target Hex:** #1D1E22 (Deep Matte Dark Slate)
+        *   **Target Hex:** #161616 (Deep Matte Dark Slate)
     *   [ ] **Secondary Surface:** A slightly lighter shade for content cards, panels, and subtle depth changes.
         *   **Token:** Surface-Card-Elevated
         *   **Target Hex:** #262626 (Slate)
@@ -33,8 +33,8 @@ The palette is built on deep, sophisticated dark tones and the brand's signature
         *   **Token:** Text-High-Contrast
         *   **Target Hex:** #F5F5F5 (Whitish)
 *   [ ] **Functional Colors (Limited Use):** Used only for immediate status or feedback, separated from the brand gold.
-    *   **Success/Approval:** Green (e.g., #00A38D)
-    *   **Error/Alert:** Red (e.g., #E44933)
+    *   **Success/Approval:** Green (e.g., #40cf72)
+    *   **Error/Alert:** Red (e.g., #e33636)
 
 ## III. Typography: Technical & Geometric
 
@@ -94,23 +94,44 @@ The interface must be minimalist, fast, and driven by purposeful interactions th
 
 ### Motion & Animation System
 
-*   [ ] **Easing Functions:**
-    *   **Standard:** `cubic-bezier(0.4, 0.0, 0.2, 1)` (Material Design)
-    *   **Emphasis:** `cubic-bezier(0.2, 0.0, 0.0, 1.0)` (Entrance)
-    *   **Decelerate:** `cubic-bezier(0.0, 0.0, 0.2, 1)` (Exit)
-*   [ ] **Duration Standards:**
-    *   **Micro-interactions:** 150ms
-    *   **Component transitions:** 200ms
-    *   **Layout animations:** 300ms
-    *   **Page transitions:** 400ms
-*   [ ] **Loading States:** 3D part rotation animation, gold accent pulse
-*   [ ] **Respect Motion Preferences:** Disable animations when `prefers-reduced-motion`
+*   [x] **Duration Tokens** (Defined in `app/globals.css`)
+    *   **--duration-instant:** `100ms` - Instant feedback (hover states, ripples)
+    *   **--duration-fast:** `150ms` - Micro-interactions (button clicks, checkbox toggles)
+    *   **--duration-normal:** `200ms` - Standard transitions (dropdowns, tooltips)
+    *   **--duration-moderate:** `300ms` - Component animations (cards, modals)
+    *   **--duration-slow:** `400ms` - Page transitions (route changes)
+    *   **--duration-slower:** `600ms` - Complex animations (accordions, carousels)
+    *   **--duration-slowest:** `800ms` - Hero animations, large-scale transitions
+
+*   [x] **Easing Tokens** (Defined in `app/globals.css`)
+    *   **--ease-standard:** `cubic-bezier(0.4, 0.0, 0.2, 1)` - Default for most transitions
+    *   **--ease-entrance:** `cubic-bezier(0.2, 0.0, 0.0, 1.0)` - Elements entering viewport
+    *   **--ease-exit:** `cubic-bezier(0.0, 0.0, 0.2, 1)` - Elements leaving viewport
+    *   **--ease-bounce:** `cubic-bezier(0.68, -0.55, 0.265, 1.55)` - Playful interactions
+    *   **--ease-smooth:** `cubic-bezier(0.4, 0.0, 0.6, 1)` - Smooth, flowing animations
+
+*   [ ] **Usage Guidelines:**
+    *   Use `--duration-fast` + `--ease-standard` for button/link hover states
+    *   Use `--duration-normal` + `--ease-entrance` for dropdown menus
+    *   Use `--duration-moderate` + `--ease-standard` for card hover effects
+    *   Use `--duration-slow` + `--ease-entrance` for modal appearances
+    *   Use `--duration-slower` + `--ease-smooth` for scroll-triggered animations
+
+*   [x] **Loading States:** 3D part rotation animation, gold accent pulse
+*   [x] **Respect Motion Preferences:** Disable animations when `prefers-reduced-motion`
+
+**Tailwind Usage:**
+```css
+/* Use CSS variables in Tailwind classes */
+transition-[color] duration-[var(--duration-fast)]
+transition-all duration-[var(--duration-normal)]
+```
 
 ### Component Specifications
 
 *   [ ] **Primary CTA Buttons:**
-    *   **Background:** Brand-Primary-Gold (#FEDA6A)
-    *   **Text:** Surface-Dark-Base (#1D1E22)
+    *   **Background:** Brand-Primary-Gold (#ffd231)
+    *   **Text:** Surface-Dark-Base (#161616)
     *   **Padding:** 16px 32px (desktop), 14px 24px (mobile)
     *   **Border Radius:** 4px
     *   **Font Weight:** SemiBold
@@ -125,8 +146,8 @@ The interface must be minimalist, fast, and driven by purposeful interactions th
 *   [ ] **Input Fields:**
     *   **Background:** Surface-Card-Elevated (#262626)
     *   **Border:** 1px solid transparent
-    *   **Focus:** 1px solid Brand-Primary-Gold (#FEDA6A)
-    *   **Error:** 1px solid Error/Alert (#E44933)
+    *   **Focus:** 1px solid Brand-Primary-Gold (#ffd231)
+    *   **Error:** 1px solid Error/Alert (#e33636)
     *   **Padding:** 12px 16px
     *   **Border Radius:** 4px
 

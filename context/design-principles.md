@@ -45,12 +45,13 @@ The visual identity must communicate the professionalism of high-end manufacturi
 ### A. Color Palette and Accessibility Standards
 
 *   [ ] **Professional Foundation**: Neutral color palette forming clutter-free environment focusing user attention on functional elements and technical data with sophisticated backdrop for 3D visualizations.7
+    *   **Implemented Colors**: Dark backgrounds (#161616, #262626) with gold accents (#ffd231) for high-value actions and contrast
 
 *   [ ] **Semantic Color Tokenization**: Functional states defined using universally understood semantic color tokens adaptable across different UI modes:
-    *   **CTA**: Standout brand color designated solely for primary conversion points12
-    *   **Success**: Green for successful operations and positive validations12
-    *   **Error**: Red reserved for critical alerts, validation failures, immediate issues12
-    *   **Warning**: Yellow/orange for caution indicators and non-critical alerts12
+    *   **CTA**: Gold (#ffd231) designated solely for primary conversion points12
+    *   **Success**: Green (#40cf72) for successful operations and positive validations12
+    *   **Error**: Red (#e33636) reserved for critical alerts, validation failures, immediate issues12
+    *   **Warning**: Yellow/orange (#f1b724) for caution indicators and non-critical alerts12
     *   **Disabled**: Light gray for inactive or temporarily unavailable elements12
 
 *   [ ] **WCAG AA Compliance (Non-Negotiable)**: Rigorous adherence to Web Content Accessibility Guidelines:
@@ -200,7 +201,72 @@ Content strategy must effectively communicate highly technical manufacturing con
 
 *   [ ] **Value Proposition Articulation**: Demonstration of enhanced functionality and durability elevating offering beyond simple printing service to high-quality finished parts provider, justifying additional workflow expenses.21
 
-## VIII. Implementation Priorities: Critical Success Factors
+## VIII. Animation & Motion Design System
+
+Consistent, purposeful animations enhance the professional feel while improving usability. All animations must respect user preferences and serve functional purposes.
+
+### A. Animation Duration Standards
+
+*   [x] **Duration Tokens** (Defined in `app/globals.css`):
+    *   **Instant (100ms)**: Immediate feedback for hover states, ripples, focus indicators
+    *   **Fast (150ms)**: Micro-interactions like button clicks, checkbox toggles, icon transitions
+    *   **Normal (200ms)**: Standard UI transitions including dropdowns, tooltips, color changes
+    *   **Moderate (300ms)**: Component-level animations like card reveals, modal fades
+    *   **Slow (400ms)**: Page-level transitions including route changes, section reveals
+    *   **Slower (600ms)**: Complex animations like accordions, carousels, galleries
+    *   **Slowest (800ms)**: Hero section animations, large-scale transitions, scroll effects
+
+### B. Easing Function Standards
+
+*   [x] **Easing Tokens** (Defined in `app/globals.css`):
+    *   **Standard**: Default timing for most transitions, balanced acceleration/deceleration
+    *   **Entrance**: Sharp entry with gradual settle for elements entering viewport
+    *   **Exit**: Quick departure for elements leaving view or closing
+    *   **Bounce**: Playful overshoot for interactive elements (use sparingly)
+    *   **Smooth**: Flowing motion for scroll-triggered and continuous animations
+
+### C. Motion Design Principles
+
+*   [ ] **Purposeful Animation**: Every animation must serve a functional purpose (feedback, guidance, or hierarchy)
+*   [ ] **Performance First**: Prefer CSS transforms (translate, scale, rotate) over properties that trigger layout recalculation
+*   [ ] **Consistency Mandate**: Use standardized duration/easing tokens across entire platform
+*   [ ] **Accessibility Compliance**: Respect `prefers-reduced-motion` media query by disabling decorative animations
+*   [ ] **Progressive Enhancement**: Core functionality must work without animations
+
+### D. Component-Specific Animation Guidelines
+
+*   [ ] **Buttons/CTAs**: `--duration-fast` + `--ease-standard` for hover/active states
+*   [ ] **Navigation Menus**: `--duration-normal` + `--ease-entrance` for dropdown reveals
+*   [ ] **Cards**: `--duration-moderate` + `--ease-standard` for hover elevations
+*   [ ] **Modals**: `--duration-slow` + `--ease-entrance` for appearance/overlay
+*   [ ] **Scroll Animations**: `--duration-slower` + `--ease-smooth` for viewport-triggered reveals
+*   [ ] **Hero Sections**: `--duration-slowest` + `--ease-entrance` for initial page load
+
+### E. Implementation Examples
+
+```css
+/* Tailwind with CSS Variables */
+.btn-primary {
+  @apply transition-colors duration-[var(--duration-fast)];
+  transition-timing-function: var(--ease-standard);
+}
+
+.card-hover {
+  @apply transition-all duration-[var(--duration-moderate)];
+  transition-timing-function: var(--ease-standard);
+}
+
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+## IX. Implementation Priorities: Critical Success Factors
 
 Execution of these design principles results in professional B2B platform defined by superior usability, transparency, and performance. Strategy converts high-friction custom manufacturing quoting into predictable, efficient digital transaction.
 

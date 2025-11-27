@@ -7,6 +7,7 @@ You will create a new React component following these steps:
 ### 1. Gather Information
 
 First, ask the user for these details if not provided:
+(Ask question by question)
 
 **Question 1:** What would you like to name your component? (PascalCase, e.g., "QuoteCalculator" or "MaterialCard")
 
@@ -27,6 +28,7 @@ First, ask the user for these details if not provided:
 Based on the answers, analyze and categorize the component:
 
 **Available Component Categories:**
+
 - **header** - Navigation headers, menus, mobile navigation
 - **card** - Content cards, panels, feature sections
 - **form** - Input forms, controls, validation
@@ -39,35 +41,44 @@ Based on the answers, analyze and categorize the component:
 - **custom** - Something else not listed
 
 **Component Location Mapping:**
-- Header components → `components/header/`
-- UI components → `components/ui/`
-- Business logic → `components/[category]/`
-- Shared components → `components/shared/`
+
+- UI components → `components/ui/[kebab-case-folder]/ComponentName.tsx`
+- All other components → `components/[kebab-case-folder]/ComponentName.tsx`
 
 ### 3. File Structure Creation
 
 Generate the appropriate file structure based on component type:
 
 **Standard Component Structure:**
+
 ```
-components/[category]/[ComponentName]/
-├── [ComponentName].tsx          # Main component
-├── [ComponentName].types.ts     # TypeScript interfaces (if complex)
-├── [ComponentName].stories.tsx  # Storybook stories (if needed)
-├── [ComponentName].test.tsx     # Jest tests (if needed)
-└── index.ts                     # Barrel export
+components/[kebab-case-folder]/
+├── ComponentName.tsx          # Main component
+├── ComponentName.types.ts     # TypeScript interfaces (if complex)
+└── index.ts                   # Barrel export
 ```
 
 **Hook Components (if needed):**
+
 ```
 hooks/use[ComponentName].ts      # Custom hooks
 ```
+
+**Pre-Creation Checklist:**
+
+Before creating a new component, always:
+
+1. **Check existing UI components** - Browse `components/ui/` for similar functionality
+2. **Verify DaisyUI equivalents** - Check if DaisyUI already provides the needed component
+3. **Review design patterns** - Ensure consistency with existing components in the codebase
+4. **Validate design decisions** - Cross-reference with `context/design-principles.md` and `context/style-guide.md`
 
 ### 4. Component Implementation
 
 Generate a TypeScript React component with:
 
 #### Technical Requirements:
+
 - ✅ **'use client' directive** only if client interactivity is needed
 - ✅ **TypeScript interfaces** following your patterns (max 3 props per ESLint)
 - ✅ **JSDoc comments** with description and @example
@@ -77,18 +88,35 @@ Generate a TypeScript React component with:
 - ✅ **Responsive behavior** using useMediaQuery hook (if requested)
 - ✅ **ForwardRef pattern** for parent communication (if needed)
 
+#### Design System Compliance:
+
+- ✅ **Verify with design principles** - Cross-reference with `context/design-principles.md` for B2B manufacturing UX patterns
+- ✅ **Follow style guide** - Use `context/style-guide.md` for typography, colors, spacing, and component specifications
+- ✅ **Use existing CSS variables** - Leverage colors from `app/globals.css` (base-100, base-200, base-300, primary, etc.)
+- ✅ **DaisyUI component approach** - Prefer DaisyUI components over custom CSS when available
+- ✅ **Use /ui components** - Check for existing reusable components in `components/ui/` before creating new ones
+- ✅ **WCAG AA compliance** - Ensure minimum 4.5:1 contrast for normal text, 3:1 for large text
+- ✅ **Accessibility first** - Include ARIA labels, keyboard navigation, screen reader support
+
 #### Design System Integration:
+
 Use your established color palette from `globals.css`:
-- **Primary actions:** `bg-primary`, `hover:bg-primary-focus`, `text-primary-content`
-- **Secondary actions:** `bg-secondary`, `hover:bg-secondary-focus`, `text-secondary-content`
+
+- **Primary actions:** `bg-primary`, `text-primary-content`
+- **Secondary actions:** `bg-secondary`, `text-secondary-content`
+- **Accent actions:** `bg-accent`, `text-accent-content`
 - **Warning states:** `bg-warning`, `text-warning-content`
 - **Error states:** `bg-error`, `text-error-content`
 - **Success states:** `bg-success`, `text-success-content`
-- **Base colors:** `base-100`, `base-200`, `base-300`, `base-content`
+- **Info states:** `bg-info`, `text-info-content`
+- **Base surfaces:** `bg-base-100`, `bg-base-200`, `bg-base-300`
+- **Text colors:** `text-base-content`, `text-neutral-content`
+- **Layout utilities:** Use `custom-container` for max-width containment, `h-header` for header spacing
 
 #### Component Patterns:
 
 **Pattern 1: Server Component (default)**
+
 ```tsx
 import { cn } from '@/utils/cn';
 
@@ -104,11 +132,7 @@ interface ComponentNameProps {
  * @example
  * <ComponentName title="Hello" description="World" />
  */
-export default function ComponentName({
-  title,
-  description,
-  className,
-}: ComponentNameProps) {
+export default function ComponentName({ title, description, className }: ComponentNameProps) {
   return (
     <div className={cn('card bg-base-100 shadow-xl', className)}>
       <div className="card-body">
@@ -121,6 +145,7 @@ export default function ComponentName({
 ```
 
 **Pattern 2: Client Component with Motion**
+
 ```tsx
 'use client';
 
@@ -151,10 +176,10 @@ export default function ComponentName({
     <motion.div
       animate={{ height: isOpen ? 'auto' : 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className={cn('overflow-hidden bg-base-200', className)}
+      className={cn('bg-base-200 overflow-hidden', className)}
     >
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-primary">{title}</h3>
+        <h3 className="text-primary text-lg font-semibold">{title}</h3>
       </div>
     </motion.div>
   );
@@ -162,6 +187,7 @@ export default function ComponentName({
 ```
 
 **Pattern 3: Component with Custom Hook**
+
 ```tsx
 'use client';
 
@@ -181,37 +207,22 @@ interface ComponentNameProps {
  * @example
  * <ComponentName title="Responsive">Content</ComponentName>
  */
-export default function ComponentName({
-  title,
-  children,
-  className,
-}: ComponentNameProps) {
+export default function ComponentName({ title, children, className }: ComponentNameProps) {
   const isTablet = useMediaQuery('above', 640);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={cn(
-      'collapse bg-base-100',
-      isTablet && 'collapse-open',
-      className
-    )}>
-      <input
-        type="checkbox"
-        checked={isOpen}
-        onChange={(e) => setIsOpen(e.target.checked)}
-      />
-      <div className="collapse-title text-xl font-medium text-primary">
-        {title}
-      </div>
-      <div className="collapse-content">
-        {children}
-      </div>
+    <div className={cn('bg-base-100 collapse', isTablet && 'collapse-open', className)}>
+      <input type="checkbox" checked={isOpen} onChange={(e) => setIsOpen(e.target.checked)} />
+      <div className="collapse-title text-primary text-xl font-medium">{title}</div>
+      <div className="collapse-content">{children}</div>
     </div>
   );
 }
 ```
 
 **Pattern 4: ForwardRef Component (for parent control)**
+
 ```tsx
 'use client';
 
@@ -235,27 +246,29 @@ interface ComponentNameProps {
  * const ref = useRef<ComponentNameRef>(null);
  * <ComponentName ref={ref} title="Controlled" />
  */
-export default forwardRef<ComponentNameRef, ComponentNameProps>(
-  ({ title, className }, ref) => {
-    const [isOpen, setIsOpen] = useState(false);
+export default forwardRef<ComponentNameRef, ComponentNameProps>(({ title, className }, ref) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-    const close = () => setIsOpen(false);
-    const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  const open = () => setIsOpen(true);
 
-    useImperativeHandle(ref, () => ({
+  useImperativeHandle(
+    ref,
+    () => ({
       close,
       open,
-    }), []);
+    }),
+    []
+  );
 
-    return (
-      <div className={cn('modal', !isOpen && 'modal-open', className)}>
-        <div className="modal-box">
-          <h3 className="font-bold text-lg text-primary">{title}</h3>
-        </div>
+  return (
+    <div className={cn('modal', !isOpen && 'modal-open', className)}>
+      <div className="modal-box">
+        <h3 className="text-primary text-lg font-bold">{title}</h3>
       </div>
-    );
-  }
-);
+    </div>
+  );
+});
 
 ComponentName.displayName = 'ComponentName';
 ```
@@ -265,6 +278,7 @@ ComponentName.displayName = 'ComponentName';
 Follow your existing patterns:
 
 **Simple Props Interface:**
+
 ```tsx
 interface ComponentNameProps {
   title: string;
@@ -274,6 +288,7 @@ interface ComponentNameProps {
 ```
 
 **Complex Props with Types File:**
+
 ```tsx
 // ComponentName.types.ts
 export interface ComponentData {
@@ -289,133 +304,7 @@ export interface ComponentNameProps {
 }
 ```
 
-### 6. Storybook Stories
-
-Generate comprehensive Storybook stories:
-
-```tsx
-import type { Meta, StoryObj } from '@storybook/react';
-import ComponentName from './ComponentName';
-
-const meta: Meta<typeof ComponentName> = {
-  title: 'Components/[ComponentName]',
-  component: ComponentName,
-  tags: ['autodocs'],
-  parameters: {
-    layout: 'centered',
-  },
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: ['default', 'primary', 'secondary'],
-    },
-    className: {
-      control: 'text',
-    },
-  },
-};
-
-export default meta;
-type Story = StoryObj<typeof ComponentName>;
-
-export const Default: Story = {
-  args: {
-    title: 'Default Component',
-  },
-};
-
-export const Primary: Story = {
-  args: {
-    title: 'Primary Component',
-    variant: 'primary',
-  },
-};
-
-export const Interactive: Story = {
-  args: {
-    title: 'Interactive Component',
-    variant: 'secondary',
-  },
-  render: (args) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <div>
-        <button
-          className="btn btn-primary mb-4"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          Toggle Component
-        </button>
-        <ComponentName {...args} isOpen={isOpen} />
-      </div>
-    );
-  },
-};
-```
-
-### 7. Jest Tests
-
-Generate comprehensive tests:
-
-```tsx
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import ComponentName from './ComponentName';
-
-describe('ComponentName', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  describe('Rendering', () => {
-    it('should render with default props', () => {
-      render(<ComponentName title="Test Title" />);
-
-      expect(screen.getByText('Test Title')).toBeInTheDocument();
-    });
-
-    it('should apply custom className', () => {
-      render(<ComponentName title="Test" className="custom-class" />);
-
-      const element = screen.getByText('Test').closest('.custom-class');
-      expect(element).toBeInTheDocument();
-    });
-  });
-
-  describe('Interactions', () => {
-    it('should handle user interactions', async () => {
-      const user = userEvent.setup();
-      const mockHandler = jest.fn();
-
-      render(<ComponentName title="Interactive" onAction={mockHandler} />);
-
-      const button = screen.getByRole('button');
-      await user.click(button);
-
-      expect(mockHandler).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('Accessibility', () => {
-    it('should have proper ARIA attributes', () => {
-      render(<ComponentName title="Accessible" />);
-
-      const element = screen.getByRole('region');
-      expect(element).toBeInTheDocument();
-    });
-
-    it('should be keyboard navigable', () => {
-      render(<ComponentName title="Keyboard" />);
-
-      const element = screen.getByRole('button');
-      element.focus();
-      expect(element).toHaveFocus();
-    });
-  });
-});
-```
-
-### 8. Barrel Export
+### 6. Barrel Export
 
 Create clean import structure:
 
@@ -428,18 +317,21 @@ export type { ComponentNameProps, ComponentNameRef } from './ComponentName';
 ## Specialized 3D Printing Components
 
 ### Calculator Components:
+
 - Integration with material pricing
 - Support for 3D file analysis
 - Cost breakdown visualization
 - Manufacturing time estimation
 
 ### Upload Components:
+
 - 3D file validation
 - Progress indicators
 - Error handling for invalid formats
 - Preview capabilities
 
 ### Material Selection:
+
 - Material properties display
 - Visual comparison tools
 - Technical specifications
@@ -448,12 +340,14 @@ export type { ComponentNameProps, ComponentNameRef } from './ComponentName';
 ## Component Best Practices
 
 ### 1. Performance:
+
 - Use React.memo for expensive components
 - Implement proper loading states
 - Lazy load heavy components
 - Optimize re-renders
 
 ### 2. Accessibility:
+
 - Semantic HTML structure
 - ARIA labels where needed
 - Keyboard navigation support
@@ -461,18 +355,21 @@ export type { ComponentNameProps, ComponentNameRef } from './ComponentName';
 - Focus management
 
 ### 3. Motion:
+
 - Use framer-motion for animations
 - Respect prefers-reduced-motion
 - Smooth transitions (300-500ms)
 - Spring animations for natural feel
 
 ### 4. Responsive:
+
 - Mobile-first design
 - Breakpoint-based layouts
 - Touch-friendly interactions
 - Adaptive content
 
 ### 5. State Management:
+
 - Local state for UI
 - Lift state when needed
 - Custom hooks for complex logic
@@ -481,25 +378,23 @@ export type { ComponentNameProps, ComponentNameRef } from './ComponentName';
 ## Integration Examples
 
 ### Import and Usage:
+
 ```tsx
 // Simple import
-import ComponentName from '@/components/category/ComponentName';
+import ComponentName from '@/components/[kebab-case-folder]';
 
 // With types
-import ComponentName, { ComponentNameProps } from '@/components/category/ComponentName';
+import ComponentName, { ComponentNameProps } from '@/components/[kebab-case-folder]';
 
 // Usage
-<ComponentName
-  title="3D Printing Calculator"
-  variant="primary"
-  className="w-full max-w-md"
-/>
+<ComponentName title="3D Printing Calculator" variant="primary" className="w-full max-w-md" />;
 ```
 
 ### Advanced Usage with Ref:
+
 ```tsx
 import { useRef } from 'react';
-import ComponentName, { ComponentNameRef } from '@/components/category/ComponentName';
+import ComponentName, { ComponentNameRef } from '@/components/[kebab-case-folder]';
 
 export default function ParentComponent() {
   const componentRef = useRef<ComponentNameRef>(null);
@@ -522,15 +417,14 @@ export default function ParentComponent() {
 After creating all files, provide:
 
 **For Basic Components:**
+
 ```
 ✅ Created ComponentName with:
    - ComponentName.tsx (XX lines)
    - ComponentName.types.ts (XX lines) [if needed]
-   - ComponentName.stories.tsx (XX lines) [if needed]
-   - ComponentName.test.tsx (XX lines) [if needed]
    - index.ts
 
-📁 Location: components/[category]/ComponentName/
+📁 Location: components/[kebab-case-folder]/
 
 🚀 Features:
    - TypeScript interfaces with proper typing
@@ -540,17 +434,16 @@ After creating all files, provide:
    - Motion animations (if requested)
 
 📖 Next steps:
-   - Import: import ComponentName from '@/components/category/ComponentName'
-   - Storybook: npm run storybook
-   - Tests: npm test ComponentName.test.tsx
+   - Import: import ComponentName from '@/components/[kebab-case-folder]'
 ```
 
 **For Advanced Components:**
+
 ```
 ✅ Created ComponentName with advanced features:
 
 🎨 Main Component:
-   - components/[category]/ComponentName/ComponentName.tsx (XX lines)
+   - components/[kebab-case-folder]/ComponentName.tsx (XX lines)
    - Client-side interactivity with 'use client'
    - Framer Motion animations
    - useMediaQuery responsive behavior
@@ -558,11 +451,9 @@ After creating all files, provide:
 
 🔧 Supporting Files:
    - ComponentName.types.ts - TypeScript interfaces
-   - ComponentName.stories.tsx - Storybook documentation
-   - ComponentName.test.tsx - Jest test coverage
    - index.ts - Clean barrel exports
 
-📁 Location: components/[category]/ComponentName/
+📁 Location: components/[kebab-case-folder]/
 
 ✨ Advanced Features:
    - Custom hooks integration
@@ -574,7 +465,7 @@ After creating all files, provide:
 🚀 Usage Examples:
    - Basic: <ComponentName title="Example" />
    - Advanced: <ComponentName ref={ref} title="Controlled" />
-   - Import: import ComponentName from '@/components/category/ComponentName'
+   - Import: import ComponentName from '@/components/[kebab-case-folder]'
 ```
 
 ## Component Creation Workflow
@@ -588,23 +479,18 @@ Generate: File structure and implementation
     ↓
 Implement: Following Additive3D patterns
     ↓
-Test: Jest test coverage
-    ↓
-Document: Storybook stories
-    ↓
 Export: Clean barrel exports
     ↓
 Summary: Usage instructions and next steps
 ```
 
 **Key Features:**
+
 - ✅ Tailored to Additive3D tech stack (Next.js 16, React 19, TypeScript)
 - ✅ DaisyUI + Tailwind CSS v4 integration
 - ✅ Framer Motion animations
 - ✅ Custom hooks support (useMediaQuery, useBodyLock)
 - ✅ ForwardRef patterns for parent control
-- ✅ Comprehensive test coverage
-- ✅ Storybook documentation
 - ✅ ESLint compliant (max 3 props, clean code)
 - ✅ Accessibility built-in
 - ✅ Mobile-first responsive design

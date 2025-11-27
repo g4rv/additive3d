@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import NextLink from 'next/link';
-import { forwardRef, useMemo, useCallback } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import {
   ButtonAsButtonProps,
   ButtonAsLinkProps,
@@ -12,15 +12,38 @@ import {
 
 const ButtonLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonLinkProps>(
   (props, ref) => {
-    const { href, external = false, variant, active, className, disabled, ...rest } = props;
+    const {
+      href,
+      external = false,
+      variant,
+      size,
+      active,
+      className,
+      disabled,
+      startAdornment,
+      endAdornment,
+      children,
+      ...rest
+    } = props;
 
     const classes = cn(
       buttonLinkVariants({
         variant: variant || 'primary',
+        size: size || 'base',
         active,
         disabled,
       }),
+      (endAdornment || startAdornment) && 'inline-flex items-center gap-2',
       className
+    );
+
+    // Render button content with adornments
+    const renderContent = () => (
+      <>
+        {startAdornment && startAdornment}
+        {children}
+        {endAdornment && endAdornment}
+      </>
     );
 
     // Memoize link type calculation for performance
@@ -40,18 +63,23 @@ const ButtonLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonLinkP
     const useNativeLink = external || linkType === 'special' || linkType === 'external';
 
     // Handle keyboard events for disabled links
-    const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-      if (disabled && (event.key === 'Enter' || event.key === ' ')) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    }, [disabled]);
+    const handleKeyDown = useCallback(
+      (event: React.KeyboardEvent) => {
+        if (disabled && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      },
+      [disabled]
+    );
 
     if (href) {
       const {
         external: _external,
         active: _active,
         disabled: _disabled,
+        startAdornment: _startAdornment,
+        endAdornment: _endAdornment,
         ...linkProps
       } = props as ButtonAsLinkProps;
 
@@ -67,7 +95,9 @@ const ButtonLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonLinkP
             onKeyDown={disabled ? handleKeyDown : linkProps.onKeyDown}
             role={disabled ? 'link' : undefined}
             tabIndex={disabled ? -1 : linkProps.tabIndex}
-          />
+          >
+            {renderContent()}
+          </a>
         );
       }
 
@@ -80,7 +110,9 @@ const ButtonLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonLinkP
           onKeyDown={disabled ? handleKeyDown : linkProps.onKeyDown}
           role={disabled ? 'link' : undefined}
           tabIndex={disabled ? -1 : linkProps.tabIndex}
-        />
+        >
+          {renderContent()}
+        </NextLink>
       );
     }
 
@@ -91,7 +123,9 @@ const ButtonLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonLinkP
         ref={ref as React.Ref<HTMLButtonElement>}
         className={classes}
         disabled={disabled}
-      />
+      >
+        {renderContent()}
+      </button>
     );
   }
 );
