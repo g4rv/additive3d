@@ -37,7 +37,7 @@ export default function MaterialCard({ item }: MaterialCardProps) {
           )}
 
           {/* Key Specifications */}
-          {item.specs && item.specs.length > 0 && (
+          {item.specs && Array.isArray(item.specs) && item.specs.length > 0 && (
             <div className="mb-4">
               <h4 className="text-base-content mb-2 flex items-center gap-2 font-medium">
                 <FileText className="h-4 w-4" />

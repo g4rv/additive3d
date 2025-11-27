@@ -8,7 +8,6 @@ import {
   Target,
   Wrench,
   FileSearch,
-  RefreshCw,
   Cpu,
 } from 'lucide-react';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';

@@ -14,8 +14,6 @@ export default function SteamIroningPage() {
       <HeroFancy
         title="Парове зварювання 3D-деталей"
         description="Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Підвищення щільності та стабілізація розмірів."
-        cta1={{ text: 'Розрахувати вартість', href: '/services/3d-printing/calculator' }}
-        cta2={{ text: 'Отримати консультацію', href: '/contact' }}
       />
 
       <div className="custom-container py-12">

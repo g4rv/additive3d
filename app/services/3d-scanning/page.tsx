@@ -423,7 +423,7 @@ export default function ThreeDScanningPage() {
               <div className="card-body p-6">
                 <h3 className="text-primary mb-2 text-lg font-semibold">Мобільне сканування</h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
-                  Переносне сканування великих об'єктів прямо на місці експлуатації
+                  Переносне сканування великих об&apos;єктів прямо на місці експлуатації
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="badge badge-outline badge-sm">Автомобілі</span>

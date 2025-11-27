@@ -14,8 +14,6 @@ export default function DyeingPage() {
       <HeroFancy
         title="Фарбування 3D-друкованих деталей"
         description="Ми спеціалізуємося на високоякісному фарбуванні деталей, надрукованих на FDM та MJF обладнанні."
-        cta1={{ text: 'Розрахувати вартість', href: '/services/3d-printing/calculator' }}
-        cta2={{ text: 'Отримати консультацію', href: '/contact' }}
       />
 
       <div className="custom-container py-12">

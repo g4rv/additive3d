@@ -25,6 +25,8 @@ export interface MaterialItem {
   /** Material name */
   name: string;
   /** Material category/technology */
+  fullname?: string
+
   technology: string;
   /** Brief description of material characteristics */
   description?: string;
@@ -32,8 +34,8 @@ export interface MaterialItem {
   href?: string;
   /** Material image path */
   image?: string;
-  /** Key technical specifications */
-  specs?: string[];
+  /** Key technical specifications - can be array of strings or detailed properties object */
+  specs?: string[] | MaterialProperties;
   /** Detailed material properties for technical comparison */
   properties?: MaterialProperties;
   /** Common applications and use cases */

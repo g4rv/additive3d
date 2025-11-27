@@ -1,26 +1,23 @@
-import { Metadata } from 'next';
-import { SlugPageProps } from '@/lib/types';
-import isTechnologySlug from '@/utils/isTechnologySlug';
-import { notFound } from 'next/navigation';
-import {
-  Zap,
-  Settings,
-  Package,
-  Award,
-  Target,
-  BarChart3,
-  CheckCircle,
-  Clock,
-  Users,
-  Cpu,
-  Layers,
-  FileText,
-  Wrench,
-} from 'lucide-react';
+import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
+import { SlugPageProps } from '@/lib/types';
+import isTechnologySlug from '@/utils/isTechnologySlug';
+import {
+  Award,
+  CheckCircle,
+  Clock,
+  Cpu,
+  FileText,
+  Layers,
+  Package,
+  Settings,
+  Target,
+  Wrench,
+  Zap,
+} from 'lucide-react';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: SlugPageProps) {
   const { slug } = await params;

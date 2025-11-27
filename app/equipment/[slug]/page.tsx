@@ -1,22 +1,22 @@
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import {
-  Zap,
-  Target,
-  CheckCircle,
-  Layers,
-  Box,
-  Settings,
-  Award,
-  Cog,
-  Printer,
-} from 'lucide-react';
+import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
 import { EQUIPMENT_DATA } from '@/lib/constants';
 import { SlugPageProps } from '@/lib/types';
 import isTechnologySlug from '@/utils/isTechnologySlug';
+import {
+  Award,
+  Box,
+  CheckCircle,
+  Cog,
+  Layers,
+  Printer,
+  Settings,
+  Target,
+  Zap,
+} from 'lucide-react';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 // Technology titles
 const TECHNOLOGY_TITLES: Record<string, { title: string; description: string }> = {
@@ -113,7 +113,7 @@ export default async function EquipmentTechnologyPage({ params }: SlugPageProps)
           </div>
 
           <div className="mx-auto max-w-7xl space-y-12">
-            {equipmentList.map((equipment, index) => (
+            {equipmentList.map((equipment) => (
               <div
                 key={equipment.name}
                 className="card bg-base-200 border-base-300 shadow-lg transition-all duration-[var(--duration-moderate)] hover:shadow-xl"

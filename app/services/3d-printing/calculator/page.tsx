@@ -3,7 +3,6 @@ import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import ButtonLink from '@/components/ui/button-link';
 import { CONTACT_INFO, NAVIGATION } from '@/lib/constants';
 import {
-  Calculator,
   FileUp,
   Mail,
   Phone,
