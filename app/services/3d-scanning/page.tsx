@@ -175,7 +175,7 @@ export default function ThreeDScanningPage() {
             <div className="card bg-base-100 border-base-300 shadow-sm overflow-hidden">
               <figure className="aspect-video">
                 <img
-                  src="/3d-scanning/engineer-using-structured-light-scanner.jpg"
+                  src="/Services/3d-scanning/engineer-using-structured-light-scanner.jpg"
                   alt="Інженер використовує структурований світловий сканер Zeiss"
                   className="h-full w-full object-cover"
                 />
@@ -192,7 +192,7 @@ export default function ThreeDScanningPage() {
             <div className="card bg-base-100 border-base-300 shadow-sm overflow-hidden">
               <figure className="aspect-video">
                 <img
-                  src="/3d-scanning/3d-mesh-wireframe-model.png"
+                  src="/Services/3d-scanning/3d-mesh-wireframe-model.png"
                   alt="3D модел у вигляді каркасної сітки"
                   className="h-full w-full object-cover"
                 />
@@ -373,7 +373,7 @@ export default function ThreeDScanningPage() {
             <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
               <figure className="aspect-video">
                 <img
-                  src="/3d-scanning/3d-laser-scanning-of-cast-metal-part.jpg"
+                  src="/Services/3d-scanning/3d-laser-scanning-of-cast-metal-part.jpg"
                   alt="3D лазерне сканування литої металевої деталі"
                   className="h-full w-full object-cover"
                 />
@@ -394,7 +394,7 @@ export default function ThreeDScanningPage() {
             <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
               <figure className="aspect-video">
                 <img
-                  src="/3d-scanning/3d-surface-scan-model-detail.png"
+                  src="/Services/3d-scanning/3d-surface-scan-model-detail.png"
                   alt="Детальне сканування поверхні моделі"
                   className="h-full w-full object-cover"
                 />
@@ -415,7 +415,7 @@ export default function ThreeDScanningPage() {
             <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
               <figure className="aspect-video">
                 <img
-                  src="/3d-scanning/portable-3d-scanner-vehicle-inspection.jpg"
+                  src="/Services/3d-scanning/portable-3d-scanner-vehicle-inspection.jpg"
                   alt="Переносний 3D сканер для інспекції транспортного засобу"
                   className="h-full w-full object-cover"
                 />

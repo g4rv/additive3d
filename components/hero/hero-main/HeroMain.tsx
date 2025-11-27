@@ -54,7 +54,7 @@ export default function HeroMain() {
         <div className="relative hidden max-h-fit 2xl:block">
           <div className="border-primary absolute bottom-16 left-16 z-10 size-40 border-6" />
           <Image
-            src="/hp-jet-fusion.png"
+            src="/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-angle.png"
             className="relative z-20 scale-80"
             aria-hidden
             alt="декоративна картинка"
