@@ -3,6 +3,7 @@
 import { ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
+import { NAVIGATION } from '@/lib/constants';
 import { NavItem } from '@/lib/types';
 import ButtonLink from '../ui/button-link';
 
@@ -84,7 +85,7 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
       {/* Animated Login Button */}
       <div>
         <ButtonLink
-          href="/login"
+          href={NAVIGATION.login.href}
           variant="secondary"
           className="transition-all duration-300 hover:shadow-lg"
         >

@@ -9,6 +9,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import useBodyLock from '@/hooks/useBodyLock';
 import useFocusTrap from '@/hooks/useFocusTrap';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import { NAVIGATION } from '@/lib/constants';
 import { NavItem } from '@/lib/types';
 import ButtonLink from '../ui/button-link';
 
@@ -233,7 +234,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
 
             <div className="border-base-300 mx-8 mt-auto border-t pt-6">
               <ButtonLink
-                href="/login"
+                href={NAVIGATION.login.href}
                 variant="secondary"
                 className="w-full py-3 text-base"
                 onClick={handleClose}

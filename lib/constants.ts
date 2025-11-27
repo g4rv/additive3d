@@ -218,6 +218,25 @@ const NAVIGATION = {
     parent: null,
     order: 1
   },
+  // Authentication pages
+  login: {
+    label: 'Увійти',
+    href: '/auth/login',
+    parent: null,
+    order: 8
+  },
+  register: {
+    label: 'Реєстрація',
+    href: '/auth/register',
+    parent: null,
+    order: 9
+  },
+  forgotPassword: {
+    label: 'Забули пароль',
+    href: '/auth/forgot-password',
+    parent: null,
+    order: 10
+  },
 } as const;
 
 // ============================================================================
