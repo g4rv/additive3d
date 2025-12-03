@@ -44,18 +44,14 @@ export interface MaterialItem {
   colors?: string[];
   /** Certifications and standards */
   certifications?: string[];
+  /** Available material variants */
+  variants?: string[];
 }
 
 /**
  * Materials showcase component props
  */
 export interface MaterialsShowcaseProps {
-  /** Section title */
-  title: ReactNode;
-  /** Optional section description */
-  description?: ReactNode;
-  /** Array of materials to display */
-  materials: MaterialItem[];
   /** Additional CSS classes */
   className?: string;
 }

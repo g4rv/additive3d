@@ -1,86 +1,5 @@
 import { NavItem } from './types';
 
-// ============================================================================
-// NAVIGATION
-// ============================================================================
-
-const MAIN_NAVIGATION_LIST: NavItem[] = [
-  {
-    label: '3D-друк',
-    href: '/services/3d-printing',
-    children: [
-      {
-        label: 'Калькулятор',
-        href: '/services/3d-printing/calculator',
-      },
-      {
-        label: 'MJF',
-        href: '/services/3d-printing/mjf',
-      },
-      {
-        label: 'FDM',
-        href: '/services/3d-printing/fdm',
-      },
-      {
-        label: 'LFAM',
-        href: '/services/3d-printing/lfam',
-      },
-    ],
-  },
-  {
-    label: '3D-сканування',
-    href: '/services/3d-scanning',
-  },
-  {
-    label: 'Послуги',
-    href: '/services',
-    children: [
-      {
-        label: 'Фарбування',
-        href: '/services/dyeing',
-      },
-      {
-        label: 'Парове прасування',
-        href: '/services/steam-ironing',
-      },
-      {
-        label: '3D-моделювання',
-        href: '/services/3d-modeling',
-      },
-      {
-        label: 'Реверс-інжиніринг',
-        href: '/services/reverse-engineering',
-      },
-      {
-        label: 'Інспекція геометрії',
-        href: '/services/geometry-inspection',
-      },
-    ],
-  },
-  {
-    label: 'Матеріали',
-    href: '/materials',
-  },
-  {
-    label: 'Обладнання',
-    href: '/equipment',
-    children: [
-      {
-        label: 'MJF',
-        href: '/equipment/mjf',
-      },
-      {
-        label: 'FDM',
-        href: '/equipment/fdm',
-      },
-      {
-        label: 'LFAM',
-        href: '/equipment/lfam',
-      },
-    ],
-  },
-];
-
 // Flat navigation structure with path metadata
 const NAVIGATION = {
   // Main categories
@@ -122,9 +41,9 @@ const NAVIGATION = {
     parent: 'services',
     order: 4,
   },
-  steamIroning: {
-    label: 'Парове прасування',
-    href: '/services/steam-ironing',
+  smoothing: {
+    label: 'Хімічне згладжування',
+    href: '/services/smoothing',
     parent: 'services',
     order: 5,
   },
@@ -173,26 +92,6 @@ const NAVIGATION = {
     order: 4,
   },
 
-  // Materials sublinks
-  'materials-mjf': {
-    label: 'MJF',
-    href: '/materials/mjf',
-    parent: 'materials',
-    order: 1,
-  },
-  'materials-fdm': {
-    label: 'FDM',
-    href: '/materials/fdm',
-    parent: 'materials',
-    order: 2,
-  },
-  'materials-lfam': {
-    label: 'LFAM',
-    href: '/materials/lfam',
-    parent: 'materials',
-    order: 3,
-  },
-
   // Equipment sublinks
   'equipment-mjf': {
     label: 'MJF',
@@ -216,28 +115,109 @@ const NAVIGATION = {
     label: 'Контакти',
     href: '/contact',
     parent: null,
-    order: 1
+    order: 1,
   },
   // Authentication pages
   login: {
     label: 'Увійти',
     href: '/auth/login',
     parent: null,
-    order: 8
+    order: 8,
   },
   register: {
     label: 'Реєстрація',
     href: '/auth/register',
     parent: null,
-    order: 9
+    order: 9,
   },
   forgotPassword: {
     label: 'Забули пароль',
     href: '/auth/forgot-password',
     parent: null,
-    order: 10
+    order: 10,
   },
 } as const;
+
+// ============================================================================
+// NAVIGATION
+// ============================================================================
+
+const MAIN_NAVIGATION_LIST: NavItem[] = [
+  {
+    label: '3D-друк',
+    href: NAVIGATION['3d-printing'].href,
+    children: [
+      {
+        label: 'Калькулятор',
+        href: NAVIGATION.calculator.href,
+      },
+      {
+        label: 'MJF',
+        href: NAVIGATION['3d-print-mjf'].href,
+      },
+      {
+        label: 'FDM',
+        href: NAVIGATION['3d-print-fdm'].href,
+      },
+      {
+        label: 'LFAM',
+        href: NAVIGATION['3d-print-lfam'].href,
+      },
+    ],
+  },
+  {
+    label: '3D-сканування',
+    href: NAVIGATION['3d-scanning'].href,
+  },
+  {
+    label: 'Послуги',
+    href: NAVIGATION.services.href,
+    children: [
+      {
+        label: 'Фарбування',
+        href: NAVIGATION.dyeing.href,
+      },
+      {
+        label: 'Хімічне згладжування',
+        href: NAVIGATION.smoothing.href,
+      },
+      {
+        label: '3D-моделювання',
+        href: NAVIGATION['3d-modeling'].href,
+      },
+      {
+        label: 'Реверс-інжиніринг',
+        href: NAVIGATION.reverseEngineering.href,
+      },
+      {
+        label: 'Інспекція геометрії',
+        href: NAVIGATION.geometryInspection.href,
+      },
+    ],
+  },
+  {
+    label: 'Матеріали',
+    href: NAVIGATION.materials.href,
+  },
+  {
+    label: 'Обладнання',
+    href: NAVIGATION.equipment.href,
+    children: [
+      {
+        label: 'MJF',
+        href: NAVIGATION['equipment-mjf'].href,
+      },
+      {
+        label: 'FDM',
+        href: NAVIGATION['equipment-fdm'].href,
+      },
+      {
+        label: 'LFAM',
+        href: NAVIGATION['equipment-lfam'].href,
+      },
+    ],
+  },
+];
 
 // ============================================================================
 // CONTACT & COMPANY INFO
@@ -257,8 +237,8 @@ const CONTACT_INFO = {
     link: 'mailto:info@additive.com.ua',
   },
   address: {
-    label: 'вулиця Пшенична, 8 м. Київ, 03134',
-    link: 'https://maps.app.goo.gl/WSeiuTJn2iRcH5pb6',
+    label: 'м. Київ',
+    link: 'https://maps.app.goo.gl/iyCgZSjzWsu1soML8',
   },
 };
 
@@ -516,6 +496,5 @@ export {
   MATERIALS_DATA,
   NAVIGATION,
   // Screen
-  SCREEN_BREAKPOINTS
+  SCREEN_BREAKPOINTS,
 };
-

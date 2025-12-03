@@ -89,6 +89,28 @@ export default function MaterialCard({ item }: MaterialCardProps) {
             </div>
           )}
 
+          {/* Variants */}
+          {item.variants && item.variants.length > 0 && (
+            <div className="mb-4">
+              <h4 className="text-base-content mb-2 flex items-center gap-2 font-medium">
+                <FileText className="h-4 w-4" />
+                Варіанти
+              </h4>
+              <div className="flex flex-wrap gap-1">
+                {item.variants.slice(0, 3).map((variant, variantIndex) => (
+                  <Badge key={variantIndex} variant="primary" size="xs">
+                    {variant}
+                  </Badge>
+                ))}
+                {item.variants.length > 3 && (
+                  <Badge variant="primary" size="xs">
+                    +{item.variants.length - 3}
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Applications */}
           {item.applications && item.applications.length > 0 && (
             <div className="mb-4">

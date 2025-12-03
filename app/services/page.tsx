@@ -108,7 +108,7 @@ export default function ServicesPage() {
       description:
         'Покращення механічних властивостей та зовнішнього вигляду деталей',
       icon: Wind,
-      href: '/services/steam-ironing',
+      href: '/services/smoothing',
     },
   ];
 

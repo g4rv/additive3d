@@ -3,17 +3,17 @@ import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Парове зварювання 3D-друкованих деталей | Additive3D',
-  description: 'Професійне парове зварювання для підвищення міцності та зносостійкості 3D-друкованих деталей. Підвищення щільності та стабілізація розмірів.',
+  title: 'Хімічне згладжування поверхні деталей (Vapor Smoothing) | Additive3D',
+  description: 'Професійне хімічне парове згладжування для підвищення міцності та зносостійкості 3D-друкованих деталей. Герметизація поверхні та усунення пористості.',
 };
 
-export default function SteamIroningPage() {
+export default function SmoothingPage() {
   return (
     <>
       {/* Hero Section */}
       <HeroFancy
-        title="Парове зварювання 3D-деталей"
-        description="Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Підвищення щільності та стабілізація розмірів."
+        title="Хімічне згладжування"
+        description="Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Герметизація поверхні та зменшення шорсткості."
       />
 
       <div className="custom-container py-12">
@@ -22,17 +22,17 @@ export default function SteamIroningPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-primary mb-6">
-                Ми спеціалізуємося на паровому зварюванні деталей
+                Ми спеціалізуємося на згладжуванні поверхні деталей парами розчинника
               </h2>
               <p className="text-base-content/80 text-lg leading-relaxed mb-8">
-                Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Підвищення щільності та стабілізація розмірів.
+                Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Герметизація поверхні та зменшення шорсткості.
               </p>
               <div className="flex gap-4 mb-8">
                 <div className="badge badge-primary badge-lg">
                   Підвищення міцності
                 </div>
                 <div className="badge badge-secondary badge-lg">
-                  Стабілізація розмірів
+                  Зменшення шорсткості
                 </div>
                 <div className="badge badge-outline badge-lg">
                   FDM та MJF
@@ -42,7 +42,7 @@ export default function SteamIroningPage() {
             <div className="relative">
               <Image
                 src="/Services/post-processing/post-processing.jpg"
-                alt="Парове зварювання 3D-деталей"
+                alt="Хімічне парове згладжування поверхні деталей (Vapor Smoothing)"
                 width={600}
                 height={400}
                 className="rounded-lg shadow-xl"
@@ -54,7 +54,7 @@ export default function SteamIroningPage() {
         {/* Process Benefits */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-primary mb-12 text-center">
-            Переваги парового зварювання
+            Переваги хімічного згладжування
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -65,9 +65,9 @@ export default function SteamIroningPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-primary mb-3">Підвищення щільності</h3>
+                <h3 className="text-lg font-bold text-primary mb-3">Герметизація поверхні</h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
-                  Видалення внутрішньої пористості та мікротріщин в полімерних деталях
+                  Усунення пористості та мікротріщин поверхні полімерних деталей
                 </p>
               </div>
             </div>
@@ -79,9 +79,9 @@ export default function SteamIroningPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-primary mb-3">Стабілізація розмірів</h3>
+                <h3 className="text-lg font-bold text-primary mb-3">Зменшення шорсткості</h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
-                  Усадка матеріалу для досягнення стабільних та точних розмірів
+                  Згладжування поверхні для покращення естетичних та функціональних властивостей
                 </p>
               </div>
             </div>
@@ -93,9 +93,9 @@ export default function SteamIroningPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a6 6 0 00-3-5.197M9 3h6a2 2 0 012 2v4a6 6 0 01-3 5.197M9 3v6a6 6 0 003 5.197" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-primary mb-3">Підвищення міцності</h3>
+                <h3 className="text-lg font-bold text-primary mb-3">Хімічна стійкість</h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
-                  Збільшення механічної міцності та стійкості до деформацій
+                  Створює захисний бар&apos;єр, який покращує стійкість до хімічних речовин, води та масел
                 </p>
               </div>
             </div>
@@ -127,27 +127,27 @@ export default function SteamIroningPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-xl font-bold text-primary mb-4">Процес зварювання</h3>
+                    <h3 className="text-xl font-bold text-primary mb-4">Процес хімічного згладжування</h3>
                     <p className="text-base-content/80 leading-relaxed mb-6">
-                      Контрольоване нагрівання деталей у паровій среді з точним регулюванням температури та часу обробки.
+                      Контрольований процес хімічної обробки деталей парами розчинника з точним регулюванням температури та часу обробки.
                     </p>
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 shrink-0"></div>
                         <div>
                           <div className="font-medium text-base-content">Точна температура</div>
                           <div className="text-sm text-base-content/60">Контрольована до 1°C</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 shrink-0"></div>
                         <div>
                           <div className="font-medium text-base-content">Рівномірна обробка</div>
-                          <div className="text-sm text-base-content/60">Однорідне пропікання всієї поверхні</div>
+                          <div className="text-sm text-base-content/60">Однорідний вплив розчинника на всю поверхню</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 shrink-0"></div>
                         <div>
                           <div className="font-medium text-base-content">Автоматизація</div>
                           <div className="text-sm text-base-content/60">Програмоване керування процесом</div>
@@ -160,24 +160,17 @@ export default function SteamIroningPage() {
                     <h3 className="text-xl font-bold text-primary mb-4">Матеріали для обробки</h3>
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 shrink-0"></div>
                         <div>
-                          <div className="font-medium text-base-content">PA12 (Nylon 12)</div>
-                          <div className="text-sm text-base-content/60">Ідеальний для MJF деталей</div>
+                          <div className="font-medium text-base-content">FDM технологія</div>
+                          <div className="text-sm text-base-content/60">ASA, ABS</div>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="w-2 h-2 bg-success rounded-full mt-2 shrink-0"></div>
                         <div>
-                          <div className="font-medium text-base-content">ABS-M30</div>
-                          <div className="text-sm text-base-content/60">Підходить для FDM деталей</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-success rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <div className="font-medium text-base-content">Polycarbonate</div>
-                          <div className="text-sm text-base-content/60">Високотемпературний матеріал</div>
+                          <div className="font-medium text-base-content">MJF технологія</div>
+                          <div className="text-sm text-base-content/60">PA12, PA11</div>
                         </div>
                       </div>
                     </div>
@@ -391,7 +384,7 @@ export default function SteamIroningPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -405,7 +398,7 @@ export default function SteamIroningPage() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -419,7 +412,7 @@ export default function SteamIroningPage() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m0-6l-3 3m6 0l-3-3m-6 0l-3-3" />
                   </svg>
@@ -435,7 +428,7 @@ export default function SteamIroningPage() {
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a6 6 0 00-3-5.197M9 3h6a2 2 0 012 2v4a6 6 0 01-3 5.197M9 3v6a6 6 0 003 5.197" />
                   </svg>
@@ -449,7 +442,7 @@ export default function SteamIroningPage() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
                   <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -468,7 +461,7 @@ export default function SteamIroningPage() {
 
       {/* CTA Section */}
       <CTA
-        title="Потрібна консультація з паровим зварюванням?"
+        title="Потрібна консультація з хімічного згладжування?"
         description="Наші інженери допоможуть обрати оптимальні параметри обробки та розрахують вартість для вашого проєкту"
         cta1={{ text: 'Розрахувати вартість', href: '/services/3d-printing/calculator' }}
         cta2={{ text: "Зв'язатися з нами", href: '/contact' }}

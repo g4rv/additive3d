@@ -1,36 +1,36 @@
-import { Metadata } from 'next';
-import {
-  Scan,
-  Target,
-  Zap,
-  Cog,
-  Building2,
-  Users,
-  Package,
-  Settings,
-  Rocket,
-  CheckCircle,
-  Clock,
-  Shield,
-  Eye,
-} from 'lucide-react';
+import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
+import {
+  Building2,
+  CheckCircle,
+  Clock,
+  Cog,
+  Eye,
+  Package,
+  Rocket,
+  Scan,
+  Settings,
+  Shield,
+  Target,
+  Users,
+  Zap,
+} from 'lucide-react';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '3D-сканування | Additive3D',
   description:
-    'Високоточне 3D-сканування об\'єктів за технологією фотограмметрії (Zeiss GOM Scan 1) та лазерного сканування (Zeiss T-SCAN Hawk 2). Точність до 0,02 мм для промислових застосувань.',
+    "Високоточне 3D-сканування об'єктів за технологією оптичного структурного сканування (Zeiss GOM Scan 1) та лазерного сканування (Zeiss T-SCAN Hawk 2). Точність до 0,02 мм для промислових застосувань.",
 };
 
 export default function ThreeDScanningPage() {
   const equipment = [
     {
       name: 'Zeiss GOM Scan 1',
-      technology: 'Фотограмметрія',
+      technology: 'Оптичне структурне сканування',
       description:
-        'Високоточне оцифрування складних деталей та поверхонь за технологією фотограмметрії з точністю до мікронів',
+        'Високоточне оцифрування складних деталей та поверхонь за технологією оптичного структурного сканування з точністю мікронів',
       icon: Scan,
       features: [
         'Точність до 0,02 мм',
@@ -43,14 +43,9 @@ export default function ThreeDScanningPage() {
       name: 'Zeiss T-SCAN Hawk 2',
       technology: 'Лазерне сканування',
       description:
-        'Лазерне сканування для надвисокої швидкості та високоточної цифровізації промислових об\'єктів',
+        "Лазерне сканування для надвисокої швидкості та високоточної цифровізації промислових об'єктів",
       icon: Zap,
-      features: [
-        'Надшвидка обробка',
-        'Великі об\'єкти',
-        'Реверс-інжиніринг',
-        'Контроль якості',
-      ],
+      features: ['Надшвидка обробка', "Великі об'єкти", 'Реверс-інжиніринг', 'Контроль якості'],
     },
   ];
 
@@ -61,28 +56,30 @@ export default function ThreeDScanningPage() {
       icon: Cog,
     },
     {
-      title: 'Дизайн',
-      description: 'Створення цифрових моделей для 3D-друку або подальшої обробки',
+      title: 'Розробка та проектування',
+      description: 'Створення цифрових моделей для нових продуктів',
       icon: Target,
     },
     {
       title: 'Архітектура',
-      description: 'Точне відтворення елементів фасаду, пам\'яток і скульптур',
+      description: "Точне відтворення елементів фасаду, пам'яток і скульптур",
       icon: Building2,
     },
     {
-      title: 'Медицина',
-      description: 'Виготовлення індивідуальних імплантів чи ортопедичних рішень',
+      title: 'Ливарне виробництво',
+      description:
+        'Контроль модельного оснащення, литих деталей, забезпечуючи стабільну якість продукції',
       icon: Package,
     },
     {
       title: 'Мистецтво',
-      description: 'Цифрове дублювання об\'єктів і людей для візуалізацій',
+      description: "Цифрове дублювання об'єктів і людей для візуалізацій",
       icon: Users,
     },
     {
-      title: 'VR та кінематографія',
-      description: 'Інтерактивне відображення об\'єктів у цифровому середовищі',
+      title: 'Аерокосмічна та оборонна промисловість',
+      description:
+        'Високоточне 3D сканування та надійний контроль якості критично важливих компонентів',
       icon: Rocket,
     },
   ];
@@ -90,7 +87,7 @@ export default function ThreeDScanningPage() {
   const processSteps = [
     {
       number: 1,
-      title: 'Оцифрування об\'єкта',
+      title: "Оцифрування об'єкта",
       description:
         'Деталь сканується з високою точністю та роздільною здатністю, вище за допуски до даної деталі. Результатом є полігональне тіло, що відображає форму поверхні з точністю до мікронів.',
       icon: Scan,
@@ -141,7 +138,7 @@ export default function ThreeDScanningPage() {
     },
     {
       title: 'Безконтактність',
-      description: 'Без ризику пошкодження оригінального об\'єкта',
+      description: "Без ризику пошкодження оригінального об'єкта",
       icon: Shield,
     },
     {
@@ -155,7 +152,7 @@ export default function ThreeDScanningPage() {
     <>
       <HeroFancy
         title="3D-сканування"
-        description="Високоточне оцифрування реальних об'єктів у точні цифрові 3D-моделі для промислових застосувань"
+        description="Оцифрування об'єктів у високоточні цифрові 3D-моделі для промислових застосувань"
       />
 
       {/* Visual Showcase Section */}
@@ -166,13 +163,13 @@ export default function ThreeDScanningPage() {
           <div className="mb-12 text-center">
             <h2 className="text-primary text-3xl font-bold lg:text-4xl">Приклади сканування</h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed lg:text-xl">
-              Візуалізація процесу 3D-сканування та результатів ourої роботи
+              Візуалізація процесу 3D-сканування та результати роботи
             </p>
           </div>
 
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
             {/* Structured Light Scanner */}
-            <div className="card bg-base-100 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-100 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <img
                   src="/Services/3d-scanning/engineer-using-structured-light-scanner.jpg"
@@ -181,15 +178,18 @@ export default function ThreeDScanningPage() {
                 />
               </figure>
               <div className="card-body p-6">
-                <h3 className="text-primary mb-2 text-lg font-semibold">Структурований світловий сканер</h3>
+                <h3 className="text-primary mb-2 text-lg font-semibold">
+                  Структурований світловий сканер
+                </h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
-                  Професійне обладнання Zeiss GOM Scan 1 для високоточного сканування складних поверхонь
+                  Професійне обладнання Zeiss GOM Scan 1 для високоточного сканування складних
+                  поверхонь
                 </p>
               </div>
             </div>
 
             {/* 3D Mesh Wireframe */}
-            <div className="card bg-base-100 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-100 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <img
                   src="/Services/3d-scanning/3d-mesh-wireframe-model.png"
@@ -219,21 +219,20 @@ export default function ThreeDScanningPage() {
                 <h2 className="text-primary mb-6 text-2xl font-semibold lg:text-3xl">
                   Що таке 3D-сканування?
                 </h2>
-                <div className="space-y-4 text-base-content/90 leading-relaxed text-base lg:text-lg">
+                <div className="text-base-content/90 space-y-4 text-base leading-relaxed lg:text-lg">
                   <p>
                     3D сканування — це процес, що дозволяє перетворювати реальні об&apos;єкти у
-                    точні цифрові 3D-моделі. За допомогою спеціального обладнання — 3D-сканерів —
-                    з поверхні предмета зчитуються мільйони точок, які формують детальну хмару
-                    точок. На основі цих даних створюється тривимірна сітка або поверхнева модель
-                    (полігональна), яку можна використовувати для подальшого аналізу, модифікацій
-                    (обмежено) чи виготовлення.
+                    точні цифрові 3D-моделі. За допомогою 3D-сканера з поверхні предмета зчитуються
+                    мільйони точок, які формують детальну хмару точок. На основі цих даних
+                    створюється тривимірна сітка або поверхнева модель (полігональна), яку можна
+                    використовувати для подальшого аналізу, модифікацій (обмежено) чи виробництва.
                   </p>
                   <p>
-                    Процес сканування у нас відбувається за технологією фотограмметрії (Zeiss GOM
-                    Scan 1), або лазерною (Zeiss T-SCAN Hawk 2) - відносно швидко, безконтактно та
-                    з високою точністю — до 0,02 мм. 3D сканування ідеально підходить для
-                    вимірювання складних форм, які важко або неможливо описати традиційними
-                    інструментами.
+                    Для сканування ми використовуємо лазерне сканування з фотограмметрією (3D сканер
+                    Zeiss T-SCAN Hawk 2), або оптичне структурне сканування (Zeiss GOM Scan 1) -
+                    відносно швидко, безконтактно та з високою точністю — до 0,02 мм. 3D сканування
+                    ідеально підходить для оцифрування складних форм, які важко або неможливо
+                    виміряти традиційними інструментами.
                   </p>
 
                   {/* Key Capabilities */}
@@ -280,9 +279,7 @@ export default function ThreeDScanningPage() {
                 >
                   <div className="card-body p-8">
                     <div className="mb-4 flex items-center gap-3">
-                      <div
-                        className={`bg-base-200 text-primary rounded-lg p-3`}
-                      >
+                      <div className={`bg-base-200 text-primary rounded-lg p-3`}>
                         <Icon className="size-6" />
                       </div>
                       <div>
@@ -291,9 +288,7 @@ export default function ThreeDScanningPage() {
                       </div>
                     </div>
 
-                    <p className="text-base-content/90 mb-6 leading-relaxed">
-                      {item.description}
-                    </p>
+                    <p className="text-base-content/90 mb-6 leading-relaxed">{item.description}</p>
 
                     <div className="space-y-2">
                       {item.features.map((feature, idx) => (
@@ -370,7 +365,7 @@ export default function ThreeDScanningPage() {
 
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-3">
             {/* Metal Cast Part Scanning */}
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <img
                   src="/Services/3d-scanning/3d-laser-scanning-of-cast-metal-part.jpg"
@@ -391,7 +386,7 @@ export default function ThreeDScanningPage() {
             </div>
 
             {/* Surface Detail Scanning */}
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <img
                   src="/Services/3d-scanning/3d-surface-scan-model-detail.png"
@@ -402,7 +397,7 @@ export default function ThreeDScanningPage() {
               <div className="card-body p-6">
                 <h3 className="text-primary mb-2 text-lg font-semibold">Деталізація поверхні</h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
-                  Ультраточне сканування мікроструктури поверхні для інженерного аналізу
+                  Детальне сканування структури поверхні для дрібних компонентів
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className="badge badge-outline badge-sm">Інженерія</span>
@@ -412,7 +407,7 @@ export default function ThreeDScanningPage() {
             </div>
 
             {/* Portable Scanner */}
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <img
                   src="/Services/3d-scanning/portable-3d-scanner-vehicle-inspection.jpg"
@@ -447,7 +442,7 @@ export default function ThreeDScanningPage() {
             </p>
           </div>
 
-          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto grid max-w-6xl justify-center gap-6 md:grid-cols-2 lg:grid-cols-3">
             {applications.map((app, index) => {
               const Icon = app.icon;
               return (
@@ -477,9 +472,7 @@ export default function ThreeDScanningPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-12 text-center">
-            <h2 className="text-primary text-3xl font-bold lg:text-4xl">
-              Переваги 3D-сканування
-            </h2>
+            <h2 className="text-primary text-3xl font-bold lg:text-4xl">Переваги 3D-сканування</h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed lg:text-xl">
               Чому професіонали обирають наші послуги сканування
             </p>
@@ -520,15 +513,13 @@ export default function ThreeDScanningPage() {
                     <Settings className="text-primary size-6" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-primary mb-3 text-lg font-semibold">
-                      Технічні обмеження
-                    </h3>
+                    <h3 className="text-primary mb-3 text-lg font-semibold">Технічні обмеження</h3>
                     <p className="text-base-content/90 leading-relaxed">
                       Принцип роботи сканера базується на такому фізичному явищі, як бінокулярний
-                      паралакс (стереокамера). Тому сканування глибоких «кишенів» або отворів,
-                      куди не можуть «поглянути» дві камери одночасно — неможливе, а внутрішні
-                      порожнини взагалі не скануються. Наші фахівці проконсультують вас щодо
-                      можливості сканування вашого об&apos;єкта.
+                      паралакс (стереокамера). Тому сканування глибоких «кишенів» або отворів, куди
+                      не можуть «поглянути» дві камери одночасно — неможливе, а внутрішні порожнини
+                      взагалі не скануються. Наші фахівці проконсультують вас щодо можливості
+                      сканування вашого об&apos;єкта.
                     </p>
                   </div>
                 </div>

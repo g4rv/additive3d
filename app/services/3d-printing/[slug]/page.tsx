@@ -5,6 +5,7 @@ import { SlugPageProps } from '@/lib/types';
 import isTechnologySlug from '@/utils/isTechnologySlug';
 import {
   Award,
+  BrushCleaning,
   CheckCircle,
   Clock,
   Cpu,
@@ -27,11 +28,13 @@ export default async function Page({ params }: SlugPageProps) {
   const technologyData = {
     mjf: {
       title: 'MJF (Multi Jet Fusion)',
-      description: 'Високотехнологічний метод 3D-друку від HP для серійного виробництва з надзвичайною деталізацією та однорідними механічними властивостями.',
+      description:
+        'Високотехнологічний метод 3D-друку від HP для серійного виробництва з надзвичайною деталізацією та однорідними механічними властивостями.',
       fullName: 'HP Multi Jet Fusion 5200',
       metadata: {
         title: 'MJF 3D-друк | Additive3D',
-        description: 'HP Multi Jet Fusion 5200: високошвидкісний 3D-друк для серійного виробництва. Точність ±0.2 мм, робоча камера 380×284×380 мм.',
+        description:
+          'HP Multi Jet Fusion 5200: високошвидкісний 3D-друк для серійного виробництва. Точність ±0.2 мм, робоча камера 380×284×380 мм.',
       },
       hero: {
         title: 'MJF 3D-друк',
@@ -49,8 +52,9 @@ export default async function Page({ params }: SlugPageProps) {
           icon: Package,
         },
         {
-          title: 'Висока точність',
-          description: 'Точність виготовлення ±0.2 мм або ±0.3% для відповідності вимогам',
+          title: 'Промислова точність',
+          description:
+            'Точність виготовлення залежить від розміру. Деталі близькі до квалітету ІТ 14',
           icon: Target,
         },
         {
@@ -62,7 +66,7 @@ export default async function Page({ params }: SlugPageProps) {
       specs: [
         { label: 'Робоча камера', value: '380 × 284 × 380 мм' },
         { label: 'Товщина шару', value: '80 мкм' },
-        { label: 'Точність', value: '±0.2 мм або ±0.3%' },
+        { label: 'Точність', value: 'Деталі близькі до квалітету ІТ 14' },
         { label: 'Швидкість друку', value: 'До 5058 см³/год' },
         { label: 'Матеріали', value: 'PA12 (Nylon 12)' },
         { label: 'Пост-обробка', value: 'Автоматизовані модулі' },
@@ -70,27 +74,36 @@ export default async function Page({ params }: SlugPageProps) {
       process: [
         {
           step: 1,
-          title: 'Підготовка порошку',
-          description: 'Пошарове нанесення порошкового полімеру PA12 з рівномірним розподілом',
+          title: 'Нанесення порошку',
+          description:
+            'Нанесення тонкого рівномірного шару порошку термопластика на робочу платформу',
           icon: Layers,
         },
         {
           step: 2,
-          title: 'Агент спікання',
-          description: 'Селективне нанесення термоактивного агента для точкового спікання',
+          title: 'Друкування агентів',
+          description:
+            'Струменевий друк двох типів агентів в перетин деталей та по їх периметру на кожен шар порошку',
           icon: Zap,
         },
         {
           step: 3,
-          title: 'Тепловий вплив',
-          description: 'Одночасний нагрів для формування суцільної деталі',
+          title: 'Спікання (плавлення)',
+          description:
+            'Інфрачервоні лампи проходить над шаром. Чорні ділянки (де нанесені агенти) поглинають більше енергії і сплавляються, утворюючи твердий шар. Там, де агент не був нанесений, порошок залишається неплавленим',
           icon: Settings,
         },
         {
           step: 4,
           title: 'Охолодження та вилучення',
-          description: 'Контрольоване охолодження з автоматичним вилученням готових деталей',
+          description: 'Контрольоване охолодження з автоматизованим вилученням готових деталей',
           icon: Clock,
+        },
+        {
+          step: 5,
+          title: 'Очищення',
+          description: 'Очищення деталей від залишків порошку в дробеструменевій камері',
+          icon: BrushCleaning,
         },
       ],
       applications: [
@@ -110,11 +123,13 @@ export default async function Page({ params }: SlugPageProps) {
     },
     fdm: {
       title: 'FDM (Fused Deposition Modeling)',
-      description: 'Надійна технологія адитивного виробництва для створення функціональних прототипів та складних технічних деталей з інженерних термопластиків.',
+      description:
+        'Надійна технологія адитивного виробництва для створення функціональних прототипів та складних технічних деталей з інженерних термопластиків.',
       fullName: 'Stratasys Fortus 400mc/250mc',
       metadata: {
         title: 'FDM 3D-друк | Additive3D',
-        description: 'Stratasys FDM 3D-друк: функціональні прототипи та технічні деталі. Широкий вибір інженерних матеріалів, висока точність.',
+        description:
+          'Stratasys FDM 3D-друк: функціональні прототипи та технічні деталі. Широкий вибір інженерних матеріалів, висока точність.',
       },
       hero: {
         title: 'FDM 3D-друк',
@@ -152,24 +167,20 @@ export default async function Page({ params }: SlugPageProps) {
       process: [
         {
           step: 1,
-          title: 'Підготовка моделі',
-          description: 'Імпорт та аналіз 3D моделі з автоматичною перевіркою geometriї',
+          title: 'Підготовка 3D друку',
+          description:
+            'Імпорт та аналіз 3D моделі з автоматичною перевіркою геометрії. Автоматична генерація оптимальних траєкторій екструдера.',
           icon: FileText,
         },
         {
           step: 2,
-          title: 'Нарізка траєкторій',
-          description: 'Автоматична генерація оптимальних траєкторій екструдера',
-          icon: Cpu,
-        },
-        {
-          step: 3,
-          title: 'Пошарове нанесення',
-          description: 'Пошарове витиснення розплавленого матеріалу через сопло',
+          title: 'FDM процес',
+          description:
+            'Витиснення розплавленого матеріалу через сопло та пошарове нанесення за заданими траєкторіями.',
           icon: Layers,
         },
         {
-          step: 4,
+          step: 3,
           title: 'Пост-обробка',
           description: 'Вилучення підтримок та фінішна обробка поверхні',
           icon: Wrench,
@@ -178,10 +189,10 @@ export default async function Page({ params }: SlugPageProps) {
       applications: [
         'Машинобудування',
         'Авіаційна та автомобільна галузь',
-        'Медичні застосування',
+        'Кінцеві деталі',
         'Функціональні прототипи',
-        'Виробничі компоненти',
-        'Технологічна оснастка',
+        'Пристосування',
+        'Технологічне та модельне оснащення',
       ],
       images: [
         '/Technology/FDM/Fortus 400mc/fortus-400mc.jpg',
@@ -192,11 +203,13 @@ export default async function Page({ params }: SlugPageProps) {
     },
     lfam: {
       title: 'LFAM (Large Format Additive Manufacturing)',
-      description: 'Промислова платформа великоформатного адитивного виробництва для виготовлення великих та складних полімерних деталей з армованих матеріалів.',
+      description:
+        'Промислова платформа великоформатного адитивного виробництва для виготовлення великих та складних полімерних виробів з армованих термопластиків.',
       fullName: 'Caracol HERON 300 HV – High Versatility',
       metadata: {
         title: 'LFAM 3D-друк | Additive3D',
-        description: 'Caracol HERON 300 HV: великогабаритний 3D-друк. Робоча зона 3000×1500×1000 мм, продуктивність до 8 кг/год.',
+        description:
+          'Caracol HERON 300 HV: великогабаритний 3D-друк. Робоча зона 3000×1500×1000 мм, продуктивність до 8 кг/год.',
       },
       hero: {
         title: 'LFAM 3D-друк',
@@ -236,13 +249,14 @@ export default async function Page({ params }: SlugPageProps) {
         {
           step: 1,
           title: 'Підготовка матеріалу',
-          description: 'Автоматичне сушіння грануляту з підтримкою вологості',
+          description: 'Автоматичне сушіння грануляту з контролем вологості',
           icon: Package,
         },
         {
           step: 2,
           title: 'Планування траєкторій',
-          description: 'EIDOS Builder генерує оптимальні шляхи руху робота',
+          description:
+            'EIDOS Builder генерує оптимальні траєкторії руху робота та роботу екструдера',
           icon: Cpu,
         },
         {
@@ -253,8 +267,8 @@ export default async function Page({ params }: SlugPageProps) {
         },
         {
           step: 4,
-          title: 'Контроль якості',
-          description: 'Вбудовані системи контролю для моніторингу процесу',
+          title: 'Моніторинг якості',
+          description: 'Вбудовані системи контролю та моніторингу забезпечують якість виробу',
           icon: CheckCircle,
         },
       ],
@@ -280,10 +294,7 @@ export default async function Page({ params }: SlugPageProps) {
 
   return (
     <>
-      <HeroFancy
-        title={tech.hero.title}
-        description={tech.hero.description}
-      />
+      <HeroFancy title={tech.hero.title} description={tech.hero.description} />
 
       {/* Visual Showcase Section */}
       <section className="bg-base-100 relative isolate py-8 lg:py-16">
@@ -291,7 +302,7 @@ export default async function Page({ params }: SlugPageProps) {
 
         <div className="custom-container relative z-10">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden lg:col-span-2">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm lg:col-span-2">
               <figure className="aspect-video">
                 <Image
                   src={tech.images[0]}
@@ -303,7 +314,7 @@ export default async function Page({ params }: SlugPageProps) {
               </figure>
             </div>
 
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <Image
                   src={tech.images[1]}
@@ -315,7 +326,7 @@ export default async function Page({ params }: SlugPageProps) {
               </figure>
             </div>
 
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <Image
                   src={tech.images[2]}
@@ -341,10 +352,8 @@ export default async function Page({ params }: SlugPageProps) {
                 <h2 className="text-primary mb-6 text-2xl font-semibold lg:text-3xl">
                   {tech.title}
                 </h2>
-                <h3 className="text-base-content mb-4 text-xl font-medium">
-                  {tech.fullName}
-                </h3>
-                <div className="space-y-4 text-base-content/90 leading-relaxed text-base lg:text-lg">
+                <h3 className="text-base-content mb-4 text-xl font-medium">{tech.fullName}</h3>
+                <div className="text-base-content/90 space-y-4 text-base leading-relaxed lg:text-lg">
                   <p>{tech.description}</p>
                 </div>
               </div>
@@ -359,9 +368,7 @@ export default async function Page({ params }: SlugPageProps) {
 
         <div className="custom-container relative z-10">
           <div className="mb-12 text-center">
-            <h2 className="text-primary text-3xl font-bold lg:text-4xl">
-              Переваги технології
-            </h2>
+            <h2 className="text-primary text-3xl font-bold lg:text-4xl">Переваги технології</h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed">
               Ключові переваги, що роблять {tech.title} ідеальним вибором
             </p>
@@ -380,11 +387,9 @@ export default async function Page({ params }: SlugPageProps) {
                       <div className="bg-primary/10 text-primary rounded-lg p-3">
                         <Icon className="size-6" />
                       </div>
-                      <h3 className="text-primary text-lg font-semibold">
-                        {feature.title}
-                      </h3>
+                      <h3 className="text-primary text-lg font-semibold">{feature.title}</h3>
                     </div>
-                    <p className="text-base-content/80 leading-relaxed text-sm">
+                    <p className="text-base-content/80 text-sm leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -429,9 +434,7 @@ export default async function Page({ params }: SlugPageProps) {
 
         <div className="custom-container relative z-10">
           <div className="mb-12 text-center">
-            <h2 className="text-primary text-3xl font-bold lg:text-4xl">
-              Процес роботи
-            </h2>
+            <h2 className="text-primary text-3xl font-bold lg:text-4xl">Процес роботи</h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed">
               Як працює технологія {tech.title}
             </p>
@@ -449,21 +452,15 @@ export default async function Page({ params }: SlugPageProps) {
                     <div className="flex gap-6">
                       <div className="flex-shrink-0">
                         <div className="bg-primary/10 flex size-12 items-center justify-center rounded-lg">
-                          <span className="text-primary text-xl font-bold">
-                            {step.step}
-                          </span>
+                          <span className="text-primary text-xl font-bold">{step.step}</span>
                         </div>
                       </div>
                       <div className="flex-1">
                         <div className="mb-3 flex items-center gap-3">
                           <Icon className="text-primary size-5" />
-                          <h3 className="text-primary text-lg font-semibold">
-                            {step.title}
-                          </h3>
+                          <h3 className="text-primary text-lg font-semibold">{step.title}</h3>
                         </div>
-                        <p className="text-base-content/90 leading-relaxed">
-                          {step.description}
-                        </p>
+                        <p className="text-base-content/90 leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   </div>
@@ -485,7 +482,7 @@ export default async function Page({ params }: SlugPageProps) {
                 <h2 className="text-primary mb-6 text-2xl font-semibold lg:text-3xl">
                   Галузі застосування
                 </h2>
-                <p className="text-base-content/90 mb-6 leading-relaxed text-lg">
+                <p className="text-base-content/90 mb-6 text-lg leading-relaxed">
                   Технологія {tech.title} ідеально підходить для:
                 </p>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -510,7 +507,10 @@ export default async function Page({ params }: SlugPageProps) {
           <div className="custom-container relative z-10">
             <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
               {tech.images.slice(3).map((image, index) => (
-                <div key={index} className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+                <div
+                  key={index}
+                  className="card bg-base-200 border-base-300 overflow-hidden shadow-sm"
+                >
                   <figure className="aspect-video">
                     <Image
                       src={image}
@@ -538,12 +538,11 @@ export default async function Page({ params }: SlugPageProps) {
                 <h3 className="text-primary mb-4 text-2xl font-semibold">
                   Чому обрати {tech.title}
                 </h3>
-                <div className="space-y-4 text-base-content/90 leading-relaxed text-lg">
+                <div className="text-base-content/90 space-y-4 text-lg leading-relaxed">
                   <p>
-                    {tech.title} — це ідеальне рішення для професійного виробництва,
-                    що поєднує високу точність, швидкість та надійність.
-                    Наша команда має багаторічний досвід роботи з цією технологією
-                    та готова реалізувати найскладніші проекти.
+                    {slug === 'lfam'
+                      ? 'LFAM (Large Format Additive Manufacturing) — це інноваційне промислове рішення для виробництва великогабаритних виробів, що поєднує високу точність, швидкість та надійність. Наша команда пропонує виготовлення масштабних деталей на виробничій системі Caracol HERON 300 HV.'
+                      : `${tech.title} — це ідеальне рішення для професійного виробництва, що поєднує високу точність, швидкість та надійність. Наша команда має багаторічний досвід роботи з цією технологією та готова реалізувати найскладніші проекти.`}
                   </p>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="flex items-center gap-3">

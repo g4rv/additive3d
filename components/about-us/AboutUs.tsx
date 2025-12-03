@@ -42,8 +42,7 @@ export default function AboutUs() {
                 <div className="card-body p-6">
                   <h4 className="text-primary mb-3 text-xl font-semibold">MJF</h4>
                   <p className="text-base-content/90 text-base lg:text-lg">
-                    Multi Jet Fusion — швидке серійне виробництво полімерних деталей високої
-                    точності
+                    Multi Jet Fusion для швидкого серійного виробництва полімерних деталей високої точності
                   </p>
                 </div>
               </div>
@@ -52,8 +51,7 @@ export default function AboutUs() {
                 <div className="card-body p-6">
                   <h4 className="text-primary mb-3 text-xl font-semibold">FDM</h4>
                   <p className="text-base-content/90 text-base lg:text-lg">
-                    Fused Deposition Modeling — міцні функціональні прототипи та інструментальна
-                    оснастка
+                    Fused Deposition Modeling для серійного виробництва деталей, міцні функціональні прототипи, модельне та технологічне оснащення
                   </p>
                 </div>
               </div>
@@ -62,7 +60,7 @@ export default function AboutUs() {
                 <div className="card-body p-6">
                   <h4 className="text-primary mb-3 text-xl font-semibold">LFAM</h4>
                   <p className="text-base-content/90 text-base lg:text-lg">
-                    Large Format Additive Manufacturing — великогабаритні композитні форми та моделі
+                    Large Format Additive Manufacturing для великогабаритних виробів, форм та модельного оснащення
                   </p>
                 </div>
               </div>

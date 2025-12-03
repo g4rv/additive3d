@@ -1,17 +1,17 @@
-import { Metadata } from 'next';
-import {
-  Scan,
-  Target,
-  Eye,
-  FileText,
-  Settings,
-  CheckCircle,
-  BarChart3,
-  Layers,
-} from 'lucide-react';
+import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
+import {
+  BarChart3,
+  CheckCircle,
+  Eye,
+  FileText,
+  Layers,
+  Scan,
+  Settings,
+  Target,
+} from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
@@ -54,13 +54,13 @@ export default function GeometryInspectionPage() {
 
   const benefits = [
     {
-      title: 'Контроль якості',
+      title: 'Контроль точності',
       description: 'Як одиничних прототипів, так і серійних виробів',
       icon: CheckCircle,
     },
     {
-      title: 'Виявлення неточностей',
-      description: 'Викликаних зношенням інструменту, похибками складання або технологічними відхиленнями',
+      title: 'Виявлення відхилень',
+      description: 'Викликаних зношенням інструменту, похибками збирання чи виробничого процесу',
       icon: Settings,
     },
     {
@@ -131,7 +131,7 @@ export default function GeometryInspectionPage() {
                     Інспекція відсканованих деталей — це процес порівняння отриманої 3D
                     моделі або хмари точок з еталонною CAD-моделлю чи технічними
                     кресленнями. Її головна мета — перевірка геометричної відповідності
-                    виробу проєктним параметрам, виявлення відхилень і контроль якості
+                    виробу проєктним параметрам, виявлення відхилень і контроль точності
                     виробництва.
                   </p>
                   <p>
@@ -207,7 +207,7 @@ export default function GeometryInspectionPage() {
               Переваги інспекції
             </h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed">
-              Інспекція дозволяє контролювати якість та виявляти відхилення
+              Інспекція дозволяє контролювати точність та виявляти відхилення
             </p>
           </div>
 
