@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 /**
  * Material properties interface for 3D printing materials
  */
@@ -25,7 +23,7 @@ export interface MaterialItem {
   /** Material name */
   name: string;
   /** Material category/technology */
-  fullname?: string
+  fullname?: string;
 
   technology: string;
   /** Brief description of material characteristics */

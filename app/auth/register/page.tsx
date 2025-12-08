@@ -170,7 +170,7 @@ export default function RegisterPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="firstName" className="text-base-content mb-2 block text-sm font-medium">
-                    Ім\'я *
+                    Ім&apos;я *
                   </label>
                   <input
                     type="text"

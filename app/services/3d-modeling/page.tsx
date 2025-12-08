@@ -99,7 +99,7 @@ export default function ThreeDModelingPage() {
             <div className="card bg-base-200 border-base-300 shadow-sm">
               <div className="card-body p-8 lg:p-12">
                 <h2 className="text-primary mb-6 text-2xl font-semibold lg:text-3xl">
-                  3D-моделювання: цифрове відтворення об'єкту
+                  3D-моделювання: цифрове відтворення об&apos;єкту
                 </h2>
                 <div className="text-base-content/90 space-y-4 text-base leading-relaxed lg:text-lg">
                   <p>

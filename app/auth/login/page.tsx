@@ -4,7 +4,6 @@ import { useState } from 'react';
 import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { Eye, EyeOff, Shield, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -13,7 +12,6 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const pathname = usePathname();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -173,7 +171,7 @@ export default function LoginPage() {
               disabled={isLoading}
             />
             <label htmlFor="remember" className="text-base-content/80 text-sm">
-              Запам\'ятати мене на 30 днів
+              Запам&apos;ятати мене на 30 днів
             </label>
           </div>
 

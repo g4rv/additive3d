@@ -210,7 +210,7 @@ export default function ForgotPasswordPage() {
             </button>
           </p>
           <p className="mt-2">
-            Для негайної допомоги зв\'яжіться з нашою{' '}
+            Для негайної допомоги зв&apos;яжіться з нашою{' '}
             <Link href="/contact" className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)]">
               службою підтримки
             </Link>

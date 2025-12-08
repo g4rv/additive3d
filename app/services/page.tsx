@@ -9,7 +9,6 @@ import {
   Wrench,
   Zap,
   Target,
-  Clock,
   Award,
   CheckCircle,
   Settings,
