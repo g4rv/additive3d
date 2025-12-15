@@ -1,16 +1,16 @@
 'use server';
 
+import { ROUTES } from '@/lib/constants';
 import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
 import { registerSchema, type RegisterFormData } from '@/lib/validation/schemas';
 import {
   extractFormData,
-  validateFormData,
   mapAuthError,
+  validateFormData,
   type FormState,
 } from '@/lib/validation/utils';
-import { ROUTES } from '@/lib/constants';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export async function signUp(
   prevState: FormState<RegisterFormData>,
@@ -38,7 +38,7 @@ export async function signUp(
 
   // Get origin from headers
   const headersList = await headers();
-  const host = headersList.get('host') || 'localhost:3000';
+  const host = headersList.get('host')
   const protocol = headersList.get('x-forwarded-proto') || 'http';
   const origin = `${protocol}://${host}`;
 
@@ -54,7 +54,7 @@ export async function signUp(
         phone_number,
         organization_name,
       },
-      emailRedirectTo: `${origin}${ROUTES.authCallback}?next=${ROUTES.dashboard}`,
+      emailRedirectTo: `${origin}${ROUTES.authCallback}`,
     },
   });
 
