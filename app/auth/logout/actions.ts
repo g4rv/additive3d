@@ -10,7 +10,7 @@ export async function signOut() {
 
   if (error) {
     console.error('Error signing out:', error);
-    return { error: 'Помилка виходу з системи' };
+    // Still redirect even on error to ensure user is logged out
   }
 
   redirect('/');
