@@ -25,7 +25,7 @@ export function extractFormData<T extends Record<string, unknown>>(
 }
 
 // Validate form data with Zod schema
-export function validateFormData<T extends z.ZodTypeAny>(
+export function validateFormData<T extends z.ZodType<Record<string, unknown>>>(
   schema: T,
   data: unknown
 ):
@@ -38,21 +38,22 @@ export function validateFormData<T extends z.ZodTypeAny>(
     return { success: true, data: result.data };
   }
 
-  const errors = result.error.flatten().fieldErrors;
-  const fieldKeys = Object.keys(errors);
+  const formattedErrors = result.error.format();
+  const fieldKeys = Object.keys(formattedErrors).filter(key => key !== '_errors') as Array<keyof z.infer<T>>;
 
   // Get first error message
   const firstError = fieldKeys.reduce<string>((acc, key) => {
     if (acc) return acc;
-    const errorArray = errors[key];
-    return errorArray?.[0] || '';
+    const fieldError = formattedErrors[key] as { _errors?: string[] };
+    return fieldError?._errors?.[0] || '';
   }, '');
 
   // Map field errors
-  const fieldErrors: Record<string, string> = {};
-  for (const [key, value] of Object.entries(errors)) {
-    if (value && value[0]) {
-      fieldErrors[key] = value[0];
+  const fieldErrors: Partial<Record<keyof z.infer<T>, string>> = {};
+  for (const key of fieldKeys) {
+    const fieldError = formattedErrors[key] as { _errors?: string[] };
+    if (fieldError?._errors?.[0]) {
+      fieldErrors[key] = fieldError._errors[0];
     }
   }
 

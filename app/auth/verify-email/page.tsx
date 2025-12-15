@@ -66,7 +66,7 @@ export default async function VerifyEmailPage() {
               <p className="text-sm text-base-content/70">
                 <strong className="text-base-content">Не отримали листа?</strong>
                 <br />
-                Перевірте папку "Спам" або зачекайте кілька хвилин. Якщо лист не прийшов, спробуйте
+                Перевірте папку &quot;Спам&quot; або зачекайте кілька хвилин. Якщо лист не прийшов, спробуйте
                 зареєструватися ще раз.
               </p>
             </div>

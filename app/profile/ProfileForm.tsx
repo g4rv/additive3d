@@ -5,14 +5,20 @@ import type { Profile } from '@/lib/types/auth';
 import { AlertCircle, Building2, CheckCircle2, Phone, User } from 'lucide-react';
 import { useActionState } from 'react';
 import { updateProfile } from './actions';
+import type { ProfileFormData } from '@/lib/validation/schemas';
+import type { FormState } from '@/lib/validation/utils';
 
 interface ProfileFormProps {
   profile: Profile;
 }
 
 export default function ProfileForm({ profile }: ProfileFormProps) {
-  const initial = { error: null, fieldErrors: {}, values: {}, success: null };
-  const [state, formAction, pending] = useActionState(updateProfile, initial);
+  const initial: FormState<ProfileFormData> = {
+    error: '',
+    fieldErrors: {},
+    values: {},
+  };
+  const [state, formAction] = useActionState(updateProfile, initial);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -37,7 +43,7 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
         {/* First Name Input */}
         <div className="flex flex-col gap-2">
           <label htmlFor="first_name" className="text-sm font-medium">
-            Ім'я
+            Ім&apos;я
           </label>
           <div className="relative">
             <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
