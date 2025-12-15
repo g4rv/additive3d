@@ -1,18 +1,9 @@
-import { Metadata } from 'next';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
+import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { CONTACT_INFO, NAVIGATION } from '@/lib/constants';
-import {
-  FileUp,
-  Mail,
-  Phone,
-  Settings,
-  Zap,
-  Clock,
-  Shield,
-  CheckCircle,
-} from 'lucide-react';
-import BgPattern from '@/components/ui/bg-pattern';
+import { Clock, FileUp, Mail, Phone, Settings, Shield, Users, Zap } from 'lucide-react';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Калькулятор 3D-друку | Additive3D',
@@ -21,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default function CalculatorPage() {
+  // Access control is handled by middleware - only authenticated users with verified emails can access this page
   return (
     <>
       <HeroFancy
@@ -33,15 +25,13 @@ export default function CalculatorPage() {
         <BgPattern pattern="dots" opacity={0.1} className="absolute inset-0" />
 
         <div className="custom-container relative z-10">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-4xl">
             <div className="bg-primary/10 border-primary/20 mb-8 inline-flex items-center gap-2 rounded-full border px-6 py-3">
               <Zap className="text-primary h-5 w-5" />
               <span className="text-primary font-semibold">Незабаром</span>
             </div>
 
-            <h2 className="mb-6 text-3xl font-bold lg:text-4xl">
-              Онлайн-калькулятор у розробці
-            </h2>
+            <h2 className="mb-6 text-3xl font-bold lg:text-4xl">Онлайн-калькулятор у розробці</h2>
 
             <p className="text-base-content/80 mx-auto mb-12 max-w-2xl text-lg leading-relaxed">
               Ми працюємо над створенням потужного онлайн-калькулятора, який дозволить вам миттєво
@@ -102,11 +92,11 @@ export default function CalculatorPage() {
 
               <div className="bg-base-200 rounded-lg p-6 text-left">
                 <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <CheckCircle className="h-6 w-6" />
+                  <Users className="h-6 w-6" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold">Без реєстрації</h3>
+                <h3 className="mb-2 text-lg font-semibold">Персональний кабінет</h3>
                 <p className="text-base-content/70 text-sm">
-                  Користуйтесь калькулятором безкоштовно без створення облікового запису
+                  Історія розрахунків та персональні налаштування
                 </p>
               </div>
             </div>
@@ -141,11 +131,11 @@ export default function CalculatorPage() {
                 </ButtonLink>
               </div>
 
-              <div className="mt-8 text-sm text-base-content/60">
+              <div className="text-base-content/60 mt-8 text-sm">
                 <p>
                   <strong>Як отримати оцінку:</strong>
                 </p>
-                <ol className="mt-2 space-y-1 text-left mx-auto max-w-md">
+                <ol className="mx-auto mt-2 max-w-md space-y-1 text-left">
                   <li>1. Надішліть 3D модель на {CONTACT_INFO.email.label}</li>
                   <li>2. Вкажіть бажаний матеріал та кількість</li>
                   <li>3. Отримайте детальну пропозицію протягом 2-4 годин</li>
@@ -176,26 +166,18 @@ export default function CalculatorPage() {
               <div>
                 <div className="text-primary mb-4 text-5xl font-bold">24h</div>
                 <h3 className="mb-2 text-lg font-semibold">Швидка пропозиція</h3>
-                <p className="text-base-content/70">
-                  Отримайте детальний розрахунок протягом доби
-                </p>
+                <p className="text-base-content/70">Отримайте детальний розрахунок протягом доби</p>
               </div>
 
               <div>
                 <div className="text-primary mb-4 text-5xl font-bold">100%</div>
                 <h3 className="mb-2 text-lg font-semibold">Гарантія якості</h3>
-                <p className="text-base-content/70">
-                  Контроль якості на всіх етапах виробництва
-                </p>
+                <p className="text-base-content/70">Контроль якості на всіх етапах виробництва</p>
               </div>
             </div>
 
             <div className="mt-12">
-              <ButtonLink
-                href={NAVIGATION.services.href}
-                variant="outlined"
-                size="large"
-              >
+              <ButtonLink href={NAVIGATION.services.href} variant="outlined" size="large">
                 Дізнатися більше про послуги
               </ButtonLink>
             </div>

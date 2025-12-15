@@ -1,27 +1,17 @@
-'use client';
-
-import useIsomorphicLayoutEffect from '@/hooks/useIsomorphicLayoutEffect';
-import useMediaQuery from '@/hooks/useMediaQuery';
-import { MAIN_NAVIGATION_LIST, SCREEN_BREAKPOINTS } from '@/lib/constants';
+import { MAIN_NAVIGATION_LIST } from '@/lib/constants';
+import { getCurrentUserWithProfile } from '@/lib/supabase/queries';
 import { cn } from '@/utils/cn';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
-import DesktopNavigation from './DesktopNavigation';
-import type { MobileNavigationRef } from './MobileNavigation';
-import MobileNavigation from './MobileNavigation';
+import HeaderClient from './HeaderClient';
 
 interface HeaderProps {
   className?: string;
 }
-const Header = ({ className }: HeaderProps) => {
-  const isDesktop = useMediaQuery('above', SCREEN_BREAKPOINTS['2xl']);
-  const [isMounted, setIsMounted] = useState(false);
-  const mobileNavRef = useRef<MobileNavigationRef>(null);
 
-  useIsomorphicLayoutEffect(() => {
-    setIsMounted(true);
-  }, []);
+const Header = async ({ className }: HeaderProps) => {
+  // Fetch current user data
+  const userData = await getCurrentUserWithProfile();
 
   return (
     <header className={cn('bg-base-100 border-base-300 sticky top-0 z-50 border-b', className)}>
@@ -34,10 +24,7 @@ const Header = ({ className }: HeaderProps) => {
           <Image priority src="/logo.png" alt="Additive3D Логотип" width={140} height={44} />
         </Link>
 
-        {isDesktop && isMounted && <DesktopNavigation navItems={MAIN_NAVIGATION_LIST} />}
-        {!isDesktop && isMounted && (
-          <MobileNavigation ref={mobileNavRef} navItems={MAIN_NAVIGATION_LIST} />
-        )}
+        <HeaderClient navItems={MAIN_NAVIGATION_LIST} user={userData} />
       </nav>
     </header>
   );

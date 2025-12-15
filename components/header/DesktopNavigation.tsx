@@ -3,12 +3,15 @@
 import { ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
-import { NAVIGATION } from '@/lib/constants';
+import { ROUTES } from '@/lib/constants';
 import { NavItem } from '@/lib/types';
+import { HeaderUser } from '@/lib/types/user';
 import ButtonLink from '../ui/button-link';
+import ProfileBar from './ProfileBar';
 
 interface DesktopNavigationProps {
   navItems: NavItem[];
+  user: HeaderUser;
 }
 
 const resetFocus = () => {
@@ -22,7 +25,7 @@ const resetFocus = () => {
   }
 };
 
-const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
+const DesktopNavigation = ({ navItems, user }: DesktopNavigationProps) => {
   const pathname = usePathname();
 
   return (
@@ -82,15 +85,23 @@ const DesktopNavigation = ({ navItems }: DesktopNavigationProps) => {
         })}
       </ul>
 
-      {/* Animated Login Button */}
+      {/* Animated Login/Profile Button */}
       <div>
-        <ButtonLink
-          href={NAVIGATION.login.href}
-          variant="secondary"
-          className="transition-all duration-300 hover:shadow-lg"
-        >
-          Вхід
-        </ButtonLink>
+        {user?.profile ? (
+          <ProfileBar
+            firstName={user.profile.first_name}
+            lastName={user.profile.last_name}
+            variant="desktop"
+          />
+        ) : (
+          <ButtonLink
+            href={ROUTES.login}
+            variant="secondary"
+            className="transition-all duration-300 hover:shadow-lg"
+          >
+            Вхід
+          </ButtonLink>
+        )}
       </div>
     </>
   );

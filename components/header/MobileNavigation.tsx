@@ -9,12 +9,15 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import useBodyLock from '@/hooks/useBodyLock';
 import useFocusTrap from '@/hooks/useFocusTrap';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import { NAVIGATION } from '@/lib/constants';
+import { ROUTES } from '@/lib/constants';
 import { NavItem } from '@/lib/types';
+import { HeaderUser } from '@/lib/types/user';
 import ButtonLink from '../ui/button-link';
+import ProfileBar from './ProfileBar';
 
 interface MobileNavigationProps {
   navItems: NavItem[];
+  user: HeaderUser;
 }
 
 export interface MobileNavigationRef {
@@ -22,7 +25,7 @@ export interface MobileNavigationRef {
 }
 
 const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
-  ({ navItems }, ref) => {
+  ({ navItems, user }, ref) => {
     const pathname = usePathname();
     const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set());
     const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -232,15 +235,26 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
               })}
             </ul>
 
-            <div className="border-base-300 mx-8 mt-auto border-t pt-6">
-              <ButtonLink
-                href={NAVIGATION.login.href}
-                variant="secondary"
-                className="w-full py-3 text-base"
-                onClick={handleClose}
-              >
-                Вхід
-              </ButtonLink>
+            <div className="mx-8 mt-auto">
+              {user?.profile ? (
+                <ProfileBar
+                  firstName={user.profile.first_name}
+                  lastName={user.profile.last_name}
+                  variant="mobile"
+                  onNavigate={handleClose}
+                />
+              ) : (
+                <div className="border-base-300 border-t pt-6">
+                  <ButtonLink
+                    href={ROUTES.login}
+                    variant="secondary"
+                    className="w-full py-3 text-base"
+                    onClick={handleClose}
+                  >
+                    Вхід
+                  </ButtonLink>
+                </div>
+              )}
             </div>
           </nav>
         </motion.div>

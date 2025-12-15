@@ -136,6 +136,38 @@ const NAVIGATION = {
     parent: null,
     order: 10,
   },
+  verifyEmail: {
+    label: 'Підтвердження пошти',
+    href: '/auth/verify-email',
+    parent: null,
+    order: 11,
+  },
+  authRequired: {
+    label: 'Потрібна авторизація',
+    href: '/auth/required',
+    parent: null,
+    order: 12,
+  },
+  authCallback: {
+    label: 'Зворотній виклик',
+    href: '/auth/callback',
+    parent: null,
+    order: 13,
+  },
+
+  // User pages
+  dashboard: {
+    label: 'Панель керування',
+    href: '/dashboard',
+    parent: null,
+    order: 13,
+  },
+  profile: {
+    label: 'Профіль',
+    href: '/profile',
+    parent: null,
+    order: 14,
+  },
 } as const;
 
 // ============================================================================
@@ -480,6 +512,45 @@ const EQUIPMENT_DATA = [
     url: '/equipment/heron-300-hv',
   },
 ];
+
+// ============================================================================
+// ROUTE HELPERS - Extract just the hrefs for easy access
+// ============================================================================
+
+export const ROUTES = {
+  // Services
+  services: NAVIGATION.services.href,
+  materials: NAVIGATION.materials.href,
+  equipment: NAVIGATION.equipment.href,
+  contact: NAVIGATION.contact.href,
+
+  // Auth
+  login: NAVIGATION.login.href,
+  register: NAVIGATION.register.href,
+  forgotPassword: NAVIGATION.forgotPassword.href,
+  verifyEmail: NAVIGATION.verifyEmail.href,
+  authRequired: NAVIGATION.authRequired.href,
+  authCallback: NAVIGATION.authCallback.href,
+
+  // User
+  dashboard: NAVIGATION.dashboard.href,
+  profile: NAVIGATION.profile.href,
+
+  // Services - detailed
+  '3dPrinting': NAVIGATION['3d-printing'].href,
+  '3dScanning': NAVIGATION['3d-scanning'].href,
+  '3dModeling': NAVIGATION['3d-modeling'].href,
+  dyeing: NAVIGATION.dyeing.href,
+  smoothing: NAVIGATION.smoothing.href,
+  reverseEngineering: NAVIGATION.reverseEngineering.href,
+  geometryInspection: NAVIGATION.geometryInspection.href,
+
+  // 3D Printing sub-pages
+  calculator: NAVIGATION.calculator.href,
+  mjf: NAVIGATION['3d-print-mjf'].href,
+  fdm: NAVIGATION['3d-print-fdm'].href,
+  lfam: NAVIGATION['3d-print-lfam'].href,
+} as const;
 
 // ============================================================================
 // EXPORTS - Single export point for all constants
