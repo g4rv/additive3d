@@ -19,7 +19,7 @@ export default async function DashboardPage() {
       <div className="w-full max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Панель керування</h1>
+          <h1 className="text-4xl font-bold mb-2">Профіль</h1>
           <p className="text-base-content/70">
             Вітаємо, {profile?.first_name} {profile?.last_name}!
           </p>

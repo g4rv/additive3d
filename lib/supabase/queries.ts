@@ -73,3 +73,21 @@ export async function updateUserProfile(
 
   return data
 }
+
+export async function getAllUsers(): Promise<Profile[]> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .order('email', { ascending: false })
+
+    console.log({log: 'users', data, error})
+
+  if (error) {
+    console.error('Error fetching all users:', error)
+    return []
+  }
+
+  return data || []
+}

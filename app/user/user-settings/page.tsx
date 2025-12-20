@@ -24,9 +24,9 @@ export default async function ProfilePage() {
             className="inline-flex items-center gap-2 text-sm text-base-content/70 hover:text-primary transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            Назад до панелі
+            Назад до профілю
           </Link>
-          <h1 className="text-4xl font-bold mb-2">Редагувати профіль</h1>
+          <h1 className="text-4xl font-bold mb-2">Налаштування профілю</h1>
           <p className="text-base-content/70">Оновіть свою особисту інформацію</p>
         </div>
 

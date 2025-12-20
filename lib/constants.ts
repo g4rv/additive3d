@@ -157,16 +157,28 @@ const NAVIGATION = {
 
   // User pages
   dashboard: {
-    label: 'Панель керування',
-    href: '/dashboard',
+    label: 'Профіль',
+    href: '/user/profile',
     parent: null,
     order: 13,
   },
   profile: {
-    label: 'Профіль',
-    href: '/profile',
+    label: 'Налаштування профілю',
+    href: '/user/user-settings',
     parent: null,
     order: 14,
+  },
+  adminDashboard: {
+    label: 'Адмін панель',
+    href: '/user/admin-dashboard',
+    parent: null,
+    order: 15,
+  },
+  adminMockManage: {
+    label: 'Mock: Управління',
+    href: '/user/admin-dashboard/mock-manage',
+    parent: null,
+    order: 16,
   },
 } as const;
 
@@ -535,6 +547,8 @@ export const ROUTES = {
   // User
   dashboard: NAVIGATION.dashboard.href,
   profile: NAVIGATION.profile.href,
+  adminDashboard: NAVIGATION.adminDashboard.href,
+  adminMockManage: NAVIGATION.adminMockManage.href,
 
   // Services - detailed
   '3dPrinting': NAVIGATION['3d-printing'].href,

@@ -6,6 +6,9 @@ import { ROUTES } from '@/lib/constants'
 // Define protected routes that require authentication AND email verification
 const protectedRoutes = [ROUTES.dashboard, ROUTES.profile]
 
+// Define admin routes that require admin role
+const adminRoutes = [ROUTES.adminDashboard, ROUTES.adminMockManage]
+
 // Define auth routes that should redirect if already authenticated
 const authRoutes = [ROUTES.login, ROUTES.register]
 
@@ -16,12 +19,13 @@ const verificationRoutes = [ROUTES.verifyEmail]
 const authRequiredRoutes = [ROUTES.calculator]
 
 export async function proxy(request: NextRequest) {
-  const { supabaseResponse, user } = await updateSession(request)
+  const { supabaseResponse, user, supabase } = await updateSession(request)
 
   const path = request.nextUrl.pathname
 
   // Check route types
   const isProtectedRoute = protectedRoutes.some((route) => path.startsWith(route))
+  const isAdminRoute = adminRoutes.some((route) => path.startsWith(route))
   const isAuthRoute = authRoutes.some((route) => path.startsWith(route))
   const isVerificationRoute = verificationRoutes.some((route) => path.startsWith(route))
   const isAuthRequiredRoute = authRequiredRoutes.some((route) => path.startsWith(route))
@@ -64,6 +68,37 @@ export async function proxy(request: NextRequest) {
   // Check email verification for protected routes
   if (isProtectedRoute && !user?.email_confirmed_at) {
     return NextResponse.redirect(new URL(ROUTES.verifyEmail, request.url))
+  }
+
+  // --- Admin Routes Logic ---
+  // Check if user is trying to access admin routes
+  if (isAdminRoute) {
+    // Not authenticated → redirect to login
+    if (!user) {
+      const loginUrl = new URL(ROUTES.login, request.url)
+      loginUrl.searchParams.set('redirect', path)
+      return NextResponse.redirect(loginUrl)
+    }
+
+    // Check email verification
+    if (!user.email_confirmed_at) {
+      return NextResponse.redirect(new URL(ROUTES.verifyEmail, request.url))
+    }
+
+    // Check admin role
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    if (profile?.role !== 'admin') {
+      // Not an admin → redirect to user dashboard
+      return NextResponse.redirect(new URL(ROUTES.dashboard, request.url))
+    }
+
+    // User is admin → allow access
+    return supabaseResponse
   }
 
   // --- Auth Routes Logic ---
