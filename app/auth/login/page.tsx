@@ -1,12 +1,16 @@
 'use client';
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
-import { useActionState } from 'react';
+import { useActionState, Suspense } from 'react';
 import { signIn } from './actions';
-import { Mail, Lock, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, ShieldCheck, CheckCircle } from 'lucide-react';
 import { ROUTES } from '@/lib/constants';
+import { useSearchParams } from 'next/navigation';
 
-export default function LoginPage() {
+function LoginForm() {
+  const searchParams = useSearchParams();
+  const successMessage = searchParams.get('message');
+
   const initial = {
     error: '',
     fieldErrors: {} as Record<string, string | undefined>,
@@ -26,6 +30,14 @@ export default function LoginPage() {
         {/* Login Card */}
         <div className="bg-base-200 rounded-box p-8 shadow-lg">
           <form action={formAction} className="flex flex-col gap-6">
+            {/* Success Message */}
+            {successMessage && (
+              <div className="alert alert-success">
+                <CheckCircle className="h-6 w-6" />
+                <span>{successMessage}</span>
+              </div>
+            )}
+
             {/* Error Message */}
             {state?.error && (
               <div className="alert alert-error">
@@ -87,6 +99,16 @@ export default function LoginPage() {
               )}
             </div>
 
+            {/* Forgot Password Link */}
+            <div className="text-right">
+              <a
+                href={ROUTES.forgotPassword}
+                className="text-primary hover:text-primary/80 text-sm transition-colors duration-[var(--duration-fast)]"
+              >
+                Забули пароль?
+              </a>
+            </div>
+
             {/* Submit Button */}
             <SubmitButton
               variant="secondary"
@@ -113,5 +135,13 @@ export default function LoginPage() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-no-header-screen flex items-center justify-center">Завантаження...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

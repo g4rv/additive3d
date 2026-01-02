@@ -45,6 +45,53 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          id: string
+          user_id: string
+          order_number: string
+          status: string
+          total_price: number
+          total_weight: number
+          files: Json
+          metadata: Json
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          order_number: string
+          status: string
+          total_price: number
+          total_weight: number
+          files: Json
+          metadata?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          order_number?: string
+          status?: string
+          total_price?: number
+          total_weight?: number
+          files?: Json
+          metadata?: Json
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'orders_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never

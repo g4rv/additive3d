@@ -82,10 +82,25 @@ export async function getAllUsers(): Promise<Profile[]> {
     .select('*')
     .order('email', { ascending: false })
 
-    console.log({log: 'users', data, error})
-
   if (error) {
     console.error('Error fetching all users:', error)
+    return []
+  }
+
+  return data || []
+}
+
+export async function getUserOrders(userId: string) {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error fetching user orders:', error)
     return []
   }
 

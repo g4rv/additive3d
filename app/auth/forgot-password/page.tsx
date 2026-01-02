@@ -1,51 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { Mail, ArrowLeft, CheckCircle, AlertCircle, Shield } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { sendPasswordResetEmail } from './actions';
+import SubmitButton from '@/components/ui/submit-button/SubmitButton';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setFormErrors({});
-
-    // Validate email
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const emailValue = formData.get('email') as string;
-    const errors: Record<string, string> = {};
-
-    if (!emailValue) {
-      errors.email = 'Електронна пошта обов\'язкова';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-      errors.email = 'Будь ласка, введіть правильну електронну адресу';
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      setIsLoading(false);
-      return;
-    }
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsLoading(false);
-    setIsSubmitted(true);
-    setEmail(emailValue);
+  const initial = {
+    error: '',
+    fieldErrors: {} as Record<string, string | undefined>,
+    values: {} as Record<string, string | undefined>,
+    success: undefined as string | undefined,
   };
+
+  const [state, formAction] = useActionState(sendPasswordResetEmail, initial);
+
+  // Watch for success state
+  useEffect(() => {
+    if (state?.success) {
+      setIsSubmitted(true);
+      setEmail(state.values?.email || '');
+    }
+  }, [state]);
 
   const handleReset = () => {
     setIsSubmitted(false);
     setEmail('');
-    setFormErrors({});
   };
 
   return (
@@ -101,7 +88,15 @@ export default function ForgotPasswordPage() {
 
         {!isSubmitted ? (
           /* Reset Form */
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form action={formAction} className="space-y-5">
+            {/* Error Message */}
+            {state?.error && (
+              <div className="alert alert-error">
+                <AlertCircle className="h-6 w-6" />
+                <span>{state.error}</span>
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="text-base-content mb-2 block text-sm font-medium">
                 Робоча електронна адреса
@@ -114,35 +109,32 @@ export default function ForgotPasswordPage() {
                   name="email"
                   autoComplete="email"
                   required
-                  aria-invalid={formErrors.email ? 'true' : 'false'}
-                  aria-describedby={formErrors.email ? 'email-error' : undefined}
-                  className="bg-base-200 text-base-content placeholder-base-content/50 w-full rounded-lg border border-base-300 pl-10 pr-4 py-3 text-[16px] transition-all duration-[var(--duration-normal)] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+                  defaultValue={state?.values?.email || ''}
+                  aria-invalid={state?.fieldErrors?.email ? 'true' : 'false'}
+                  aria-describedby={state?.fieldErrors?.email ? 'email-error' : undefined}
+                  className={`bg-base-200 text-base-content placeholder-base-content/50 w-full rounded-lg border pl-10 pr-4 py-3 text-[16px] transition-all duration-[var(--duration-normal)] focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                    state?.fieldErrors?.email
+                      ? 'border-error focus:border-error'
+                      : 'border-base-300 focus:border-primary'
+                  }`}
                   placeholder="ivan@company.com"
-                  disabled={isLoading}
                 />
               </div>
-              {formErrors.email && (
+              {state?.fieldErrors?.email && (
                 <div id="email-error" className="text-error mt-2 flex items-center gap-2 text-sm">
                   <AlertCircle size={14} />
-                  <span>{formErrors.email}</span>
+                  <span>{state.fieldErrors.email}</span>
                 </div>
               )}
             </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="text-primary-content bg-primary hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50 disabled:hover:bg-primary disabled:active:scale-100 w-full rounded-lg px-6 py-3 font-semibold transition-all duration-[var(--duration-fast)] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 focus:ring-offset-base-100"
-            >
-              {isLoading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="text-primary-content size-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                  Надсилання посилання...
-                </div>
-              ) : (
-                'Надіслати безпечне посилання'
-              )}
-            </button>
+            <SubmitButton
+              variant="primary"
+              size="large"
+              className="w-full"
+              text="Надіслати безпечне посилання"
+              pendingText="Надсилання посилання..."
+            />
           </form>
         ) : (
           /* Success State */
@@ -188,8 +180,7 @@ export default function ForgotPasswordPage() {
 
               <button
                 onClick={handleReset}
-                disabled={isLoading}
-                className="text-base-content/70 hover:text-base-content w-full rounded-lg px-6 py-2 text-sm transition-colors duration-[var(--duration-fast)] disabled:opacity-50"
+                className="text-base-content/70 hover:text-base-content w-full rounded-lg px-6 py-2 text-sm transition-colors duration-[var(--duration-fast)]"
               >
                 Надіслати на іншу адресу
               </button>
@@ -203,8 +194,7 @@ export default function ForgotPasswordPage() {
             Не отримали лист? Перевірте папку спам або{' '}
             <button
               onClick={isSubmitted ? handleReset : undefined}
-              disabled={isLoading}
-              className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)] disabled:opacity-50"
+              className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)]"
             >
               спробуйте знову
             </button>

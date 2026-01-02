@@ -73,7 +73,25 @@ export const profileSchema = z.object({
   organization_name: organizationField,
 });
 
+// Forgot password schema
+export const forgotPasswordSchema = z.object({
+  email: emailField,
+});
+
+// Reset password schema
+export const resetPasswordSchema = z
+  .object({
+    password: strongPasswordField,
+    confirm_password: z.string().min(1, ERROR_MESSAGES.CONFIRM_PASSWORD_REQUIRED),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: ERROR_MESSAGES.PASSWORD_MISMATCH,
+    path: ['confirm_password'],
+  });
+
 // TypeScript types derived from schemas
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type ProfileFormData = z.infer<typeof profileSchema>;
+export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;

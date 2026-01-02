@@ -136,11 +136,17 @@ const NAVIGATION = {
     parent: null,
     order: 10,
   },
+  resetPassword: {
+    label: 'Скинути пароль',
+    href: '/auth/reset-password',
+    parent: null,
+    order: 11,
+  },
   verifyEmail: {
     label: 'Підтвердження пошти',
     href: '/auth/verify-email',
     parent: null,
-    order: 11,
+    order: 12,
   },
   authRequired: {
     label: 'Потрібна авторизація',
@@ -540,6 +546,7 @@ export const ROUTES = {
   login: NAVIGATION.login.href,
   register: NAVIGATION.register.href,
   forgotPassword: NAVIGATION.forgotPassword.href,
+  resetPassword: NAVIGATION.resetPassword.href,
   verifyEmail: NAVIGATION.verifyEmail.href,
   authRequired: NAVIGATION.authRequired.href,
   authCallback: NAVIGATION.authCallback.href,

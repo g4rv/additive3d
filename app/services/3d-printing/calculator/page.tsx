@@ -1,9 +1,15 @@
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
-import { CONTACT_INFO, NAVIGATION } from '@/lib/constants';
-import { Clock, FileUp, Mail, Phone, Settings, Shield, Users, Zap } from 'lucide-react';
+import { NAVIGATION } from '@/lib/constants';
 import { Metadata } from 'next';
+import { CalculatorProvider } from './context/CalculatorContext';
+import FileUpload from './components/FileUpload';
+import FilesList from './components/FilesList';
+import CalculatorSummary from './components/CalculatorSummary';
+import PriceMultiplier from './components/PriceMultiplier';
+import ExportButton from './components/ExportButton';
+import SubmitOrderButton from './components/SubmitOrderButton';
 
 export const metadata: Metadata = {
   title: 'Калькулятор 3D-друку | Additive3D',
@@ -20,129 +26,34 @@ export default function CalculatorPage() {
         description="Отримайте миттєву оцінку вартості вашого проєкту"
       />
 
-      {/* Coming Soon Section */}
+      {/* Calculator Section */}
       <section className="bg-base-100 relative isolate py-16 lg:py-24">
         <BgPattern pattern="dots" opacity={0.1} className="absolute inset-0" />
 
         <div className="custom-container relative z-10">
-          <div className="mx-auto max-w-4xl">
-            <div className="bg-primary/10 border-primary/20 mb-8 inline-flex items-center gap-2 rounded-full border px-6 py-3">
-              <Zap className="text-primary h-5 w-5" />
-              <span className="text-primary font-semibold">Незабаром</span>
+          <CalculatorProvider>
+            {/* Upload Section */}
+            <div className="mb-12">
+              <FileUpload />
             </div>
 
-            <h2 className="mb-6 text-3xl font-bold lg:text-4xl">Онлайн-калькулятор у розробці</h2>
-
-            <p className="text-base-content/80 mx-auto mb-12 max-w-2xl text-lg leading-relaxed">
-              Ми працюємо над створенням потужного онлайн-калькулятора, який дозволить вам миттєво
-              отримати точну вартість 3D-друку просто завантаживши модель.
-            </p>
-
-            {/* Features Preview */}
-            <div className="mb-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <div className="bg-base-200 rounded-lg p-6 text-left">
-                <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <FileUp className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">Завантаження моделі</h3>
-                <p className="text-base-content/70 text-sm">
-                  Підтримка STL, STEP, OBJ та інших форматів 3D-моделей
-                </p>
-              </div>
-
-              <div className="bg-base-200 rounded-lg p-6 text-left">
-                <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <Settings className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">Налаштування параметрів</h3>
-                <p className="text-base-content/70 text-sm">
-                  Вибір матеріалу, технології, кількості та пост-обробки
-                </p>
-              </div>
-
-              <div className="bg-base-200 rounded-lg p-6 text-left">
-                <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <Zap className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">Миттєвий розрахунок</h3>
-                <p className="text-base-content/70 text-sm">
-                  Отримайте точну вартість та терміни за лічені секунди
-                </p>
-              </div>
-
-              <div className="bg-base-200 rounded-lg p-6 text-left">
-                <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <Clock className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">Оцінка термінів</h3>
-                <p className="text-base-content/70 text-sm">
-                  Автоматичний розрахунок часу виробництва для вашого замовлення
-                </p>
-              </div>
-
-              <div className="bg-base-200 rounded-lg p-6 text-left">
-                <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <Shield className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">Безпека даних</h3>
-                <p className="text-base-content/70 text-sm">
-                  Повна конфіденційність ваших файлів та проєктів
-                </p>
-              </div>
-
-              <div className="bg-base-200 rounded-lg p-6 text-left">
-                <div className="bg-primary/10 text-primary mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg">
-                  <Users className="h-6 w-6" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold">Персональний кабінет</h3>
-                <p className="text-base-content/70 text-sm">
-                  Історія розрахунків та персональні налаштування
-                </p>
+            {/* Controls */}
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+              <PriceMultiplier />
+              <div className="flex gap-4">
+                <ExportButton />
+                <SubmitOrderButton />
               </div>
             </div>
 
-            {/* Current Alternative */}
-            <div className="bg-base-200 rounded-lg p-8 lg:p-12">
-              <h3 className="mb-4 text-2xl font-bold">Отримайте розрахунок зараз</h3>
-              <p className="text-base-content/80 mx-auto mb-8 max-w-2xl">
-                Поки калькулятор у розробці, ви можете отримати детальну оцінку вартості та
-                консультацію від наших фахівців протягом 2-4 годин.
-              </p>
-
-              <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <ButtonLink
-                  href={CONTACT_INFO.email.link}
-                  variant="secondary"
-                  size="large"
-                  className="gap-2"
-                >
-                  <Mail className="h-5 w-5" />
-                  Надіслати модель на Email
-                </ButtonLink>
-
-                <ButtonLink
-                  href={CONTACT_INFO.phone.link}
-                  variant="outlined"
-                  size="large"
-                  className="gap-2"
-                >
-                  <Phone className="h-5 w-5" />
-                  Зателефонувати нам
-                </ButtonLink>
-              </div>
-
-              <div className="text-base-content/60 mt-8 text-sm">
-                <p>
-                  <strong>Як отримати оцінку:</strong>
-                </p>
-                <ol className="mx-auto mt-2 max-w-md space-y-1 text-left">
-                  <li>1. Надішліть 3D модель на {CONTACT_INFO.email.label}</li>
-                  <li>2. Вкажіть бажаний матеріал та кількість</li>
-                  <li>3. Отримайте детальну пропозицію протягом 2-4 годин</li>
-                </ol>
-              </div>
+            {/* Summary Stats */}
+            <div className="mb-12">
+              <CalculatorSummary />
             </div>
-          </div>
+
+            {/* Files Grid */}
+            <FilesList />
+          </CalculatorProvider>
         </div>
       </section>
 
