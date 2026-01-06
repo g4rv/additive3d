@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { sendPasswordResetEmail } from './actions';
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
 
-export default function ForgotPasswordPage() {
+function ForgotPasswordForm() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -243,5 +243,13 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ForgotPasswordPage() {
+  return (
+    <Suspense fallback={<div className="min-h-no-header-screen flex items-center justify-center">Loading...</div>}>
+      <ForgotPasswordForm />
+    </Suspense>
   );
 }

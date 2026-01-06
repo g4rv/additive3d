@@ -100,18 +100,11 @@ export async function changePassword(
   // Extract and validate form data
   const rawData = extractFormData<ChangePasswordFormData>(formData, [
     'current_password',
-    'new_password',
+    'password',
     'confirm_password',
   ]);
 
-  // Map new_password to password for validation
-  const dataForValidation = {
-    current_password: rawData.current_password,
-    password: rawData.new_password,
-    confirm_password: rawData.confirm_password,
-  };
-
-  const validation = validateFormData(changePasswordSchema, dataForValidation);
+  const validation = validateFormData(changePasswordSchema, rawData);
 
   if (!validation.success) {
     return validation.error;

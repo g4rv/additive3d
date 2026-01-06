@@ -71,7 +71,8 @@ export async function proxy(request: NextRequest) {
   }
 
   // --- Admin Routes Logic ---
-  // Check if user is trying to access admin routes
+  // Admin routes use route-level authorization (see lib/auth/route-protection.ts)
+  // Here we only check authentication and email verification
   if (isAdminRoute) {
     // Not authenticated → redirect to login
     if (!user) {
@@ -85,19 +86,7 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL(ROUTES.verifyEmail, request.url))
     }
 
-    // Check admin role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
-
-    if (profile?.role !== 'admin') {
-      // Not an admin → redirect to user dashboard
-      return NextResponse.redirect(new URL(ROUTES.dashboard, request.url))
-    }
-
-    // User is admin → allow access
+    // Role check happens at route level via requireAdmin()
     return supabaseResponse
   }
 

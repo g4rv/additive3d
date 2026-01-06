@@ -1,5 +1,5 @@
-import { getCurrentUserWithProfile, getAllUsers } from '@/lib/supabase/queries';
-import { redirect } from 'next/navigation';
+import { requireAdmin } from '@/lib/auth/route-protection';
+import { getAllUsers } from '@/lib/supabase/queries';
 import Link from 'next/link';
 import { ArrowLeft, User, Shield, AlertTriangle, Mail, Settings } from 'lucide-react';
 import { ROUTES } from '@/lib/constants';
@@ -7,11 +7,8 @@ import UserManagementRow from './UserManagementRow';
 import DeleteByIdForm from './DeleteByIdForm';
 
 export default async function MockManagePage() {
-  const userData = await getCurrentUserWithProfile();
-
-  if (!userData) {
-    redirect(ROUTES.login);
-  }
+  // Verify user is authenticated and has admin role
+  await requireAdmin();
 
   // Fetch all users
   const users = await getAllUsers();

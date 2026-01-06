@@ -47,7 +47,7 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
         {/* First Name Input */}
         <div className="flex flex-col gap-2">
           <label htmlFor="first_name" className="text-sm font-medium">
-            Ім&apos;я
+            Ім&apos;я <span className="text-error">*</span>
           </label>
           <div className="relative">
             <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -74,7 +74,7 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
         {/* Last Name Input */}
         <div className="flex flex-col gap-2">
           <label htmlFor="last_name" className="text-sm font-medium">
-            Прізвище
+            Прізвище <span className="text-error">*</span>
           </label>
           <div className="relative">
             <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -102,7 +102,7 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
       {/* Phone Input */}
       <div className="flex flex-col gap-2">
         <label htmlFor="phone_number" className="text-sm font-medium">
-          Номер телефону
+          Номер телефону <span className="text-error">*</span>
         </label>
         <div className="relative">
           <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">

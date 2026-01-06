@@ -10,6 +10,7 @@ export default function PasswordChangeForm() {
     error: '',
     fieldErrors: {} as Record<string, string | undefined>,
     values: {} as Record<string, string | undefined>,
+    success: undefined as string | undefined,
   };
   const [state, formAction] = useActionState(changePassword, initial);
 
@@ -77,7 +78,7 @@ export default function PasswordChangeForm() {
 
         {/* New Password */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="new_password" className="text-sm font-medium">
+          <label htmlFor="password" className="text-sm font-medium">
             Новий пароль
           </label>
           <div className="relative">
@@ -86,19 +87,19 @@ export default function PasswordChangeForm() {
             </div>
             <input
               type="password"
-              id="new_password"
-              name="new_password"
+              id="password"
+              name="password"
               autoComplete="new-password"
               className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
-                state?.fieldErrors?.new_password
+                state?.fieldErrors?.password
                   ? 'border-error focus:border-error'
                   : 'focus:border-primary border-transparent'
               }`}
               placeholder="Введіть новий пароль"
             />
           </div>
-          {state?.fieldErrors?.new_password && (
-            <p className="text-error text-xs">{state.fieldErrors.new_password}</p>
+          {state?.fieldErrors?.password && (
+            <p className="text-error text-xs">{state.fieldErrors.password}</p>
           )}
         </div>
 

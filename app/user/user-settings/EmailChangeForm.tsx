@@ -14,6 +14,7 @@ export default function EmailChangeForm({ currentEmail }: EmailChangeFormProps) 
     error: '',
     fieldErrors: {} as Record<string, string | undefined>,
     values: {} as Record<string, string | undefined>,
+    success: undefined as string | undefined,
   };
   const [state, formAction] = useActionState(changeEmail, initial);
 

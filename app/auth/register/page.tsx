@@ -51,7 +51,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="flex flex-col gap-2">
                 <label htmlFor="first_name" className="text-sm font-medium">
-                  Ім&apos;я
+                  Ім&apos;я <span className="text-error">*</span>
                 </label>
                 <div className="relative">
                   <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -77,7 +77,7 @@ export default function RegisterPage() {
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="last_name" className="text-sm font-medium">
-                  Прізвище
+                  Прізвище <span className="text-error">*</span>
                 </label>
                 <div className="relative">
                   <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -105,7 +105,7 @@ export default function RegisterPage() {
             {/* Email Input */}
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className="text-sm font-medium">
-                Електронна пошта
+                Електронна пошта <span className="text-error">*</span>
               </label>
               <div className="relative">
                 <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -132,7 +132,7 @@ export default function RegisterPage() {
             {/* Phone Number */}
             <div className="flex flex-col gap-2">
               <label htmlFor="phone_number" className="text-sm font-medium">
-                Номер телефону
+                Номер телефону <span className="text-error">*</span>
               </label>
               <div className="relative">
                 <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -187,7 +187,7 @@ export default function RegisterPage() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="flex flex-col gap-2">
                 <label htmlFor="password" className="text-sm font-medium">
-                  Пароль
+                  Пароль <span className="text-error">*</span>
                 </label>
                 <div className="relative">
                   <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
@@ -221,7 +221,7 @@ export default function RegisterPage() {
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="confirm_password" className="text-sm font-medium">
-                  Підтвердіть пароль
+                  Підтвердіть пароль <span className="text-error">*</span>
                 </label>
                 <div className="relative">
                   <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">

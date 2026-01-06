@@ -37,11 +37,13 @@ export const phoneField = z
   .min(1, ERROR_MESSAGES.PHONE_REQUIRED)
   .regex(/^\+?[\d\s\-\(\)]+$/, ERROR_MESSAGES.PHONE_INVALID);
 
+// Optional organization field - allows empty string or omitted
 export const organizationField = z
   .string()
-  .min(1, ERROR_MESSAGES.ORGANIZATION_REQUIRED)
-  .min(2, ERROR_MESSAGES.ORGANIZATION_MIN_LENGTH)
-  .max(100, ERROR_MESSAGES.ORGANIZATION_MAX_LENGTH);
+  .trim()
+  .max(100, ERROR_MESSAGES.ORGANIZATION_MAX_LENGTH)
+  .optional()
+  .or(z.literal(''));
 
 // Login schema
 export const loginSchema = z.object({
