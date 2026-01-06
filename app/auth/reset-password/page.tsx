@@ -1,14 +1,18 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import BgPattern from '@/components/ui/bg-pattern';
 import { Lock, Shield, AlertCircle, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { resetPassword } from './actions';
+import { resetPassword, checkRecoverySession } from './actions';
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
+import { useRouter } from 'next/navigation';
 
 export default function ResetPasswordPage() {
+  const router = useRouter();
+  const [isValidSession, setIsValidSession] = useState<boolean | null>(null);
+
   const initial = {
     error: '',
     fieldErrors: {} as Record<string, string | undefined>,
@@ -16,6 +20,49 @@ export default function ResetPasswordPage() {
   };
 
   const [state, formAction] = useActionState(resetPassword, initial);
+
+  // Check if user has a valid recovery session
+  useEffect(() => {
+    checkRecoverySession().then((isValid) => {
+      setIsValidSession(isValid);
+      if (!isValid) {
+        setTimeout(() => {
+          router.push('/auth/forgot-password?error=Посилання для скидання пароля застаріло або недійсне');
+        }, 3000);
+      }
+    });
+  }, [router]);
+
+  // Show loading state while checking session
+  if (isValidSession === null) {
+    return (
+      <div className="min-h-no-header-screen flex items-center justify-center bg-base-100">
+        <BgPattern pattern="dots" opacity={0.05} className="absolute inset-0" />
+        <div className="relative z-10 text-center">
+          <div className="loading loading-spinner loading-lg text-primary"></div>
+          <p className="text-base-content/70 mt-4">Перевірка посилання...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error if session is invalid
+  if (isValidSession === false) {
+    return (
+      <div className="min-h-no-header-screen flex items-center justify-center bg-base-100">
+        <BgPattern pattern="dots" opacity={0.05} className="absolute inset-0" />
+        <div className="relative z-10 w-full max-w-md px-4 py-8">
+          <div className="alert alert-error">
+            <AlertCircle className="h-6 w-6" />
+            <div>
+              <h3 className="font-semibold">Недійсне посилання</h3>
+              <p className="text-sm">Посилання для скидання пароля застаріло або вже було використано. Ви будете перенаправлені...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-no-header-screen flex items-center justify-center bg-base-100">

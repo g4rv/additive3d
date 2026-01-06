@@ -1,8 +1,8 @@
 'use client';
 
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useCalculator } from '../context/CalculatorContext';
 import StlViewer from './StlViewer';
-import { Trash2, Plus, Minus } from 'lucide-react';
 
 interface FileCardProps {
   fileId: string;
@@ -22,12 +22,12 @@ export default function FileCard({ fileId }: FileCardProps) {
       updateQuantity(file.id, num);
     }
   };
-
+  
   return (
-    <div className="card bg-base-100 shadow-xl overflow-hidden">
+    <div className="card bg-base-200 shadow-xl overflow-hidden border border-primary">
       {/* 3D Viewer */}
       <div className="relative h-48">
-        <StlViewer url={file.url} className="w-full h-full" />
+        <StlViewer url={file.url} className="w-full h-full" useGrid={false} />
 
         {/* Remove Button */}
         <button
@@ -40,18 +40,18 @@ export default function FileCard({ fileId }: FileCardProps) {
       </div>
 
       {/* Card Body */}
-      <div className="card-body bg-primary text-primary-content gap-4">
+      <div className="card-body bg-base-200 text-base-content gap-4">
         {/* File Info */}
         <div className="space-y-2">
-          <h3 className="card-title text-lg break-words">{file.name}</h3>
-          <p className="text-sm">Ціна/од: {file.pricePerUnit.toLocaleString('uk-UA')} грн</p>
-          <p className="text-sm">Вага/од: {file.modelWeight.toLocaleString('uk-UA')} г</p>
+          <h3 className="card-title text-lg wrap-break-word text-primary">{file.name}</h3>
+          <p className="text-sm">Ціна/од: <span className="text-primary font-semibold">{file.pricePerUnit.toLocaleString('uk-UA')} грн</span></p>
+          <p className="text-sm">Вага/од: <span className="text-primary font-semibold">{file.modelWeight.toLocaleString('uk-UA')} г</span></p>
 
           {/* Paint Checkbox */}
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
-              className="checkbox checkbox-sm bg-base-100"
+              className="checkbox checkbox-sm checkbox-primary"
               checked={file.includePaint}
               onChange={() => togglePaint(file.id)}
             />
@@ -64,7 +64,7 @@ export default function FileCard({ fileId }: FileCardProps) {
           <button
             onClick={() => decrementQuantity(file.id)}
             disabled={file.quantity <= 1}
-            className="btn btn-circle btn-sm btn-outline border-primary-content text-primary-content hover:bg-primary-content hover:text-primary"
+            className="btn btn-circle btn-sm btn-outline border-primary text-primary hover:bg-primary hover:text-base-100"
             aria-label="Зменшити кількість"
           >
             <Minus className="h-4 w-4" />
@@ -76,13 +76,13 @@ export default function FileCard({ fileId }: FileCardProps) {
             onChange={(e) => handleQuantityChange(e.target.value)}
             min="1"
             max="99999"
-            className="input input-sm w-20 text-center bg-base-100 text-base-content"
+            className="input input-sm w-20 text-center bg-base-300 text-base-content border-primary"
           />
 
           <button
             onClick={() => incrementQuantity(file.id)}
             disabled={file.quantity >= 99999}
-            className="btn btn-circle btn-sm btn-outline border-primary-content text-primary-content hover:bg-primary-content hover:text-primary"
+            className="btn btn-circle btn-sm btn-outline border-primary text-primary hover:bg-primary hover:text-base-100"
             aria-label="Збільшити кількість"
           >
             <Plus className="h-4 w-4" />
@@ -90,16 +90,16 @@ export default function FileCard({ fileId }: FileCardProps) {
         </div>
 
         {/* Totals */}
-        <div className="space-y-1 text-sm border-t border-primary-content/30 pt-3">
+        <div className="space-y-1 text-sm border-t border-primary/30 pt-3">
           <p className="flex justify-between">
             <span>Вага:</span>
-            <span className="font-semibold">
+            <span className="font-semibold text-primary">
               {(file.modelWeight * file.quantity).toLocaleString('uk-UA')} г
             </span>
           </p>
           <p className="flex justify-between">
             <span>Ціна:</span>
-            <span className="font-semibold">{file.totalPrice.toLocaleString('uk-UA')} грн</span>
+            <span className="font-semibold text-primary text-lg">{file.totalPrice.toLocaleString('uk-UA')} грн</span>
           </p>
         </div>
       </div>

@@ -139,7 +139,7 @@ export default async function DashboardPage() {
                   className="btn btn-primary btn-sm gap-2 w-full"
                 >
                   <Settings className="w-4 h-4" />
-                  Налаштування
+                  Налаштування профілю
                 </Link>
 
                 <form action={signOut} className="w-full">

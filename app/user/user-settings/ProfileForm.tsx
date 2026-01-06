@@ -21,7 +21,7 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
   const [state, formAction] = useActionState(updateProfile, initial);
 
   return (
-    <form action={formAction} className="flex flex-col gap-6">
+    <form action={formAction} className="flex flex-col gap-5">
       {/* Success Message */}
       {state?.success && (
         <div className="alert alert-success">
@@ -38,8 +38,12 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
         </div>
       )}
 
+      <p className="text-sm text-base-content/70">
+        Оновіть вашу контактну інформацію та дані організації
+      </p>
+
       {/* Name Fields Grid */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         {/* First Name Input */}
         <div className="flex flex-col gap-2">
           <label htmlFor="first_name" className="text-sm font-medium">

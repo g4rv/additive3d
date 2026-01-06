@@ -7,6 +7,7 @@ import {
   validateFormData,
   type FormState,
 } from '@/lib/validation/utils';
+import { headers } from 'next/headers';
 
 export async function sendPasswordResetEmail(
   prevState: FormState<ForgotPasswordFormData>,
@@ -24,26 +25,17 @@ export async function sendPasswordResetEmail(
 
   const supabase = await createClient();
 
-  // Check if email exists in profiles table
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('email')
-    .eq('email', email)
-    .single();
+  // Get origin from headers (works in both dev and production)
+  const headersList = await headers();
+  const host = headersList.get('host');
+  const protocol = headersList.get('x-forwarded-proto') || 'http';
+  const origin = `${protocol}://${host}`;
 
-  if (profileError || !profile) {
-    // Email is not registered
-    return {
-      error: 'Користувача з такою електронною поштою не знайдено',
-      fieldErrors: {
-        email: 'Ця електронна пошта не зареєстрована в системі',
-      },
-      values: rawData,
-    };
-  }
-
-  // Email exists, send password reset email
-  const redirectTo = `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`;
+  // Send password reset email
+  // Note: Supabase will only send the email if the user exists in auth.users
+  // This is secure - we don't reveal whether the email is registered or not
+  // Supabase will automatically add token_hash and type=recovery parameters
+  const redirectTo = `${origin}/auth/callback`;
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,
@@ -58,11 +50,12 @@ export async function sendPasswordResetEmail(
     };
   }
 
-  // Success - email was sent
+  // Success - always show success message for security
+  // (don't reveal whether the email exists or not)
   return {
     error: '',
     fieldErrors: {},
     values: rawData,
-    success: 'Лист успішно надіслано',
+    success: 'Якщо ця адреса зареєстрована, ви отримаєте лист для скидання пароля',
   };
 }

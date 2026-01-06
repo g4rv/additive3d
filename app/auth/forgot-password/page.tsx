@@ -1,6 +1,7 @@
 'use client';
 
 import { useActionState, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { Mail, ArrowLeft, CheckCircle, AlertCircle, Shield } from 'lucide-react';
@@ -10,8 +11,10 @@ import { sendPasswordResetEmail } from './actions';
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
 
 export default function ForgotPasswordPage() {
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [urlError, setUrlError] = useState<string | null>(null);
 
   const initial = {
     error: '',
@@ -21,6 +24,16 @@ export default function ForgotPasswordPage() {
   };
 
   const [state, formAction] = useActionState(sendPasswordResetEmail, initial);
+
+  // Check for error in URL params
+  useEffect(() => {
+    const error = searchParams.get('error');
+    if (error) {
+      setUrlError(error);
+      // Clear error after 5 seconds
+      setTimeout(() => setUrlError(null), 5000);
+    }
+  }, [searchParams]);
 
   // Watch for success state
   useEffect(() => {
@@ -89,7 +102,15 @@ export default function ForgotPasswordPage() {
         {!isSubmitted ? (
           /* Reset Form */
           <form action={formAction} className="space-y-5">
-            {/* Error Message */}
+            {/* URL Error Message */}
+            {urlError && (
+              <div className="alert alert-error">
+                <AlertCircle className="h-6 w-6" />
+                <span>{urlError}</span>
+              </div>
+            )}
+
+            {/* Form Error Message */}
             {state?.error && (
               <div className="alert alert-error">
                 <AlertCircle className="h-6 w-6" />

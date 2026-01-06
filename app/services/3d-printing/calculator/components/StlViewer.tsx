@@ -8,9 +8,22 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 interface StlViewerProps {
   url: string;
   className?: string;
+  useGrid?: boolean;
+  voidColor?: string;
+  modelPosition?: { x: number; y: number; z: number };
+  modelRotation?: { x: number; y: number; z: number };
+  modelColor?: string;
 }
 
-export default function StlViewer({ url, className = '' }: StlViewerProps) {
+export default function StlViewer({
+  url,
+  className = '',
+  useGrid = true,
+  voidColor = '#2d2d2d',
+  modelPosition = { x: 0, y: 0, z: 0 },
+  modelRotation = { x: 0, y: 0, z: 0 },
+  modelColor = '#ffd231',
+}: StlViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<{
     scene: THREE.Scene;
@@ -29,7 +42,7 @@ export default function StlViewer({ url, className = '' }: StlViewerProps) {
 
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf5f5f5);
+    scene.background = new THREE.Color(voidColor);
 
     // Camera setup
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
@@ -56,7 +69,7 @@ export default function StlViewer({ url, className = '' }: StlViewerProps) {
     scene.add(ambientLight);
 
     const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight1.position.set(1, 1, 1);
+    directionalLight1.position.set(3, 3, 3);
     directionalLight1.castShadow = true;
     directionalLight1.shadow.mapSize.width = 2048;
     directionalLight1.shadow.mapSize.height = 2048;
@@ -66,13 +79,17 @@ export default function StlViewer({ url, className = '' }: StlViewerProps) {
     directionalLight2.position.set(-1, -1, -1);
     scene.add(directionalLight2);
 
-    // Grid helper
-    const gridHelper = new THREE.GridHelper(200, 20, 0xcccccc, 0xe0e0e0);
-    gridHelper.receiveShadow = true;
-    scene.add(gridHelper);
+    // Grid helper - darker colors for better contrast
+    if (useGrid) {
+      const gridHelper = new THREE.GridHelper(200, 20, 0x555555, 0x888888);
+      gridHelper.receiveShadow = true;
+      scene.add(gridHelper);
+    }
 
-    // Axis helper
+    // Axis helper - subtle colors
     const axesHelper = new THREE.AxesHelper(50);
+    axesHelper.material.opacity = 0.5;
+    axesHelper.material.transparent = true;
     scene.add(axesHelper);
 
     // Store scene reference
@@ -89,11 +106,11 @@ export default function StlViewer({ url, className = '' }: StlViewerProps) {
           scene.remove(existingMesh);
         }
 
-        // Create material
+        // Create material - Gold/Yellow color matching primary brand color
         const material = new THREE.MeshPhongMaterial({
-          color: 0x0088ff,
-          specular: 0x111111,
-          shininess: 200,
+          color: modelColor,
+          specular: 0x444444,
+          shininess: 150,
         });
 
         // Create mesh
@@ -119,6 +136,10 @@ export default function StlViewer({ url, className = '' }: StlViewerProps) {
         camera.lookAt(0, 0, 0);
         controls.target.set(0, 0, 0);
         controls.update();
+
+        // Apply custom position and rotation (after auto-centering)
+        mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+        mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
 
         scene.add(mesh);
       },

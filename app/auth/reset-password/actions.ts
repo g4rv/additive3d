@@ -10,6 +10,20 @@ import {
 } from '@/lib/validation/utils';
 import { redirect } from 'next/navigation';
 
+export async function checkRecoverySession(): Promise<boolean> {
+  try {
+    const supabase = await createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+
+    // Check if session exists and user is authenticated
+    // During password recovery, Supabase creates a temporary session
+    return !!session?.user;
+  } catch (error) {
+    console.error('Recovery session check error:', error);
+    return false;
+  }
+}
+
 export async function resetPassword(
   prevState: FormState<ResetPasswordFormData>,
   formData: FormData
