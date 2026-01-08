@@ -92,6 +92,7 @@ const DesktopNavigation = ({ navItems, user }: DesktopNavigationProps) => {
             firstName={user.profile.first_name}
             lastName={user.profile.last_name}
             variant="desktop"
+            isAdmin={user.profile.role === 'admin'}
           />
         ) : (
           <ButtonLink

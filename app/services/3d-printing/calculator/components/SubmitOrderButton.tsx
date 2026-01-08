@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useCalculator } from '../context/CalculatorContext';
 import { Send } from 'lucide-react';
+import { uploadOrder } from '../actions';
 
 export default function SubmitOrderButton() {
   const { state } = useCalculator();
@@ -53,15 +54,10 @@ export default function SubmitOrderButton() {
       };
       formData.append('orderData', JSON.stringify(orderMetadata));
 
-      // Upload to Cloudflare R2
-      const response = await fetch('/api/upload-stl', {
-        method: 'POST',
-        body: formData,
-      });
+      // Upload to Cloudflare R2 via Server Action
+      const result = await uploadOrder(formData);
 
-      const result = await response.json();
-
-      if (!response.ok) {
+      if (!result.success) {
         throw new Error(result.error || 'Failed to upload files');
       }
 

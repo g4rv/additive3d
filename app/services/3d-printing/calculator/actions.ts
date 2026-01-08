@@ -1,11 +1,9 @@
+'use server';
+
 import { sendOrderConfirmationEmail } from '@/lib/email/send-order-email';
 import { createClient } from '@/lib/supabase/server';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { NextRequest, NextResponse } from 'next/server';
-
-// Route segment config - allow large file uploads
-export const runtime = 'nodejs';
-export const maxDuration = 60; // 60 seconds timeout
+import { revalidatePath } from 'next/cache';
 
 // Configure Cloudflare R2 client
 const r2Client = new S3Client({
@@ -17,11 +15,45 @@ const r2Client = new S3Client({
   },
 });
 
-
 const BUCKET_NAME = process.env.CLOUDFLARE_R2_BUCKET_NAME || '';
 const MAX_FILE_SIZE = 200 * 1024 * 1024; // 200MB
 
-export async function POST(request: NextRequest) {
+export interface OrderFileData {
+  name: string;
+  weight: number;
+  quantity: number;
+  includePaint: boolean;
+  pricePerUnit: number;
+  totalPrice: number;
+}
+
+export interface UploadOrderData {
+  totalPrice: number;
+  totalWeight: number;
+  priceMultiplier: number;
+  files: OrderFileData[];
+}
+
+export interface UploadOrderResult {
+  success: true;
+  order: {
+    id: string;
+    orderNumber: string;
+    totalPrice: number;
+    totalWeight: number;
+    files: Array<{ fileName: string; url: string; size: number }>;
+  };
+}
+
+export interface UploadOrderError {
+  success: false;
+  error: string;
+  details?: string;
+}
+
+export async function uploadOrder(
+  formData: FormData
+): Promise<UploadOrderResult | UploadOrderError> {
   try {
     // Verify user is authenticated
     const supabase = await createClient();
@@ -30,48 +62,41 @@ export async function POST(request: NextRequest) {
       error: authError,
     } = await supabase.auth.getUser();
 
-
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Parse form data with error handling
-    let formData: FormData;
-    try {
-      formData = await request.formData();
-    } catch (formError) {
-      console.error('FormData parsing error:', formError);
-      return NextResponse.json(
-        {
-          error: 'Failed to parse form data',
-          details: formError instanceof Error ? formError.message : 'Unknown error',
-          hint: 'Restart your dev server (npm run dev) and try again'
-        },
-        { status: 400 }
-      );
+      return {
+        success: false,
+        error: 'Unauthorized',
+        details: 'Please log in to submit an order',
+      };
     }
 
     const files = formData.getAll('files') as File[];
     const orderDataString = formData.get('orderData') as string;
 
     if (!files || files.length === 0) {
-      return NextResponse.json({ error: 'No files provided' }, { status: 400 });
+      return {
+        success: false,
+        error: 'No files provided',
+      };
     }
 
     if (!orderDataString) {
-      return NextResponse.json({ error: 'Order data missing' }, { status: 400 });
+      return {
+        success: false,
+        error: 'Order data missing',
+      };
     }
 
     // Parse order data
-    const orderData = JSON.parse(orderDataString);
+    const orderData: UploadOrderData = JSON.parse(orderDataString);
 
     // Validate file sizes
     const totalSize = files.reduce((sum, file) => sum + file.size, 0);
     if (totalSize > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: `Total file size exceeds ${MAX_FILE_SIZE / (1024 * 1024)}MB limit` },
-        { status: 400 }
-      );
+      return {
+        success: false,
+        error: `Total file size exceeds ${MAX_FILE_SIZE / (1024 * 1024)}MB limit`,
+      };
     }
 
     // Upload files to R2
@@ -82,10 +107,10 @@ export async function POST(request: NextRequest) {
     for (const file of files) {
       // Validate file type
       if (!file.name.toLowerCase().endsWith('.stl')) {
-        return NextResponse.json(
-          { error: `Invalid file type: ${file.name}. Only .stl files are allowed` },
-          { status: 400 }
-        );
+        return {
+          success: false,
+          error: `Invalid file type: ${file.name}. Only .stl files are allowed`,
+        };
       }
 
       // Create unique file path: orders/{userId}/{timestamp}/{filename}
@@ -103,7 +128,6 @@ export async function POST(request: NextRequest) {
         Metadata: {
           uploadedBy: userId,
           uploadedAt: new Date().toISOString(),
-          originalName: file.name,
         },
       });
 
@@ -123,7 +147,7 @@ export async function POST(request: NextRequest) {
     const orderNumber = `ORD-${timestamp}`;
 
     // Merge uploaded file URLs with order metadata
-    const filesWithUrls = orderData.files.map((fileData: any, index: number) => ({
+    const filesWithUrls = orderData.files.map((fileData, index) => ({
       ...fileData,
       url: uploadedFiles[index].url,
       fileSize: uploadedFiles[index].size,
@@ -149,10 +173,11 @@ export async function POST(request: NextRequest) {
 
     if (dbError) {
       console.error('Error saving order to Supabase:', dbError);
-      return NextResponse.json(
-        { error: 'Failed to save order', details: dbError.message },
-        { status: 500 }
-      );
+      return {
+        success: false,
+        error: 'Failed to save order',
+        details: dbError.message,
+      };
     }
 
     // Send confirmation email
@@ -169,10 +194,12 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       // Log error but don't fail the request - order is already saved
       console.error('Failed to send confirmation email:', emailError);
-      // You could add the order to a retry queue here
     }
 
-    return NextResponse.json({
+    // Revalidate any paths that might display orders
+    revalidatePath('/user/orders');
+
+    return {
       success: true,
       order: {
         id: order.id,
@@ -181,12 +208,13 @@ export async function POST(request: NextRequest) {
         totalWeight: order.total_weight,
         files: uploadedFiles,
       },
-    });
+    };
   } catch (error) {
     console.error('Error processing order:', error);
-    return NextResponse.json(
-      { error: 'Failed to process order', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    );
+    return {
+      success: false,
+      error: 'Failed to process order',
+      details: error instanceof Error ? error.message : 'Unknown error',
+    };
   }
 }

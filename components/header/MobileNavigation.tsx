@@ -242,6 +242,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
                   lastName={user.profile.last_name}
                   variant="mobile"
                   onNavigate={handleClose}
+                  isAdmin={user.profile.role === 'admin'}
                 />
               ) : (
                 <div className="border-base-300 border-t pt-6">

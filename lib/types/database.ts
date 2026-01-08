@@ -18,6 +18,7 @@ export type Database = {
           phone_number: string
           organization_name: string
           role: 'user' | 'admin'
+          ppg?: number
           created_at: string
           updated_at: string
         }
@@ -29,6 +30,7 @@ export type Database = {
           phone_number: string
           organization_name: string
           role?: 'user' | 'admin'
+          ppg?: number
           created_at?: string
           updated_at?: string
         }
@@ -40,6 +42,7 @@ export type Database = {
           phone_number?: string
           organization_name?: string
           role?: 'user' | 'admin'
+          ppg?: number
           created_at?: string
           updated_at?: string
         }

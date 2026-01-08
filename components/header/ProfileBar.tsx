@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { ChevronDown, User, LogOut, LayoutDashboard } from 'lucide-react';
+import { ChevronDown, User, LogOut, LayoutDashboard, Shield } from 'lucide-react';
 import ButtonLink from '../ui/button-link';
 import { ROUTES } from '@/lib/constants';
 import { signOut } from '@/app/auth/logout/actions';
@@ -12,9 +12,10 @@ interface ProfileBarProps {
   lastName: string;
   variant?: 'desktop' | 'mobile';
   onNavigate?: () => void;
+  isAdmin?: boolean;
 }
 
-const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate }: ProfileBarProps) => {
+const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAdmin = false }: ProfileBarProps) => {
   const pathname = usePathname();
   const fullName = `${firstName} ${lastName}`;
 
@@ -44,6 +45,18 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate }: Pr
             <LayoutDashboard className="w-4 h-4" />
             Панель керування
           </ButtonLink>
+
+          {isAdmin && (
+            <ButtonLink
+              href={ROUTES.adminDashboard}
+              variant="secondary"
+              className="w-full py-3 text-base justify-start gap-2"
+              onClick={onNavigate}
+            >
+              <Shield className="w-4 h-4" />
+              Адмін панель
+            </ButtonLink>
+          )}
 
           <form action={handleSignOut} className="w-full">
             <button
@@ -103,6 +116,19 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate }: Pr
             <LayoutDashboard className="w-4 h-4" />
             Панель керування
           </ButtonLink>
+
+          {isAdmin && (
+            <ButtonLink
+              href={ROUTES.adminDashboard}
+              active={pathname === ROUTES.adminDashboard}
+              className="hover:bg-base-200 p-3 text-left transition-all duration-200 flex items-center gap-2"
+              onMouseOver={resetFocus}
+              onClick={resetFocus}
+            >
+              <Shield className="w-4 h-4" />
+              Адмін панель
+            </ButtonLink>
+          )}
 
           <div className="border-base-300 border-t my-1" />
 

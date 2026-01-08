@@ -555,6 +555,8 @@ export const ROUTES = {
   dashboard: NAVIGATION.dashboard.href,
   profile: NAVIGATION.profile.href,
   adminDashboard: NAVIGATION.adminDashboard.href,
+  adminUsers: '/user/admin-dashboard/users',
+  adminOrders: '/user/admin-dashboard/orders',
   adminMockManage: NAVIGATION.adminMockManage.href,
 
   // Services - detailed
