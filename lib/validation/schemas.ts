@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ERROR_MESSAGES } from './error-messages';
+import { isValidPhoneNumber } from './utils';
 
 // Reusable field validators
 export const emailField = z
@@ -35,7 +36,10 @@ export const lastNameField = z
 export const phoneField = z
   .string()
   .min(1, ERROR_MESSAGES.PHONE_REQUIRED)
-  .regex(/^\+?[\d\s\-\(\)]+$/, ERROR_MESSAGES.PHONE_INVALID);
+  .refine(
+    (value) => isValidPhoneNumber(value),
+    { message: ERROR_MESSAGES.PHONE_INVALID }
+  );
 
 // Optional organization field - allows empty string or omitted
 export const organizationField = z

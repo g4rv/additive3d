@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Повторна автентифікація - Additive3D</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Inter', Arial, sans-serif; background-color: #161616; color: #f5f5f5;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #161616;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #262626; border-radius: 8px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #ffd231; padding: 40px 30px; text-align: center;">
+              <h1 style="margin: 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 28px; font-weight: 700; color: #161616;">
+                Additive3D
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 40px 30px;">
+              <h2 style="margin: 0 0 20px 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 24px; font-weight: 600; color: #ffd231;">
+                Підтвердження повторної автентифікації
+              </h2>
+
+              <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #f5f5f5;">
+                Для виконання цієї дії необхідно підтвердити вашу особу. Будь ласка, введіть код нижче в додатку.
+              </p>
+
+              <!-- OTP Code Large Display -->
+              <table cellpadding="0" cellspacing="0" style="margin: 30px 0; width: 100%;">
+                <tr>
+                  <td style="background-color: #2d2d2d; padding: 30px; border-radius: 8px; text-align: center; border: 2px solid #ffd231;">
+                    <p style="margin: 0 0 15px 0; font-size: 14px; color: #f5f5f5; text-transform: uppercase; letter-spacing: 1px;">
+                      Ваш код підтвердження
+                    </p>
+                    <p style="margin: 0; font-family: monospace; font-size: 36px; font-weight: 700; color: #ffd231; letter-spacing: 8px;">
+                      {{ .Token }}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Security Notice -->
+              <div style="margin: 30px 0; padding: 15px; background-color: #2d2d2d; border-radius: 4px; border-left: 4px solid #e33636;">
+                <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #f5f5f5;">
+                  🔒 Не передавайте цей код нікому. Цей код дійсний протягом 5 хвилин. Якщо ви не запитували цей код, зверніться до служби підтримки негайно.
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #161616; padding: 30px; text-align: center; border-top: 1px solid #2d2d2d;">
+              <p style="margin: 0 0 10px 0; font-size: 14px; color: #8b7355;">
+                © 2026 Additive3D. Усі права захищені.
+              </p>
+              <p style="margin: 0; font-size: 12px; color: #8b7355;">
+                Професійні послуги 3D-друку для вашого бізнесу
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

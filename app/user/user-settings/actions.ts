@@ -18,6 +18,14 @@ import {
   mapAuthError,
   type FormState,
 } from '@/lib/validation/utils';
+import {
+  checkRateLimit,
+  recordFailedAttempt,
+  recordSuccessfulAttempt,
+  getClientIp,
+  formatRateLimitError,
+} from '@/lib/rate-limit';
+import { logAuthEvent } from '@/lib/auth-logger';
 import { SUPABASE_ERROR_MESSAGES, ERROR_MESSAGES } from '@/lib/validation/error-messages';
 import { ROUTES } from '@/lib/constants';
 import { z } from 'zod';
@@ -110,6 +118,11 @@ export async function changePassword(
     return validation.error;
   }
 
+  // Get client info for logging
+  const headersList = await headers();
+  const clientIp = getClientIp(headersList);
+  const userAgent = headersList.get('user-agent') || 'Unknown';
+
   // Verify current password by trying to sign in
   const supabase = await createClient();
   const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -118,6 +131,18 @@ export async function changePassword(
   });
 
   if (signInError) {
+    // Log failed password change (wrong current password)
+    await logAuthEvent({
+      userId: user.id,
+      email: user.email!,
+      eventType: 'password_changed', // Failed
+      ipAddress: clientIp,
+      userAgent,
+      metadata: {
+        reason: 'incorrect_current_password',
+      },
+    });
+
     return {
       error: 'Неправильний поточний пароль',
       fieldErrors: {
@@ -133,12 +158,33 @@ export async function changePassword(
   });
 
   if (error) {
+    // Log failed password change (update error)
+    await logAuthEvent({
+      userId: user.id,
+      email: user.email!,
+      eventType: 'password_changed', // Failed
+      ipAddress: clientIp,
+      userAgent,
+      metadata: {
+        error: error.message,
+      },
+    });
+
     return {
       error: mapAuthError(error),
       fieldErrors: {},
       values: rawData,
     };
   }
+
+  // Log successful password change
+  await logAuthEvent({
+    userId: user.id,
+    email: user.email!,
+    eventType: 'password_changed', // Success
+    ipAddress: clientIp,
+    userAgent,
+  });
 
   // Success
   return {
@@ -189,11 +235,34 @@ export async function changeEmail(
     };
   }
 
-  // Get origin from headers
+  // Get origin from headers and client IP for rate limiting and logging
   const headersList = await headers();
   const host = headersList.get('host');
   const protocol = headersList.get('x-forwarded-proto') || 'http';
   const origin = `${protocol}://${host}`;
+  const clientIp = getClientIp(headersList);
+  const userAgent = headersList.get('user-agent') || 'Unknown';
+
+  // Check rate limit using both current email and IP
+  const emailRateLimit = await checkRateLimit(user.email!.toLowerCase(), 'email_change');
+  const ipRateLimit = await checkRateLimit(clientIp, 'email_change');
+
+  // If either email or IP is rate limited, block the attempt
+  if (!emailRateLimit.allowed) {
+    return {
+      error: formatRateLimitError(emailRateLimit, 'email_change'),
+      fieldErrors: {},
+      values: rawData,
+    };
+  }
+
+  if (!ipRateLimit.allowed) {
+    return {
+      error: formatRateLimitError(ipRateLimit, 'email_change'),
+      fieldErrors: {},
+      values: rawData,
+    };
+  }
 
   // Update email
   const supabase = await createClient();
@@ -205,6 +274,24 @@ export async function changeEmail(
   );
 
   if (error) {
+    // Record failed attempt and log event
+    await Promise.all([
+      recordFailedAttempt(user.email!.toLowerCase(), 'email_change'),
+      recordFailedAttempt(clientIp, 'email_change'),
+      // Log failed email change request
+      logAuthEvent({
+        userId: user.id,
+        email: user.email!,
+        eventType: 'email_change_requested', // Failed
+        ipAddress: clientIp,
+        userAgent,
+        metadata: {
+          new_email: new_email.toLowerCase(),
+          error: error.message,
+        },
+      }),
+    ]);
+
     return {
       error: mapAuthError(error),
       fieldErrors: {},
@@ -212,11 +299,29 @@ export async function changeEmail(
     };
   }
 
+  // Record successful attempt and log event (clears rate limit)
+  await Promise.all([
+    recordSuccessfulAttempt(user.email!.toLowerCase(), 'email_change'),
+    recordSuccessfulAttempt(clientIp, 'email_change'),
+    // Log email change request initiated
+    logAuthEvent({
+      userId: user.id,
+      email: user.email!,
+      eventType: 'email_change_requested', // Initiated (pending verification)
+      ipAddress: clientIp,
+      userAgent,
+      metadata: {
+        new_email: new_email.toLowerCase(),
+        status: 'pending_verification',
+      },
+    }),
+  ]);
+
   // Success
   return {
     error: '',
     fieldErrors: {},
     values: rawData,
-    success: 'Лист з підтвердженням надіслано на нову адресу. Перевірте вашу пошту.',
+    success: 'Листи з підтвердженням надіслано на обидві адреси (поточну та нову). Підтвердіть обидва листи для завершення зміни.',
   };
 }

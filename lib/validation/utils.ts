@@ -83,9 +83,53 @@ export function mapAuthError(error: AuthError): string {
     return SUPABASE_ERROR_MESSAGES.USER_ALREADY_REGISTERED;
   }
 
+  if (message.includes('same') && message.includes('password')) {
+    return SUPABASE_ERROR_MESSAGES.SAME_PASSWORD;
+  }
+
   if (message.includes('password')) {
     return SUPABASE_ERROR_MESSAGES.PASSWORD_REQUIREMENTS;
   }
 
   return SUPABASE_ERROR_MESSAGES.GENERIC_ERROR;
+}
+
+// Validate phone number format
+export function isValidPhoneNumber(phoneNumber: string): boolean {
+  // Remove all formatting characters (spaces, hyphens, parentheses)
+  const cleaned = phoneNumber.replace(/[\s\-\(\)]/g, '');
+
+  // Check if it starts with + (international format)
+  const hasPlus = cleaned.startsWith('+');
+
+  // Extract only digits
+  const digitsOnly = cleaned.replace(/\D/g, '');
+
+  // Validation rules:
+  // 1. Must have actual digits (prevents gibberish like "---" or "(((")
+  if (digitsOnly.length === 0) {
+    return false;
+  }
+
+  // 2. For international format (+XXX...), need 10-15 digits
+  // 3. For local format, need 10-13 digits
+  const minDigits = hasPlus ? 10 : 10;
+  const maxDigits = hasPlus ? 15 : 13;
+
+  if (digitsOnly.length < minDigits || digitsOnly.length > maxDigits) {
+    return false;
+  }
+
+  // 4. If has plus sign, it must be at the beginning and followed by digits
+  if (phoneNumber.includes('+') && !hasPlus) {
+    return false;
+  }
+
+  // 5. The cleaned string should only contain + (at start) and digits
+  const validPattern = hasPlus ? /^\+\d+$/ : /^\d+$/;
+  if (!validPattern.test(cleaned)) {
+    return false;
+  }
+
+  return true;
 }

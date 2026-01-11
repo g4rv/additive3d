@@ -1,16 +1,18 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState, Suspense } from 'react';
 import BgPattern from '@/components/ui/bg-pattern';
 import { Lock, Shield, AlertCircle, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { resetPassword, checkRecoverySession } from './actions';
+import { resetPassword } from './actions';
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isValidSession, setIsValidSession] = useState<boolean | null>(null);
 
   const initial = {
@@ -23,15 +25,49 @@ export default function ResetPasswordPage() {
 
   // Check if user has a valid recovery session
   useEffect(() => {
-    checkRecoverySession().then((isValid) => {
-      setIsValidSession(isValid);
-      if (!isValid) {
+    const checkSession = async () => {
+      // Check for recovery flag from callback
+      const recoveryFlag = searchParams.get('recovery');
+
+      if (!recoveryFlag) {
+        // No recovery flag, redirect to forgot password
+        setIsValidSession(false);
         setTimeout(() => {
           router.push('/auth/forgot-password?error=Посилання для скидання пароля застаріло або недійсне');
         }, 3000);
+        return;
+      }
+
+      // Verify user has an active session after OTP verification
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        setIsValidSession(false);
+        setTimeout(() => {
+          router.push('/auth/forgot-password?error=Посилання для скидання пароля застаріло або недійсне');
+        }, 3000);
+        return;
+      }
+
+      setIsValidSession(true);
+    };
+
+    checkSession();
+
+    // Listen for PASSWORD_RECOVERY event (best practice from Supabase docs)
+    const supabase = createClient();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        // User is in password recovery mode
+        setIsValidSession(true);
       }
     });
-  }, [router]);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router, searchParams]);
 
   // Show loading state while checking session
   if (isValidSession === null) {
@@ -222,5 +258,19 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="min-h-no-header-screen flex items-center justify-center bg-base-100">
+      <BgPattern pattern="dots" opacity={0.05} className="absolute inset-0" />
+      <div className="relative z-10 text-center">
+        <div className="loading loading-spinner loading-lg text-primary"></div>
+        <p className="text-base-content/70 mt-4">Завантаження...</p>
+      </div>
+    </div>}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }

@@ -143,8 +143,21 @@ export async function uploadOrder(
       });
     }
 
-    // Generate order number
-    const orderNumber = `ORD-${timestamp}`;
+    // Generate order number - get next sequential number
+    const { count, error: countError } = await supabase
+      .from('orders')
+      .select('*', { count: 'exact', head: true });
+
+    if (countError) {
+      console.error('Error getting order count:', countError);
+      return {
+        success: false,
+        error: 'Failed to generate order number',
+        details: countError.message,
+      };
+    }
+
+    const orderNumber = `${(count || 0) + 1}`;
 
     // Merge uploaded file URLs with order metadata
     const filesWithUrls = orderData.files.map((fileData, index) => ({

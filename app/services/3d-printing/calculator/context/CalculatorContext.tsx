@@ -176,8 +176,21 @@ interface CalculatorContextType {
 const CalculatorContext = createContext<CalculatorContextType | undefined>(undefined);
 
 // Provider
-export function CalculatorProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(calculatorReducer, initialState);
+interface CalculatorProviderProps {
+  children: ReactNode;
+  initialPpg?: number;
+  userRole?: 'user' | 'admin';
+}
+
+export function CalculatorProvider({
+  children,
+  initialPpg = 40,
+  userRole = 'user'
+}: CalculatorProviderProps) {
+  const [state, dispatch] = useReducer(calculatorReducer, {
+    ...initialState,
+    priceMultiplier: initialPpg,
+  });
 
   const addFiles = async (files: File[]) => {
     const stlFiles: STLFile[] = await Promise.all(

@@ -43,8 +43,7 @@ export default function EmailChangeForm({ currentEmail }: EmailChangeFormProps) 
           <div>
             <h3 className="text-base-content font-semibold text-sm mb-1">Зміна електронної пошти</h3>
             <p className="text-base-content/70 text-xs">
-              Після зміни електронної пошти ви отримаєте лист для підтвердження на нову адресу.
-              Підтвердіть нову адресу, щоб завершити процес.
+              Для безпеки, вам потрібно підтвердити зміну на обох адресах: ви отримаєте листи для підтвердження як на поточну, так і на нову адресу. Підтвердіть обидва листи, щоб завершити процес.
             </p>
           </div>
         </div>

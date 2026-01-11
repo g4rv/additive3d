@@ -5,6 +5,7 @@ import { Download, ChevronDown, ChevronUp, Archive, Trash2 } from 'lucide-react'
 import { cn } from '@/utils/cn';
 import { updateOrderStatus, deleteOrder } from './actions';
 import { downloadFilesAsZip, downloadFile, FileToDownload } from '@/lib/utils/file-download';
+import { Popup, usePopup } from '@/components/ui/popup';
 
 interface OrderFile {
   name: string;
@@ -19,12 +20,14 @@ interface OrderFile {
 
 interface Order {
   id: string;
+  user_id: string;
   order_number: string;
   status: string;
   total_price: number;
+  total_weight: number;
   files: OrderFile[];
   created_at: string;
-  profiles: {
+  profiles?: {
     id: string;
     first_name: string;
     last_name: string;
@@ -41,6 +44,7 @@ const OrderRow = ({ order }: OrderRowProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const { popup, showConfirm, close } = usePopup();
 
   const files: OrderFile[] = Array.isArray(order.files) ? order.files : [];
 
@@ -97,11 +101,15 @@ const OrderRow = ({ order }: OrderRowProps) => {
 
   const handleDelete = async () => {
     // Confirm before deleting
-    const confirmed = window.confirm(
-      `Ви впевнені, що хочете видалити замовлення ${order.order_number}?\n\n` +
-      `Ця дія видалить замовлення та всі файли (${files.length} шт.) з Cloudflare R2.\n\n` +
-      `Цю дію неможливо скасувати!`
-    );
+    const confirmed = await showConfirm({
+      title: 'Видалити замовлення?',
+      message:
+        `Ви впевнені, що хочете видалити замовлення ${order.order_number}?\n\n` +
+        `Ця дія видалить замовлення та всі файли (${files.length} шт.) з Cloudflare R2.\n\n` +
+        `Цю дію неможливо скасувати!`,
+      confirmText: 'Видалити',
+      cancelText: 'Скасувати',
+    });
 
     if (!confirmed) return;
 
@@ -302,6 +310,19 @@ const OrderRow = ({ order }: OrderRowProps) => {
             </div>
           </td>
         </tr>
+      )}
+      {popup && (
+        <Popup
+          isOpen={popup.isOpen}
+          onClose={close}
+          title={popup.title}
+          message={popup.message}
+          type={popup.type}
+          confirmText={popup.confirmText}
+          cancelText={popup.cancelText}
+          onConfirm={popup.onConfirm}
+          onCancel={popup.onCancel}
+        />
       )}
     </>
   );

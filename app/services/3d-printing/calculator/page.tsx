@@ -10,6 +10,7 @@ import CalculatorSummary from './components/CalculatorSummary';
 import PriceMultiplier from './components/PriceMultiplier';
 import ExportButton from './components/ExportButton';
 import SubmitOrderButton from './components/SubmitOrderButton';
+import { requireAuth } from '@/lib/auth/route-protection';
 
 export const metadata: Metadata = {
   title: 'Калькулятор 3D-друку | Additive3D',
@@ -17,8 +18,12 @@ export const metadata: Metadata = {
     'Розрахуйте вартість вашого 3D-друку онлайн. Миттєва оцінка з можливістю завантаження моделі.',
 };
 
-export default function CalculatorPage() {
-  // Access control is handled by middleware - only authenticated users with verified emails can access this page
+export default async function CalculatorPage() {
+  // Fetch user data including PPG and role
+  const user = await requireAuth();
+  const userPpg = user.profile?.ppg ?? 40; // Default to 40 if not set
+  const userRole = user.profile?.role ?? 'user';
+
   return (
     <>
       <HeroFancy
@@ -31,7 +36,7 @@ export default function CalculatorPage() {
         <BgPattern pattern="dots" opacity={0.1} className="absolute inset-0" />
 
         <div className="custom-container relative z-10">
-          <CalculatorProvider>
+          <CalculatorProvider initialPpg={userPpg} userRole={userRole}>
             {/* Upload Section */}
             <div className="mb-12">
               <FileUpload />
@@ -39,7 +44,7 @@ export default function CalculatorPage() {
 
             {/* Controls */}
             <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-              <PriceMultiplier />
+              <PriceMultiplier userRole={userRole} />
               <div className="flex gap-4">
                 <ExportButton />
                 <SubmitOrderButton />

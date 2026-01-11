@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Profile } from '@/lib/types/auth';
 import { Trash2, Check, X } from 'lucide-react';
 import { updateUserRole, updateUserPpg, deleteUser } from './actions';
+import { Popup, usePopup } from '@/components/ui/popup';
 
 interface UserRowProps {
   user: Profile;
@@ -15,6 +16,7 @@ const UserRow = ({ user, currentUserId }: UserRowProps) => {
   const [ppgValue, setPpgValue] = useState((user.ppg ?? 40).toString());
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const { popup, showConfirm, close } = usePopup();
 
   const isOwnProfile = user.id === currentUserId;
 
@@ -80,11 +82,15 @@ const UserRow = ({ user, currentUserId }: UserRowProps) => {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(
-      `Ви впевнені, що хочете видалити користувача ${user.first_name} ${user.last_name}?\n\n` +
+    const confirmed = await showConfirm({
+      title: 'Видалити користувача?',
+      message:
+        `Ви впевнені, що хочете видалити користувача ${user.first_name} ${user.last_name}?\n\n` +
         `Email: ${user.email}\n\n` +
-        `Це дію НЕМОЖЛИВО скасувати!`
-    );
+        `Це дію НЕМОЖЛИВО скасувати!`,
+      confirmText: 'Видалити',
+      cancelText: 'Скасувати',
+    });
 
     if (!confirmed) return;
 
@@ -216,6 +222,19 @@ const UserRow = ({ user, currentUserId }: UserRowProps) => {
           Видалити
         </button>
       </td>
+      {popup && (
+        <Popup
+          isOpen={popup.isOpen}
+          onClose={close}
+          title={popup.title}
+          message={popup.message}
+          type={popup.type}
+          confirmText={popup.confirmText}
+          cancelText={popup.cancelText}
+          onConfirm={popup.onConfirm}
+          onCancel={popup.onCancel}
+        />
+      )}
     </tr>
   );
 };

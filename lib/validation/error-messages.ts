@@ -24,7 +24,7 @@ export const ERROR_MESSAGES = {
 
   // Phone
   PHONE_REQUIRED: "Номер телефону обов'язковий",
-  PHONE_INVALID: 'Невірний формат номера телефону',
+  PHONE_INVALID: 'Невірний номер телефону. Приклад: +380671234567',
 
   // Organization
   ORGANIZATION_REQUIRED: "Назва організації обов'язкова",
@@ -41,6 +41,7 @@ export const SUPABASE_ERROR_MESSAGES = {
   EMAIL_NOT_CONFIRMED: 'Будь ласка, підтвердіть свою електронну пошту',
   USER_ALREADY_REGISTERED: 'Користувач з такою поштою вже зареєстрований',
   PASSWORD_REQUIREMENTS: 'Пароль не відповідає вимогам безпеки',
+  SAME_PASSWORD: 'Новий пароль повинен відрізнятися від поточного',
   GENERIC_ERROR: 'Помилка. Спробуйте ще раз.',
   SIGN_IN_ERROR: 'Помилка входу. Спробуйте ще раз.',
   SIGN_UP_ERROR: 'Помилка реєстрації. Спробуйте ще раз.',

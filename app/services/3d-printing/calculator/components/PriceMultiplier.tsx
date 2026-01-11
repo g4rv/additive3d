@@ -2,8 +2,18 @@
 
 import { useCalculator } from '../context/CalculatorContext';
 
-export default function PriceMultiplier() {
+interface PriceMultiplierProps {
+  userRole: 'user' | 'admin';
+}
+
+export default function PriceMultiplier({ userRole }: PriceMultiplierProps) {
   const { state, setPriceMultiplier } = useCalculator();
+  const isAdmin = userRole === 'admin';
+
+  // Hide completely for default users
+  if (!isAdmin) {
+    return null;
+  }
 
   const handleChange = (value: string) => {
     const num = parseFloat(value);

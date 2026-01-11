@@ -154,6 +154,10 @@ export default function RegisterPage() {
               {state?.fieldErrors?.phone_number && (
                 <p className="text-error text-xs">{state.fieldErrors.phone_number}</p>
               )}
+              <p className="text-base-content/60 text-xs">
+                Увага: переконайтеся, що номер введено правильно. Він буде використовуватися для
+                зв&apos;язку з вами щодо замовлень.
+              </p>
             </div>
 
             {/* Organization Name */}

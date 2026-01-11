@@ -95,6 +95,69 @@ export type Database = {
           }
         ]
       }
+      auth_logs: {
+        Row: {
+          id: string
+          user_id: string | null
+          event_type: string
+          email: string
+          ip_address: string | null
+          user_agent: string | null
+          metadata: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          event_type: string
+          email: string
+          ip_address?: string | null
+          user_agent?: string | null
+          metadata?: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          event_type?: string
+          email?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          metadata?: Json
+          created_at?: string
+        }
+        Relationships: []
+      }
+      auth_rate_limits: {
+        Row: {
+          id: string
+          identifier: string
+          action: string
+          attempts: number
+          last_attempt_at: string
+          locked_until: string | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          identifier: string
+          action: string
+          attempts?: number
+          last_attempt_at?: string
+          locked_until?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          identifier?: string
+          action?: string
+          attempts?: number
+          last_attempt_at?: string
+          locked_until?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

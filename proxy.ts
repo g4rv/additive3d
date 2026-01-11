@@ -7,7 +7,7 @@ import { ROUTES } from '@/lib/constants'
 const protectedRoutes = [ROUTES.dashboard, ROUTES.profile]
 
 // Define admin routes that require admin role
-const adminRoutes = [ROUTES.adminDashboard, ROUTES.adminMockManage]
+const adminRoutes = [ROUTES.adminDashboard]
 
 // Define auth routes that should redirect if already authenticated
 const authRoutes = [ROUTES.login, ROUTES.register]

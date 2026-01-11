@@ -7,7 +7,16 @@ import {
   validateFormData,
   type FormState,
 } from '@/lib/validation/utils';
+import {
+  checkRateLimit,
+  recordFailedAttempt,
+  recordSuccessfulAttempt,
+  getClientIp,
+  formatRateLimitError,
+} from '@/lib/rate-limit';
+import { logAuthEvent } from '@/lib/auth-logger';
 import { headers } from 'next/headers';
+import { ROUTES } from '@/lib/constants';
 
 export async function sendPasswordResetEmail(
   prevState: FormState<ForgotPasswordFormData>,
@@ -23,19 +32,45 @@ export async function sendPasswordResetEmail(
 
   const { email } = validation.data;
 
-  const supabase = await createClient();
-
-  // Get origin from headers (works in both dev and production)
+  // Get origin from headers and client IP for rate limiting and logging
   const headersList = await headers();
   const host = headersList.get('host');
   const protocol = headersList.get('x-forwarded-proto') || 'http';
   const origin = `${protocol}://${host}`;
+  const clientIp = getClientIp(headersList);
+  const userAgent = headersList.get('user-agent') || 'Unknown';
+
+  // Check rate limit using both email and IP
+  const emailRateLimit = await checkRateLimit(email.toLowerCase(), 'password_reset');
+  const ipRateLimit = await checkRateLimit(clientIp, 'password_reset');
+
+  // If either email or IP is rate limited, block the attempt
+  if (!emailRateLimit.allowed) {
+    return {
+      error: formatRateLimitError(emailRateLimit, 'password_reset'),
+      fieldErrors: {},
+      values: rawData,
+    };
+  }
+
+  if (!ipRateLimit.allowed) {
+    return {
+      error: formatRateLimitError(ipRateLimit, 'password_reset'),
+      fieldErrors: {},
+      values: rawData,
+    };
+  }
+
+  const supabase = await createClient();
 
   // Send password reset email
   // Note: Supabase will only send the email if the user exists in auth.users
   // This is secure - we don't reveal whether the email is registered or not
-  // Supabase will automatically add token_hash and type=recovery parameters
-  const redirectTo = `${origin}/auth/callback`;
+  // The email template will include token_hash for stateless verification
+  const redirectTo = `${origin}${ROUTES.resetPassword}?recovery=true`;
+
+  console.log('Password reset - Origin:', origin);
+  console.log('Password reset - Redirect URL:', redirectTo);
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo,
@@ -43,12 +78,42 @@ export async function sendPasswordResetEmail(
 
   if (error) {
     console.error('Password reset error:', error);
+
+    // Record failed attempt and log event
+    await Promise.all([
+      recordFailedAttempt(email.toLowerCase(), 'password_reset'),
+      recordFailedAttempt(clientIp, 'password_reset'),
+      logAuthEvent({
+        email: email.toLowerCase(),
+        eventType: 'password_reset_requested', // Failed request
+        ipAddress: clientIp,
+        userAgent,
+        metadata: {
+          error: error.message,
+        },
+      }),
+    ]);
+
     return {
       error: 'Помилка надсилання листа. Спробуйте ще раз.',
       fieldErrors: {},
       values: rawData,
     };
   }
+
+  // Record the attempt and log (we don't know if email exists due to security)
+  // Always record as successful to prevent email enumeration
+  await Promise.all([
+    recordSuccessfulAttempt(email.toLowerCase(), 'password_reset'),
+    recordSuccessfulAttempt(clientIp, 'password_reset'),
+    // Log password reset request (even if email doesn't exist for security)
+    logAuthEvent({
+      email: email.toLowerCase(),
+      eventType: 'password_reset_requested', // Successful request
+      ipAddress: clientIp,
+      userAgent,
+    }),
+  ]);
 
   // Success - always show success message for security
   // (don't reveal whether the email exists or not)

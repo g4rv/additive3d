@@ -180,12 +180,6 @@ const NAVIGATION = {
     parent: null,
     order: 15,
   },
-  adminMockManage: {
-    label: 'Mock: Управління',
-    href: '/user/admin-dashboard/mock-manage',
-    parent: null,
-    order: 16,
-  },
 } as const;
 
 // ============================================================================
@@ -557,7 +551,6 @@ export const ROUTES = {
   adminDashboard: NAVIGATION.adminDashboard.href,
   adminUsers: '/user/admin-dashboard/users',
   adminOrders: '/user/admin-dashboard/orders',
-  adminMockManage: NAVIGATION.adminMockManage.href,
 
   // Services - detailed
   '3dPrinting': NAVIGATION['3d-printing'].href,
