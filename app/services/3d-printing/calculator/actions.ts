@@ -1,7 +1,7 @@
 'use server';
 
 import { sendOrderConfirmationEmail } from '@/lib/email/send-order-email';
-import { checkRateLimit, formatRateLimitError, recordSuccessfulAttempt } from '@/lib/rate-limit';
+import { checkFileSizeLimit, formatRateLimitError, recordFileSizeUsage } from '@/lib/rate-limit';
 import { createClient } from '@/lib/supabase/server';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { revalidatePath } from 'next/cache';
@@ -71,30 +71,7 @@ export async function uploadOrder(
       };
     }
 
-    // Check rate limiting for order submissions
-    const rateLimitResult = await checkRateLimit(user.email!, 'order_submission');
-    if (!rateLimitResult.allowed) {
-      return {
-        success: false,
-        error: formatRateLimitError(rateLimitResult, 'order_submission'),
-      };
-    }
-
-    // Check if user has given consent for file sharing
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('agree_to_share_files, has_not_signed_nda')
-      .eq('id', user.id)
-      .single();
-
-    if (!profile?.agree_to_share_files || !profile?.has_not_signed_nda) {
-      return {
-        success: false,
-        error: 'consent_required',
-        details: 'User must consent to file sharing before placing orders',
-      };
-    }
-
+    // Extract files early for rate limit check
     const files = formData.getAll('files') as File[];
     const orderDataString = formData.get('orderData') as string;
 
@@ -112,11 +89,43 @@ export async function uploadOrder(
       };
     }
 
+    // Check rate limiting for order submissions based on file size
+    let totalSize = files.reduce((sum, file) => sum + file.size, 0);
+    const rateLimitResult = await checkFileSizeLimit(user.id, totalSize);
+    if (!rateLimitResult.allowed) {
+      return {
+        success: false,
+        error: formatRateLimitError(rateLimitResult, 'order_submission'),
+      };
+    }
+
+    // Check if user has given consent for file sharing
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('agree_to_share_files, has_not_signed_nda')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (profileError || !profile) {
+      return {
+        success: false,
+        error: 'Profile not found',
+        details: 'Please complete your profile before placing orders',
+      };
+    }
+
+    if (!profile.agree_to_share_files || !profile.has_not_signed_nda) {
+      return {
+        success: false,
+        error: 'consent_required',
+        details: 'User must consent to file sharing before placing orders',
+      };
+    }
+
     // Parse order data
     const orderData: UploadOrderData = JSON.parse(orderDataString);
 
-    // Validate file sizes
-    const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+    // Validate file sizes (totalSize was already calculated for rate limit check)
     if (totalSize > MAX_FILE_SIZE) {
       return {
         success: false,
@@ -237,8 +246,8 @@ export async function uploadOrder(
     // Revalidate any paths that might display orders
     revalidatePath('/user/orders');
 
-    // Record successful order submission (resets rate limit counter)
-    await recordSuccessfulAttempt(user.email!, 'order_submission');
+    // Record successful order submission (tracks file size usage)
+    await recordFileSizeUsage(user.id, totalSize);
 
     return {
       success: true,

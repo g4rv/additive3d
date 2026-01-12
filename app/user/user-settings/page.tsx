@@ -5,6 +5,7 @@ import { ArrowLeft, User, Mail, Lock, Shield, Check, X } from 'lucide-react';
 import ProfileForm from './ProfileForm';
 import EmailChangeForm from './EmailChangeForm';
 import PasswordChangeForm from './PasswordChangeForm';
+import ConsentForm from './ConsentForm';
 import { ROUTES } from '@/lib/constants';
 import { Metadata } from 'next';
 
@@ -90,84 +91,12 @@ export default async function UserSettingsPage() {
               <div>
                 <h2 className="text-xl font-semibold">Налаштування конфіденційності</h2>
                 <p className="text-sm text-base-content/70">
-                  Статус згоди на обробку та передачу файлів
+                  Згода на обробку та передачу файлів для виконання замовлень
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              {/* Consent Status */}
-              <div className="bg-base-100 rounded-lg p-4">
-                <div className="space-y-3">
-                  {/* Agree to share files status */}
-                  <div className="flex items-start gap-3">
-                    {profile.agree_to_share_files ? (
-                      <div className="bg-success/10 p-1 rounded">
-                        <Check className="w-4 h-4 text-success" />
-                      </div>
-                    ) : (
-                      <div className="bg-base-300 p-1 rounded">
-                        <X className="w-4 h-4 text-base-content/40" />
-                      </div>
-                    )}
-                    <div className="flex-1">
-                      <p className="font-semibold">Згода на передачу файлів</p>
-                      <p className="text-sm text-base-content/70">
-                        {profile.agree_to_share_files
-                          ? 'Надано'
-                          : 'Не надано (необхідно для розміщення замовлень)'}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Has not signed NDA status */}
-                  <div className="flex items-start gap-3">
-                    {profile.has_not_signed_nda ? (
-                      <div className="bg-success/10 p-1 rounded">
-                        <Check className="w-4 h-4 text-success" />
-                      </div>
-                    ) : (
-                      <div className="bg-base-300 p-1 rounded">
-                        <X className="w-4 h-4 text-base-content/40" />
-                      </div>
-                    )}
-                    <div className="flex-1">
-                      <p className="font-semibold">Відсутність NDA</p>
-                      <p className="text-sm text-base-content/70">
-                        {profile.has_not_signed_nda
-                          ? 'Підтверджено'
-                          : 'Не підтверджено (необхідно для розміщення замовлень)'}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Consent date */}
-                  {profile.consent_given_at && (
-                    <div className="border-t border-base-300 pt-3 mt-3">
-                      <p className="text-sm text-base-content/60">
-                        Згода надана:{' '}
-                        {new Date(profile.consent_given_at).toLocaleDateString('uk-UA', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Info box */}
-              <div className="bg-info/10 border-info/30 border-l-4 rounded-lg p-4">
-                <p className="text-sm text-base-content/90">
-                  <strong>Важливо:</strong> Згода на обробку файлів необхідна для розміщення
-                  замовлень. Ваші файли можуть бути передані партнерам-виробникам для виконання
-                  замовлення. Згоду можна надати при першій спробі розміщення замовлення.
-                </p>
-              </div>
-            </div>
+            <ConsentForm profile={profile} />
           </div>
         </div>
       </div>

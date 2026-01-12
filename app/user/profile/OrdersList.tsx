@@ -7,7 +7,6 @@ import { ROUTES } from '@/lib/constants';
 import { Popup, usePopup } from '@/components/ui/popup';
 import { useToast } from '@/components/ui/toast';
 import { deleteUserOrder } from './actions';
-import { useRealtimeOrders } from '@/lib/hooks/useRealtimeOrders';
 
 interface OrderFile {
   name: string;
@@ -44,21 +43,7 @@ interface OrdersListProps {
 export default function OrdersList({ orders: initialOrders, userId }: OrdersListProps) {
   const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null);
   const { popup, showConfirm, close } = usePopup();
-  const { success: showSuccessToast, error: showErrorToast, info, ToastContainer } = useToast();
-
-  // Use real-time updates filtered by userId
-  const orders = useRealtimeOrders(initialOrders, {
-    userId,
-    onOrderInserted: (order) => {
-      info('Нове замовлення', `Замовлення ${order.order_number} створено`);
-    },
-    onOrderUpdated: (order) => {
-      info('Замовлення оновлено', `Статус замовлення ${order.order_number} змінено`);
-    },
-    onOrderDeleted: (orderId) => {
-      info('Замовлення видалено', 'Замовлення було видалено');
-    },
-  });
+  const { success: showSuccessToast, error: showErrorToast, ToastContainer } = useToast();
 
   const getStatusBadge = (status: string) => {
     const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
@@ -80,7 +65,7 @@ export default function OrdersList({ orders: initialOrders, userId }: OrdersList
   };
 
   const canDeleteOrder = (status: string) => {
-    // Users can delete orders that are pending, completed, or cancelled
+    // Users can delete initialOrders that are pending, completed, or cancelled
     // But NOT processing
     return ['pending', 'completed', 'cancelled'].includes(status);
   };
@@ -108,13 +93,14 @@ export default function OrdersList({ orders: initialOrders, userId }: OrdersList
 
     if (result.success) {
       showSuccessToast('Замовлення видалено', `Замовлення ${order.order_number} успішно видалено`);
-      // Real-time updates will automatically remove the order from the list
+      // Refresh the page to show updated orders
+      window.location.reload();
     } else {
       showErrorToast('Помилка видалення', result.error || 'Не вдалося видалити замовлення');
     }
   };
 
-  if (orders.length === 0) {
+  if (initialOrders.length === 0) {
     return (
       <div className="text-center py-12">
         <Package className="w-16 h-16 mx-auto text-base-content/30 mb-4" />
@@ -132,7 +118,7 @@ export default function OrdersList({ orders: initialOrders, userId }: OrdersList
   return (
     <>
       <div className="space-y-4">
-        {orders.map((order) => (
+        {initialOrders.map((order) => (
           <div
             key={order.id}
             className="bg-base-100 rounded-lg p-5 border border-base-300 hover:border-primary/50 transition-colors"

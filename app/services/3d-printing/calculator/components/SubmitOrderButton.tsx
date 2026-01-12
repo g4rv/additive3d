@@ -10,7 +10,7 @@ import ConsentModal from '@/components/ConsentModal';
 import { updateUserConsent } from '@/app/user/user-settings/actions';
 
 export default function SubmitOrderButton() {
-  const { state } = useCalculator();
+  const { state, clearAllFiles } = useCalculator();
   const [isUploading, setIsUploading] = useState(false);
   const [showConsentModal, setShowConsentModal] = useState(false);
   const { popup, showSuccess: showSuccessPopup, close } = usePopup();
@@ -74,7 +74,9 @@ export default function SubmitOrderButton() {
         throw new Error(result.error || 'Failed to upload files');
       }
 
-      // Success - Show detailed popup with order info
+      // Success - Clear files and show detailed popup with order info
+      clearAllFiles();
+
       showSuccessPopup(
         `Номер замовлення: ${result.order.orderNumber}\n` +
           `Кількість файлів: ${result.order.files.length}\n` +

@@ -29,7 +29,8 @@ type CalculatorAction =
   | { type: 'INCREMENT_QUANTITY'; payload: string }
   | { type: 'DECREMENT_QUANTITY'; payload: string }
   | { type: 'TOGGLE_PAINT'; payload: string }
-  | { type: 'SET_PRICE_MULTIPLIER'; payload: number };
+  | { type: 'SET_PRICE_MULTIPLIER'; payload: number }
+  | { type: 'CLEAR_ALL_FILES' };
 
 // Initial state
 const initialState: CalculatorState = {
@@ -154,6 +155,17 @@ function calculatorReducer(state: CalculatorState, action: CalculatorAction): Ca
       };
     }
 
+    case 'CLEAR_ALL_FILES': {
+      // Clean up all blob URLs
+      state.files.forEach((file) => {
+        URL.revokeObjectURL(file.url);
+      });
+      return {
+        ...state,
+        files: [],
+      };
+    }
+
     default:
       return state;
   }
@@ -169,6 +181,7 @@ interface CalculatorContextType {
   decrementQuantity: (id: string) => void;
   togglePaint: (id: string) => void;
   setPriceMultiplier: (multiplier: number) => void;
+  clearAllFiles: () => void;
   getTotalWeight: () => number;
   getTotalPrice: () => number;
 }
@@ -253,6 +266,10 @@ export function CalculatorProvider({
     dispatch({ type: 'SET_PRICE_MULTIPLIER', payload: multiplier });
   };
 
+  const clearAllFiles = () => {
+    dispatch({ type: 'CLEAR_ALL_FILES' });
+  };
+
   const getTotalWeight = () => {
     return state.files.reduce((sum, file) => sum + file.modelWeight * file.quantity, 0);
   };
@@ -272,6 +289,7 @@ export function CalculatorProvider({
         decrementQuantity,
         togglePaint,
         setPriceMultiplier,
+        clearAllFiles,
         getTotalWeight,
         getTotalPrice,
       }}

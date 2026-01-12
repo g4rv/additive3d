@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
@@ -90,12 +91,13 @@ interface ToastContainerProps {
 function ToastContainer({ toasts, onClose }: ToastContainerProps) {
   if (toasts.length === 0) return null;
 
-  return (
-    <div className="fixed top-0 right-0 z-50 p-4 space-y-3 pointer-events-none">
+  return createPortal(
+    <div className="fixed top-0 right-0 z-[9999] p-4 space-y-3 pointer-events-none">
       {toasts.map((toast) => (
         <ToastItem key={toast.id} {...toast} onClose={onClose} />
       ))}
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -104,6 +106,12 @@ let toastId = 0;
 
 export function useToast() {
   const [toasts, setToasts] = useState<(ToastConfig & { id: string })[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure we only render portal on client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const show = (config: ToastConfig) => {
     const id = config.id || `toast-${++toastId}`;
@@ -143,6 +151,6 @@ export function useToast() {
     info,
     close,
     closeAll,
-    ToastContainer: () => <ToastContainer toasts={toasts} onClose={close} />,
+    ToastContainer: mounted ? () => <ToastContainer toasts={toasts} onClose={close} /> : () => null,
   };
 }
