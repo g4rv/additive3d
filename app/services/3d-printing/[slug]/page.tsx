@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
     };
   }
 
-  const metadata = TECHNOLOGY_METADATA[slug];
+  const metadata = TECHNOLOGY_METADATA[slug as keyof typeof TECHNOLOGY_METADATA];
   return {
     title: metadata.title,
     description: metadata.description,
