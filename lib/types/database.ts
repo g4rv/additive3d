@@ -19,6 +19,9 @@ export type Database = {
           organization_name: string
           role: 'user' | 'admin'
           ppg?: number
+          agree_to_share_files?: boolean
+          has_not_signed_nda?: boolean
+          consent_given_at?: string
           created_at: string
           updated_at: string
         }
@@ -31,6 +34,9 @@ export type Database = {
           organization_name: string
           role?: 'user' | 'admin'
           ppg?: number
+          agree_to_share_files?: boolean
+          has_not_signed_nda?: boolean
+          consent_given_at?: string
           created_at?: string
           updated_at?: string
         }
@@ -43,6 +49,9 @@ export type Database = {
           organization_name?: string
           role?: 'user' | 'admin'
           ppg?: number
+          agree_to_share_files?: boolean
+          has_not_signed_nda?: boolean
+          consent_given_at?: string
           created_at?: string
           updated_at?: string
         }
@@ -136,6 +145,7 @@ export type Database = {
           attempts: number
           last_attempt_at: string
           locked_until: string | null
+          created_at: string
           updated_at: string
         }
         Insert: {
@@ -145,6 +155,7 @@ export type Database = {
           attempts?: number
           last_attempt_at?: string
           locked_until?: string | null
+          created_at?: string
           updated_at?: string
         }
         Update: {
@@ -154,6 +165,7 @@ export type Database = {
           attempts?: number
           last_attempt_at?: string
           locked_until?: string | null
+          created_at?: string
           updated_at?: string
         }
         Relationships: []

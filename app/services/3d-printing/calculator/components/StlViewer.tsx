@@ -6,7 +6,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 
 interface StlViewerProps {
-  url: string;
+  url?: string; // Optional now
+  file?: File; // Accept File directly
   className?: string;
   useGrid?: boolean;
   voidColor?: string;
@@ -17,6 +18,7 @@ interface StlViewerProps {
 
 export default function StlViewer({
   url,
+  file,
   className = '',
   useGrid = true,
   voidColor = '#2d2d2d',
@@ -95,59 +97,78 @@ export default function StlViewer({
     // Store scene reference
     sceneRef.current = { scene, camera, renderer, controls };
 
-    // Load STL
+    // Load STL - prefer File object over URL to avoid fetch issues
     const loader = new STLLoader();
-    loader.load(
-      url,
-      (geometry) => {
-        // Remove previous mesh if exists
-        const existingMesh = scene.children.find((child) => child.type === 'Mesh');
-        if (existingMesh) {
-          scene.remove(existingMesh);
-        }
 
-        // Create material - Gold/Yellow color matching primary brand color
-        const material = new THREE.MeshPhongMaterial({
-          color: modelColor,
-          specular: 0x444444,
-          shininess: 150,
-        });
+    const loadGeometry = (buffer: ArrayBuffer) => {
+      // Parse the STL data directly
+      const geometry = loader.parse(buffer);
 
-        // Create mesh
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-
-        // Auto-center and fit to view
-        geometry.computeBoundingBox();
-        const boundingBox = geometry.boundingBox!;
-        const center = new THREE.Vector3();
-        boundingBox.getCenter(center);
-        geometry.translate(-center.x, -center.y, -center.z);
-
-        // Calculate optimal camera distance
-        const size = new THREE.Vector3();
-        boundingBox.getSize(size);
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const fov = camera.fov * (Math.PI / 180);
-        const cameraDistance = Math.abs(maxDim / Math.sin(fov / 2)) * 1.2;
-
-        camera.position.set(cameraDistance, cameraDistance, cameraDistance);
-        camera.lookAt(0, 0, 0);
-        controls.target.set(0, 0, 0);
-        controls.update();
-
-        // Apply custom position and rotation (after auto-centering)
-        mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
-        mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
-
-        scene.add(mesh);
-      },
-      undefined,
-      (error) => {
-        console.error('Error loading STL:', error);
+      // Remove previous mesh if exists
+      const existingMesh = scene.children.find((child) => child.type === 'Mesh');
+      if (existingMesh) {
+        scene.remove(existingMesh);
       }
-    );
+
+      // Create material - Gold/Yellow color matching primary brand color
+      const material = new THREE.MeshPhongMaterial({
+        color: modelColor,
+        specular: 0x444444,
+        shininess: 150,
+      });
+
+      // Create mesh
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+
+      // Auto-center and fit to view
+      geometry.computeBoundingBox();
+      const boundingBox = geometry.boundingBox!;
+      const center = new THREE.Vector3();
+      boundingBox.getCenter(center);
+      geometry.translate(-center.x, -center.y, -center.z);
+
+      // Calculate optimal camera distance
+      const size = new THREE.Vector3();
+      boundingBox.getSize(size);
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const fov = camera.fov * (Math.PI / 180);
+      const cameraDistance = Math.abs(maxDim / Math.sin(fov / 2)) * 1.2;
+
+      camera.position.set(cameraDistance, cameraDistance, cameraDistance);
+      camera.lookAt(0, 0, 0);
+      controls.target.set(0, 0, 0);
+      controls.update();
+
+      // Apply custom position and rotation (after auto-centering)
+      mesh.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+      mesh.rotation.set(modelRotation.x, modelRotation.y, modelRotation.z);
+
+      scene.add(mesh);
+    };
+
+    // Load file directly if provided (more reliable than blob URLs)
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          loadGeometry(e.target.result as ArrayBuffer);
+        }
+      };
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+      };
+      reader.readAsArrayBuffer(file);
+    } else if (url) {
+      // Fallback to URL if file not provided
+      fetch(url)
+        .then((response) => response.arrayBuffer())
+        .then(loadGeometry)
+        .catch((error) => {
+          console.error('Error loading STL:', error);
+        });
+    }
 
     // Animation loop
     const animate = () => {

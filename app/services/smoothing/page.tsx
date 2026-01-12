@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import Image from 'next/image';
+import { Zap, CheckCircle, Shield, Clock, Info, FileText, Search } from 'lucide-react';
 
 export const metadata = {
   title: 'Хімічне згладжування | Additive3D',

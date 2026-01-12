@@ -1,6 +1,7 @@
 'use server';
 
 import { sendOrderConfirmationEmail } from '@/lib/email/send-order-email';
+import { checkRateLimit, formatRateLimitError, recordSuccessfulAttempt } from '@/lib/rate-limit';
 import { createClient } from '@/lib/supabase/server';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { revalidatePath } from 'next/cache';
@@ -67,6 +68,30 @@ export async function uploadOrder(
         success: false,
         error: 'Unauthorized',
         details: 'Please log in to submit an order',
+      };
+    }
+
+    // Check rate limiting for order submissions
+    const rateLimitResult = await checkRateLimit(user.email!, 'order_submission');
+    if (!rateLimitResult.allowed) {
+      return {
+        success: false,
+        error: formatRateLimitError(rateLimitResult, 'order_submission'),
+      };
+    }
+
+    // Check if user has given consent for file sharing
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('agree_to_share_files, has_not_signed_nda')
+      .eq('id', user.id)
+      .single();
+
+    if (!profile?.agree_to_share_files || !profile?.has_not_signed_nda) {
+      return {
+        success: false,
+        error: 'consent_required',
+        details: 'User must consent to file sharing before placing orders',
       };
     }
 
@@ -211,6 +236,9 @@ export async function uploadOrder(
 
     // Revalidate any paths that might display orders
     revalidatePath('/user/orders');
+
+    // Record successful order submission (resets rate limit counter)
+    await recordSuccessfulAttempt(user.email!, 'order_submission');
 
     return {
       success: true,

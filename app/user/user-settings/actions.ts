@@ -325,3 +325,80 @@ export async function changeEmail(
     success: 'Листи з підтвердженням надіслано на обидві адреси (поточну та нову). Підтвердіть обидва листи для завершення зміни.',
   };
 }
+
+// Update User Consent Action
+export async function updateUserConsent(
+  agreeToShare: boolean,
+  hasNotSignedNda: boolean
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    // Check authentication
+    const user = await getCurrentUser();
+    if (!user) {
+      return {
+        success: false,
+        error: 'Необхідна автентифікація',
+      };
+    }
+
+    // Validate that both consents are true
+    if (!agreeToShare || !hasNotSignedNda) {
+      return {
+        success: false,
+        error: 'Обидві згоди є обов\'язковими',
+      };
+    }
+
+    // Get client info for logging
+    const headersList = await headers();
+    const clientIp = getClientIp(headersList);
+    const userAgent = headersList.get('user-agent') || 'Unknown';
+
+    // Update profile with consent
+    const supabase = await createClient();
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update({
+        agree_to_share_files: agreeToShare,
+        has_not_signed_nda: hasNotSignedNda,
+        consent_given_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', user.id);
+
+    if (updateError) {
+      console.error('Error updating consent:', updateError);
+      return {
+        success: false,
+        error: 'Помилка при збереженні згоди',
+      };
+    }
+
+    // Log consent event
+    await logAuthEvent({
+      userId: user.id,
+      email: user.email!,
+      eventType: 'consent_given',
+      ipAddress: clientIp,
+      userAgent,
+      metadata: {
+        agree_to_share_files: agreeToShare,
+        has_not_signed_nda: hasNotSignedNda,
+      },
+    });
+
+    // Revalidate relevant paths
+    revalidatePath(ROUTES.dashboard);
+    revalidatePath(ROUTES.profile);
+
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error('Error in updateUserConsent:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Невідома помилка',
+    };
+  }
+}

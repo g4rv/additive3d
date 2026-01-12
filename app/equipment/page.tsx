@@ -1,6 +1,13 @@
 import CTA from '@/components/cta';
 import EquipmentShowcase from '@/components/equipment-showcase';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
+import { createMetadata } from '@/lib/metadata';
+
+export const metadata = createMetadata({
+  title: 'Наше обладнання - Промислові 3D принтери',
+  description: 'HERON 300 HV (LFAM), HP Jet Fusion 5200 (MJF), Fortus 400mc і 250 (FDM). Професійні промислові 3D принтери для серійного виробництва та прототипування.',
+  path: '/equipment',
+});
 
 export default function EquipmentPage() {
   const equipmentData = [
@@ -9,7 +16,7 @@ export default function EquipmentPage() {
       technology: 'LFAM',
       description:
         'Великоформатний адитивний принтер для виготовлення великих деталей, корпусів і форм — ідеальний для масштабного виробництва без потреби у литті.',
-      href: '/equipment/heron-300-hv',
+      href: '/equipment/lfam',
       image: '/Technology/LFAM/HERON 300 HV/heron-300-hv-no-bg.png',
       specs: [
         "Об'єм побудови: 3000 x 2000 x 1000 мм",
@@ -22,7 +29,7 @@ export default function EquipmentPage() {
       technology: 'MJF',
       description:
         'Швидкісний промисловий 3D-принтер для серійного виробництва функціональних деталей з точною геометрією і якісною поверхнею — без потреби у формах.',
-      href: '/equipment/hp-jet-fusion-5200',
+      href: '/equipment/mjf',
       image: '/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-with-build-unit.png',
       specs: [
         'Швидкість друку: до 4000 см³/год',
@@ -36,7 +43,7 @@ export default function EquipmentPage() {
       technology: 'FDM',
       description:
         'Надійний FDM-принтер для міцних термопластичних деталей: корпусів, конструкцій, інструментів та «end-use» компонентів із інженерних матеріалів.',
-      href: '/equipment/fortus-400mc',
+      href: '/equipment/fdm',
       image: '/Technology/FDM/Fortus 400mc/fortus-400mc.png',
       specs: [
         'Точність: ±0.127 мм',
@@ -49,7 +56,7 @@ export default function EquipmentPage() {
       technology: 'FDM',
       description:
         'Компактний FDM-принтер для швидкого прототипування або виготовлення дрібних/середніх деталей.',
-      href: '/equipment/fortus-250',
+      href: '/equipment/fdm',
       image: '/Technology/FDM/Fortus 250/fortus-250.png',
       specs: [
         'Точність: ±0.127 мм',

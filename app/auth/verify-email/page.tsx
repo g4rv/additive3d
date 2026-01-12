@@ -2,6 +2,14 @@ import { Mail, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { ROUTES } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/supabase/queries';
+import { createMetadata } from '@/lib/metadata';
+
+export const metadata = createMetadata({
+  title: 'Підтвердження email',
+  description: 'Підтвердіть вашу електронну адресу для завершення реєстрації в Additive3D',
+  path: '/auth/verify-email',
+  noIndex: true,
+});
 
 export default async function VerifyEmailPage() {
   // Note: When email confirmation is enabled, signup doesn't create a session

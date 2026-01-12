@@ -15,6 +15,11 @@ import {
   Target,
   Users,
   Zap,
+  Crosshair,
+  FolderOpen,
+  Info,
+  Sparkles,
+  Camera,
 } from 'lucide-react';
 import { Metadata } from 'next';
 
@@ -90,14 +95,14 @@ export default function ThreeDScanningPage() {
       title: "Оцифрування об'єкта",
       description:
         'Деталь сканується з високою точністю та роздільною здатністю, вище за допуски до даної деталі. Результатом є полігональне тіло, що відображає форму поверхні з точністю до мікронів.',
-      icon: Scan,
+      icon: Camera,
     },
     {
       number: 2,
       title: 'Вирівнювання (alignment)',
       description:
         'Відсканована модель суміщується з еталонною CAD-моделлю за ключовими орієнтирами або геометричними базами.',
-      icon: Target,
+      icon: Crosshair,
     },
     {
       number: 3,
@@ -119,7 +124,7 @@ export default function ThreeDScanningPage() {
     {
       title: 'Висока точність',
       description: 'До 0,02 мм для найвимогливіших завдань',
-      icon: Target,
+      icon: Crosshair,
     },
     {
       title: 'Швидкість',
@@ -134,7 +139,7 @@ export default function ThreeDScanningPage() {
     {
       title: 'Інтеграція з CAD',
       description: 'Прямий експорт у популярні САПР системи',
-      icon: Package,
+      icon: FolderOpen,
     },
     {
       title: 'Безконтактність',
@@ -144,7 +149,7 @@ export default function ThreeDScanningPage() {
     {
       title: 'Складні форми',
       description: 'Оцифрування геометрії будь-якої складності',
-      icon: Zap,
+      icon: Sparkles,
     },
   ];
 
@@ -510,7 +515,7 @@ export default function ThreeDScanningPage() {
               <div className="card-body p-6 lg:p-8">
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 rounded-lg p-3">
-                    <Settings className="text-primary size-6" />
+                    <Info className="text-primary size-6" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-primary mb-3 text-lg font-semibold">Технічні обмеження</h3>

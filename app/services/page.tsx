@@ -18,6 +18,11 @@ import {
   Sparkles,
   Shield,
   Rocket,
+  Car,
+  Plane,
+  GraduationCap,
+  HeadphonesIcon,
+  MessageCircle,
 } from 'lucide-react';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
@@ -156,7 +161,7 @@ export default function ServicesPage() {
       title: 'Консультація та аналіз',
       description:
         'Обговорення ваших потреб, аналіз технічних вимог, підбір оптимальної технології та матеріалів',
-      icon: Users,
+      icon: MessageCircle,
     },
     {
       number: 2,
@@ -182,14 +187,14 @@ export default function ServicesPage() {
   ];
 
   const industries = [
-    { name: 'Автомобільна промисловість', icon: Rocket },
-    { name: 'Аерокосмічна галузь', icon: Rocket },
+    { name: 'Автомобільна промисловість', icon: Car },
+    { name: 'Аерокосмічна галузь', icon: Plane },
     { name: 'Медичні пристрої', icon: Shield },
     { name: 'Електроніка та телекомунікації', icon: Sparkles },
     { name: 'Промислові корпуси та кріплення', icon: Package },
     { name: 'Оснащення виробництва', icon: Settings },
     { name: 'Архітектура та дизайн', icon: Target },
-    { name: 'Освітні заклади та R&D', icon: Users },
+    { name: 'Освітні заклади та R&D', icon: GraduationCap },
   ];
 
   return (
@@ -519,7 +524,7 @@ export default function ServicesPage() {
                     { icon: Settings, text: 'Професійне обладнання' },
                     { icon: Shield, text: 'Сертифіковані матеріали' },
                     { icon: Target, text: 'Контроль на всіх етапах' },
-                    { icon: Users, text: 'Технічна підтримка' },
+                    { icon: HeadphonesIcon, text: 'Технічна підтримка' },
                   ].map((item, index) => {
                     const Icon = item.icon;
                     return (

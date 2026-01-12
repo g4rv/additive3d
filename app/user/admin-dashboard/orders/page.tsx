@@ -1,5 +1,10 @@
 import { getOrdersByStatus } from '@/lib/supabase/queries';
 import OrdersTable from './OrdersTable';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Управління замовленнями | Additive3D',
+};
 
 interface OrdersPageProps {
   searchParams: Promise<{ status?: string }>;

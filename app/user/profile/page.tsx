@@ -5,6 +5,11 @@ import { User, Mail, Phone, Building2, Calendar, LogOut, Settings, Package } fro
 import { signOut } from '@/app/auth/logout/actions';
 import { ROUTES } from '@/lib/constants';
 import OrdersList from './OrdersList';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Мій профіль | Additive3D',
+};
 
 export default async function DashboardPage() {
   const userData = await getCurrentUserWithProfile();

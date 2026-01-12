@@ -1,77 +1,129 @@
 import { MetadataRoute } from 'next';
 
+/**
+ * Generate sitemap.xml for Additive3D
+ * This helps search engines discover and index your pages
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://additive3d.net';
-  const currentDate = new Date().toISOString();
+  const baseUrl = 'https://additive3d.com';
 
-  return [
+  // Public pages that should be indexed
+  const publicPages = [
     {
       url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
       priority: 1,
     },
     {
-      url: `${baseUrl}/company`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/equipment`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.9,
     },
-    // Services
+    {
+      url: `${baseUrl}/equipment/lfam`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/equipment/mjf`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/equipment/fdm`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/materials`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
     {
       url: `${baseUrl}/services`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/services/3d-modeling`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
+      url: `${baseUrl}/services/3d-printing`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/services/3d-scanning`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      url: `${baseUrl}/services/3d-printing/calculator`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
     },
     {
-      url: `${baseUrl}/services/reverse-engineering`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/geometry-inspection`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/painting`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
+      url: `${baseUrl}/services/3d-printing/lfam`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
     {
       url: `${baseUrl}/services/3d-printing/mjf`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/services/3d-printing/fdm`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/services/3d-scanning`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
-    // Materials
     {
-      url: `${baseUrl}/materials/fdm`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
+      url: `${baseUrl}/services/3d-modeling`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/reverse-engineering`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/services/geometry-inspection`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/services/dyeing`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/services/smoothing`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
   ];
+
+  return publicPages;
 }

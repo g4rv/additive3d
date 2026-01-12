@@ -6,10 +6,13 @@ import { Send } from 'lucide-react';
 import { uploadOrder } from '../actions';
 import { Popup, usePopup } from '@/components/ui/popup';
 import { useToast } from '@/components/ui/toast';
+import ConsentModal from '@/components/ConsentModal';
+import { updateUserConsent } from '@/app/user/user-settings/actions';
 
 export default function SubmitOrderButton() {
   const { state } = useCalculator();
   const [isUploading, setIsUploading] = useState(false);
+  const [showConsentModal, setShowConsentModal] = useState(false);
   const { popup, showSuccess: showSuccessPopup, close } = usePopup();
   const { success: showSuccessToast, error: showErrorToast, ToastContainer } = useToast();
 
@@ -62,6 +65,12 @@ export default function SubmitOrderButton() {
       const result = await uploadOrder(formData);
 
       if (!result.success) {
+        // Check if consent is required
+        if (result.error === 'consent_required') {
+          setShowConsentModal(true);
+          setIsUploading(false);
+          return;
+        }
         throw new Error(result.error || 'Failed to upload files');
       }
 
@@ -85,6 +94,25 @@ export default function SubmitOrderButton() {
     } finally {
       setIsUploading(false);
     }
+  };
+
+  const handleConsent = async (agreeToShare: boolean, hasNotSignedNda: boolean) => {
+    const result = await updateUserConsent(agreeToShare, hasNotSignedNda);
+
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to update consent');
+    }
+
+    // Close modal
+    setShowConsentModal(false);
+
+    // Show success message
+    showSuccessToast('Згоду збережено! Тепер ви можете розмістити замовлення.');
+
+    // Automatically retry order submission
+    setTimeout(() => {
+      handleSubmitOrder();
+    }, 500);
   };
 
   return (
@@ -124,6 +152,13 @@ export default function SubmitOrderButton() {
 
       {/* Toast for quick error messages */}
       <ToastContainer />
+
+      {/* Consent Modal */}
+      <ConsentModal
+        isOpen={showConsentModal}
+        onClose={() => setShowConsentModal(false)}
+        onConsent={handleConsent}
+      />
     </>
   );
 }

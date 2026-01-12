@@ -27,7 +27,7 @@ export default function FileCard({ fileId }: FileCardProps) {
     <div className="card bg-base-200 shadow-xl overflow-hidden border border-primary">
       {/* 3D Viewer */}
       <div className="relative h-48">
-        <StlViewer url={file.url} className="w-full h-full" useGrid={false} />
+        <StlViewer file={file.file} url={file.url} className="w-full h-full" useGrid={false} />
 
         {/* Remove Button */}
         <button

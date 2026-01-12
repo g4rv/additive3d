@@ -3,6 +3,13 @@ import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { COMPANY_NAME, CONTACT_INFO, NAVIGATION } from '@/lib/constants';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { createMetadata } from '@/lib/metadata';
+
+export const metadata = createMetadata({
+  title: 'Контакти - Зв\'яжіться з нами',
+  description: 'Телефони, email, адреса виробництва Additive3D. Відповідаємо протягом 2-4 годин у робочі дні. Миттєвий розрахунок вартості 3D друку онлайн.',
+  path: '/contact',
+});
 
 export default function ContactPage() {
   return (

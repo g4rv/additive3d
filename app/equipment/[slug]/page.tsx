@@ -187,7 +187,7 @@ export default async function EquipmentTechnologyPage({ params }: SlugPageProps)
                     <div className="card bg-base-100 border-base-300 shadow-sm">
                       <div className="card-body p-6">
                         <div className="mb-4 flex items-center gap-3">
-                          <Target className="text-secondary size-5" />
+                          <Target className="text-primary size-5" />
                           <h4 className="text-primary text-lg font-semibold">
                             Оптимальне застосування
                           </h4>

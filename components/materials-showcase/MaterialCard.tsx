@@ -1,4 +1,4 @@
-import { CheckCircle, FileText, Target } from 'lucide-react';
+import { CheckCircle, FileText, Target, Layers, Wrench } from 'lucide-react';
 import Badge from '../ui/badge';
 import type { MaterialItem } from './MaterialsShowcase.types';
 
@@ -93,7 +93,7 @@ export default function MaterialCard({ item }: MaterialCardProps) {
           {item.variants && item.variants.length > 0 && (
             <div className="mb-4">
               <h4 className="text-base-content mb-2 flex items-center gap-2 font-medium">
-                <FileText className="h-4 w-4" />
+                <Layers className="h-4 w-4" />
                 Варіанти
               </h4>
               <div className="flex flex-wrap gap-1">
@@ -115,7 +115,7 @@ export default function MaterialCard({ item }: MaterialCardProps) {
           {item.applications && item.applications.length > 0 && (
             <div className="mb-4">
               <h4 className="text-base-content mb-2 flex items-center gap-2 font-medium">
-                <Target className="h-4 w-4" />
+                <Wrench className="h-4 w-4" />
                 Застосування
               </h4>
               <div className="flex flex-wrap gap-1">

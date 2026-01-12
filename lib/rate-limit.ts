@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 
-export type RateLimitAction = 'login' | 'signup' | 'password_reset' | 'email_change';
+export type RateLimitAction = 'login' | 'signup' | 'password_reset' | 'email_change' | 'order_submission';
 
 export interface RateLimitConfig {
   maxAttempts: number; // Maximum attempts allowed
@@ -27,6 +27,11 @@ const RATE_LIMIT_CONFIGS: Record<RateLimitAction, RateLimitConfig> = {
   },
   email_change: {
     maxAttempts: 3,
+    windowMinutes: 60,
+    lockoutMinutes: 60,
+  },
+  order_submission: {
+    maxAttempts: 5,
     windowMinutes: 60,
     lockoutMinutes: 60,
   },
@@ -241,6 +246,8 @@ export function formatRateLimitError(result: RateLimitResult, action: RateLimitA
         return `Забагато запитів на скидання пароля. Спробуйте знову через ${minutes} хв.`;
       case 'email_change':
         return `Забагато спроб зміни email. Спробуйте знову через ${minutes} хв.`;
+      case 'order_submission':
+        return `Перевищено ліміт замовлень. Спробуйте знову через ${minutes} хв.`;
     }
   }
 
