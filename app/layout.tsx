@@ -18,6 +18,45 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Additive3D - Промисловий 3D Друк',
   description: 'Професійні послуги 3D друку та моделювання для бізнесу',
+  // Open Graph / Facebook
+  openGraph: {
+    type: 'website',
+    locale: 'uk_UA',
+    siteName: 'Additive3D',
+    title: 'Additive3D - Промисловий 3D Друк',
+    description: 'Професійні послуги 3D друку та моделювання для бізнесу',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Additive3D',
+      },
+    ],
+  },
+  // Twitter Card
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Additive3D - Промисловий 3D Друк',
+    description: 'Професійні послуги 3D друку та моделювання для бізнесу',
+    images: ['/og-image.jpg'],
+  },
+  // Additional meta tags
+  other: {
+    'facebook:domain_verification': 'your-facebook-verification-code',
+    'google-site-verification': 'your-google-verification-code',
+  },
+  // Icons and manifests
+  icons: {
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
