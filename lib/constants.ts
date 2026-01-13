@@ -450,9 +450,8 @@ const EQUIPMENT_DATA = [
       accuracy: '±0,09 мм або ±0,0015 мм/мм',
       supportSystem: 'Розчинні підтримки SR-30 / SR-100',
     },
-    image: '/Technology/FDM/Fortus 400mc/fortus-400mc.png',
+    image: '/Technology/FDM/Fortus 400mc/fortus-400mc.jpg',
     images: [
-      '/Technology/FDM/Fortus 400mc/fortus-400mc.png',
       '/Technology/FDM/Fortus 400mc/fortus-400mc.jpg',
       '/Technology/FDM/Fortus 400mc/fortus-400mc-oven.jpg',
       '/Technology/FDM/Fortus 400mc/fortus-400mc-cartridge.jpg',

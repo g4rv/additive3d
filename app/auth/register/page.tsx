@@ -1,9 +1,11 @@
 'use client';
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
+import PasswordInput from '@/components/ui/password-input/PasswordInput';
+import ButtonLink from '@/components/ui/button-link';
 import { ROUTES } from '@/lib/constants';
-import { Building2, Eye, EyeOff, Lock, Mail, Phone, ShieldCheck, User } from 'lucide-react';
-import { useActionState, useState } from 'react';
+import { Building2, Mail, Phone, ShieldCheck, User } from 'lucide-react';
+import { useActionState } from 'react';
 import { signUp } from './actions';
 
 export default function RegisterPage() {
@@ -13,8 +15,6 @@ export default function RegisterPage() {
     values: {} as Record<string, string | undefined>,
   };
   const [state, formAction] = useActionState(signUp, initial);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <section className="min-h-no-header-screen flex flex-col items-center justify-center px-4 py-8">
@@ -121,7 +121,7 @@ export default function RegisterPage() {
                       ? 'border-error focus:border-error'
                       : 'focus:border-primary border-transparent'
                   }`}
-                  placeholder="ivan@example.com"
+                  placeholder="email@example.com"
                 />
               </div>
               {state?.fieldErrors?.email && (
@@ -179,7 +179,7 @@ export default function RegisterPage() {
                       ? 'border-error focus:border-error'
                       : 'focus:border-primary border-transparent'
                   }`}
-                  placeholder="Ваша компанія ТОВ"
+                  placeholder="Назва вашої компанії"
                 />
               </div>
               {state?.fieldErrors?.organization_name && (
@@ -189,81 +189,25 @@ export default function RegisterPage() {
 
             {/* Password Fields */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="password" className="text-sm font-medium">
-                  Пароль <span className="text-error">*</span>
-                </label>
-                <div className="relative">
-                  <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
-                    <Lock className="size-5" />
-                  </div>
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    name="password"
-                    defaultValue={state?.values?.password || ''}
-                    className={`bg-base-300 text-base-content placeholder:text-base-content/40 w-full rounded border py-3 pr-12 pl-12 transition-colors duration-[var(--duration-normal)] focus:outline-none ${
-                      state?.fieldErrors?.password
-                        ? 'border-error focus:border-error'
-                        : 'focus:border-primary border-transparent'
-                    }`}
-                    placeholder="Створіть пароль"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="text-base-content/50 hover:text-base-content absolute top-1/2 right-4 -translate-y-1/2 transition-colors duration-[var(--duration-fast)]"
-                    aria-label={showPassword ? 'Сховати пароль' : 'Показати пароль'}
-                  >
-                    {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
-                  </button>
-                </div>
-                {state?.fieldErrors?.password && (
-                  <p className="text-error text-xs">{state.fieldErrors.password}</p>
-                )}
-              </div>
+              <PasswordInput
+                id="password"
+                name="password"
+                label="Пароль"
+                autoComplete="new-password"
+                placeholder="Створіть пароль"
+                error={state?.fieldErrors?.password}
+                required
+              />
 
-              <div className="flex flex-col gap-2">
-                <label htmlFor="confirm_password" className="text-sm font-medium">
-                  Підтвердіть пароль <span className="text-error">*</span>
-                </label>
-                <div className="relative">
-                  <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
-                    <Lock className="size-5" />
-                  </div>
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    id="confirm_password"
-                    name="confirm_password"
-                    defaultValue={state?.values?.confirm_password || ''}
-                    className={`bg-base-300 text-base-content placeholder:text-base-content/40 w-full rounded border py-3 pr-12 pl-12 transition-colors duration-[var(--duration-normal)] focus:outline-none ${
-                      state?.fieldErrors?.confirm_password
-                        ? 'border-error focus:border-error'
-                        : 'focus:border-primary border-transparent'
-                    }`}
-                    placeholder="Підтвердіть пароль"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="text-base-content/50 hover:text-base-content absolute top-1/2 right-4 -translate-y-1/2 transition-colors duration-[var(--duration-fast)]"
-                    aria-label={
-                      showConfirmPassword
-                        ? 'Сховати підтвердження пароля'
-                        : 'Показати підтвердження пароля'
-                    }
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="size-5" />
-                    ) : (
-                      <Eye className="size-5" />
-                    )}
-                  </button>
-                </div>
-                {state?.fieldErrors?.confirm_password && (
-                  <p className="text-error text-xs">{state.fieldErrors.confirm_password}</p>
-                )}
-              </div>
+              <PasswordInput
+                id="confirm_password"
+                name="confirm_password"
+                label="Підтвердіть пароль"
+                autoComplete="new-password"
+                placeholder="Підтвердіть пароль"
+                error={state?.fieldErrors?.confirm_password}
+                required
+              />
             </div>
 
             {/* Submit Button */}
@@ -286,12 +230,9 @@ export default function RegisterPage() {
         {/* Login Link */}
         <div className="text-base-content/60 mt-6 text-center text-sm">
           Вже є акаунт?{' '}
-          <a
-            href={ROUTES.login}
-            className="text-primary hover:text-primary/80 font-medium transition-colors duration-[var(--duration-fast)]"
-          >
+          <ButtonLink href={ROUTES.login} variant="string" size="small">
             Увійти
-          </a>
+          </ButtonLink>
         </div>
       </div>
     </section>

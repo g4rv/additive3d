@@ -33,6 +33,7 @@ const ButtonLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonLinkP
         active,
         disabled,
       }),
+      'cursor-pointer',
       (endAdornment || startAdornment) && 'inline-flex items-center gap-2',
       className
     );

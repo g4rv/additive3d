@@ -2,7 +2,7 @@
 
 import ButtonLink from '@/components/ui/button-link';
 import { NAVIGATION } from '@/lib/constants';
-import { ArrowLeft, Home, Search } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Home, Search, SquareChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default function NotFound() {
@@ -51,42 +51,60 @@ export default function NotFound() {
           <div className="bg-base-200 rounded-lg p-6 text-left">
             <h3 className="text-base-content mb-4 text-lg font-semibold">Що ви шукали?</h3>
             <nav className="grid gap-2 sm:grid-cols-2">
-              <Link
+              <ButtonLink
                 href={NAVIGATION['3d-printing'].href}
-                className="text-base-content/80 hover:text-primary transition-colors duration-200"
+                variant="secondary"
+                className='items-center justify-center'
+                size="base"
+                endAdornment={<ArrowRight size={16}/>}
               >
-                → 3D-друк та калькулятор вартості
-              </Link>
-              <Link
+                3D-друк та калькулятор вартості
+              </ButtonLink>
+              <ButtonLink
                 href={NAVIGATION['3d-scanning'].href}
-                className="text-base-content/80 hover:text-primary transition-colors duration-200"
+                variant="secondary"
+                className='items-center justify-center'
+                size="base"
+                endAdornment={<ArrowRight size={16}/>}
               >
-                → 3D-сканування об&apos;єктів
-              </Link>
-              <Link
+                3D-сканування об&apos;єктів
+              </ButtonLink>
+              <ButtonLink
                 href={NAVIGATION.materials.href}
-                className="text-base-content/80 hover:text-primary transition-colors duration-200"
+                variant="secondary"
+                className='items-center justify-center'
+                size="base"
+                endAdornment={<ArrowRight size={16}/>}
               >
-                → Матеріали для друку
-              </Link>
-              <Link
+                Матеріали для друку
+              </ButtonLink>
+              <ButtonLink
                 href={NAVIGATION.equipment.href}
-                className="text-base-content/80 hover:text-primary transition-colors duration-200"
+                variant="secondary"
+                className='items-center justify-center'
+                size="base"
+                endAdornment={<ArrowRight size={16}/>}
               >
-                → Наше обладнання
-              </Link>
-              <Link
+                Наше обладнання
+              </ButtonLink>
+              <ButtonLink
                 href={NAVIGATION.contact.href}
-                className="text-base-content/80 hover:text-primary transition-colors duration-200"
+                variant="secondary"
+                className='items-center justify-center'
+                size="base"
+                endAdornment={<ArrowRight size={16}/>}
               >
-                → Контактна інформація
-              </Link>
-              <Link
+                Контактна інформація
+              </ButtonLink>
+              <ButtonLink
                 href={NAVIGATION['3d-modeling'].href}
-                className="text-base-content/80 hover:text-primary transition-colors duration-200"
+                variant="secondary"
+                className='items-center justify-center'
+                size="base"
+                endAdornment={<ArrowRight size={16}/>}
               >
-                → 3D-моделювання
-              </Link>
+                3D-моделювання
+              </ButtonLink>
             </nav>
           </div>
 
@@ -94,13 +112,13 @@ export default function NotFound() {
           <div className="mt-8">
             <p className="text-base-content/60 text-sm">
               Якщо ви вважаєте, що це помилка, будь ласка,{' '}
-              <Link href={NAVIGATION.contact.href} className="text-primary hover:underline">
+              <ButtonLink href={NAVIGATION.contact.href} variant="string" size="small">
                 зв&apos;яжіться з нами
-              </Link>{' '}
+              </ButtonLink>{' '}
               або поверніться{' '}
               <button
                 onClick={() => window.history.back()}
-                className="text-primary inline-flex items-center gap-1 hover:underline"
+                className="text-primary inline-flex items-center gap-1 hover:underline cursor-pointer"
               >
                 <ArrowLeft size={14} />
                 назад

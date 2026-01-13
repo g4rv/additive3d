@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 
 // Technology titles
 const TECHNOLOGY_TITLES: Record<string, { title: string; description: string }> = {
@@ -148,10 +149,13 @@ export default async function EquipmentTechnologyPage({ params }: SlugPageProps)
                             key={idx}
                             className="bg-base-100 overflow-hidden rounded-lg border border-base-300 transition-all duration-[var(--duration-moderate)] hover:shadow-lg"
                           >
-                            <img
+                            <Image
                               src={imagePath}
                               alt={`${equipment.name} - зображення ${idx + 1}`}
+                              width={400}
+                              height={192}
                               className="h-48 w-full object-cover"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             />
                           </div>
                         ))}

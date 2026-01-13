@@ -40,17 +40,17 @@ export default function OurAdvantages() {
       <div className="custom-container">
         <h2 className="text-primary mb-12 text-center text-4xl font-bold">Чому обирають {COMPANY_NAME}</h2>
 
-        <ul className="grid grid-cols-3 gap-8">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {advantages.map((advantage, index) => (
             <li
               key={index}
-              className="bg-base-200 border-base-300/50 hover:border-primary flex flex-col items-center gap-4 rounded-2xl border p-8 text-center transition-[shadow_color] duration-(--duration-moderate) hover:shadow-[0_0_15px_var(--color-primary)]"
+              className="bg-base-200 border-base-300/50 hover:border-primary flex flex-col items-center gap-4 rounded-2xl border p-6 lg:p-8 text-center transition-[shadow_color] duration-(--duration-moderate) hover:shadow-[0_0_15px_var(--color-primary)]"
             >
-              <advantage.icon size={32} className="text-primary" />
+              <advantage.icon size={32} className="text-primary flex-shrink-0" />
 
               <div>
-                <h3 className="mb-2 text-lg font-semibold">{advantage.title}</h3>
-                <p className="text-sm">{advantage.description}</p>
+                <h3 className="mb-2 text-base lg:text-lg font-semibold">{advantage.title}</h3>
+                <p className="text-sm lg:text-base leading-relaxed">{advantage.description}</p>
               </div>
             </li>
           ))}

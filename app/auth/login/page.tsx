@@ -1,9 +1,11 @@
 'use client';
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
+import PasswordInput from '@/components/ui/password-input/PasswordInput';
+import ButtonLink from '@/components/ui/button-link';
 import { useActionState, Suspense } from 'react';
 import { signIn } from './actions';
-import { Mail, Lock, ShieldCheck, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, ShieldCheck, CheckCircle, AlertCircle } from 'lucide-react';
 import { ROUTES } from '@/lib/constants';
 import { useSearchParams } from 'next/navigation';
 
@@ -64,7 +66,7 @@ function LoginForm() {
                       ? 'border-error focus:border-error'
                       : 'border-transparent focus:border-primary'
                   }`}
-                  placeholder="ваша@пошта.com"
+                  placeholder="email@example.com"
                 />
               </div>
               {state?.fieldErrors?.email && (
@@ -73,40 +75,20 @@ function LoginForm() {
             </div>
 
             {/* Password Input */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="password" className="text-sm font-medium">
-                Пароль
-              </label>
-              <div className="relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-base-content/50">
-                  <Lock className="size-5" />
-                </div>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  defaultValue={state?.values?.password || ''}
-                  className={`w-full bg-base-300 border rounded pl-12 pr-4 py-3 text-base-content placeholder:text-base-content/40 focus:outline-none transition-colors duration-[var(--duration-normal)] ${
-                    state?.fieldErrors?.password
-                      ? 'border-error focus:border-error'
-                      : 'border-transparent focus:border-primary'
-                  }`}
-                  placeholder="Введіть ваш пароль"
-                />
-              </div>
-              {state?.fieldErrors?.password && (
-                <p className="text-error text-xs">{state.fieldErrors.password}</p>
-              )}
-            </div>
+            <PasswordInput
+              id="password"
+              name="password"
+              label="Пароль"
+              placeholder="Введіть ваш пароль"
+              error={state?.fieldErrors?.password}
+              required
+            />
 
             {/* Forgot Password Link */}
             <div className="text-right">
-              <a
-                href={ROUTES.forgotPassword}
-                className="text-primary hover:text-primary/80 text-sm transition-colors duration-[var(--duration-fast)]"
-              >
+              <ButtonLink href={ROUTES.forgotPassword} variant="string" size="small">
                 Забули пароль?
-              </a>
+              </ButtonLink>
             </div>
 
             {/* Submit Button */}
@@ -129,9 +111,9 @@ function LoginForm() {
         {/* Register Link */}
         <div className="mt-6 text-center text-sm text-base-content/60">
           Немає акаунту?{' '}
-          <a href={ROUTES.register} className="text-primary hover:text-primary/80 font-medium transition-colors duration-[var(--duration-fast)]">
+          <ButtonLink href={ROUTES.register} variant="string" size="small">
             Створити акаунт
-          </a>
+          </ButtonLink>
         </div>
       </div>
     </section>

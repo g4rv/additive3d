@@ -4,12 +4,14 @@ import SubmitButton from '@/components/ui/submit-button/SubmitButton';
 import { AlertCircle, CheckCircle2, Mail, Info } from 'lucide-react';
 import { useActionState } from 'react';
 import { changeEmail } from './actions';
+import { cn } from '@/utils/cn';
 
 interface EmailChangeFormProps {
   currentEmail: string;
+  className?: string;
 }
 
-export default function EmailChangeForm({ currentEmail }: EmailChangeFormProps) {
+export default function EmailChangeForm({ currentEmail, className }: EmailChangeFormProps) {
   const initial = {
     error: '',
     fieldErrors: {} as Record<string, string | undefined>,
@@ -19,7 +21,7 @@ export default function EmailChangeForm({ currentEmail }: EmailChangeFormProps) 
   const [state, formAction] = useActionState(changeEmail, initial);
 
   return (
-    <form action={formAction} className="flex flex-col gap-5">
+    <form action={formAction} className={cn("flex flex-col gap-5", className)}>
       {/* Success Message */}
       {state?.success && (
         <div className="alert alert-success">
@@ -96,7 +98,7 @@ export default function EmailChangeForm({ currentEmail }: EmailChangeFormProps) 
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-auto">
         <SubmitButton
           text="Змінити електронну пошту"
           pendingText="Зміна адреси..."

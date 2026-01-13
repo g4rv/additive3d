@@ -341,14 +341,6 @@ export async function updateUserConsent(
       };
     }
 
-    // Validate that both consents are true
-    if (!agreeToShare || !hasNotSignedNda) {
-      return {
-        success: false,
-        error: 'Обидві згоди є обов\'язковими',
-      };
-    }
-
     // Get client info for logging
     const headersList = await headers();
     const clientIp = getClientIp(headersList);
@@ -361,7 +353,7 @@ export async function updateUserConsent(
       .update({
         agree_to_share_files: agreeToShare,
         has_not_signed_nda: hasNotSignedNda,
-        consent_given_at: new Date().toISOString(),
+        consent_given_at: agreeToShare && hasNotSignedNda ? new Date().toISOString() : undefined,
         updated_at: new Date().toISOString(),
       })
       .eq('id', user.id);
@@ -378,7 +370,7 @@ export async function updateUserConsent(
     await logAuthEvent({
       userId: user.id,
       email: user.email!,
-      eventType: 'consent_given',
+      eventType: agreeToShare && hasNotSignedNda ? 'consent_given' : 'consent_revoked',
       ipAddress: clientIp,
       userAgent,
       metadata: {

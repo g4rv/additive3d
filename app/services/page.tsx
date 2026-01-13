@@ -23,6 +23,9 @@ import {
   GraduationCap,
   HeadphonesIcon,
   MessageCircle,
+  Building,
+  Factory,
+  Palette,
 } from 'lucide-react';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
@@ -191,9 +194,9 @@ export default function ServicesPage() {
     { name: 'Аерокосмічна галузь', icon: Plane },
     { name: 'Медичні пристрої', icon: Shield },
     { name: 'Електроніка та телекомунікації', icon: Sparkles },
-    { name: 'Промислові корпуси та кріплення', icon: Package },
-    { name: 'Оснащення виробництва', icon: Settings },
-    { name: 'Архітектура та дизайн', icon: Target },
+    { name: 'Промислові корпуси та кріплення', icon: Factory },
+    { name: 'Оснащення виробництва', icon: Wrench },
+    { name: 'Архітектура та дизайн', icon: Building },
     { name: 'Освітні заклади та R&D', icon: GraduationCap },
   ];
 
@@ -403,7 +406,7 @@ export default function ServicesPage() {
 
                       {/* CTA */}
                       <div className="text-primary mt-auto inline-flex items-center gap-2 text-sm font-semibold transition-all duration-[var(--duration-fast)] group-hover:gap-3">
-                        Більше
+                        <span>Більше</span>
                         <ArrowRight className="size-4" />
                       </div>
                     </div>

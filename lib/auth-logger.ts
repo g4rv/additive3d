@@ -10,7 +10,8 @@ export type AuthEventType =
   | 'email_change_requested'
   | 'email_changed'
   | 'logout'
-  | 'consent_given';
+  | 'consent_given'
+  | 'consent_revoked';
 
 export interface AuthLogData {
   userId?: string; // UUID of the user (if available)

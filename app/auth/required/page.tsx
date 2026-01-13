@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function AuthRequiredPage() {
   return (
     <AuthRequiredBanner
-      title="Вхід необхідний"
+      title="Увійдіть, щоб продовжити"
       message="Ця функція доступна тільки для зареєстрованих користувачів. Створіть безкоштовний обліковий запис для доступу до всіх можливостей платформи."
     />
   );

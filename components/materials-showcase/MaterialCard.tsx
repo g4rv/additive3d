@@ -15,15 +15,15 @@ export default function MaterialCard({ item }: MaterialCardProps) {
       <div className="card bg-base-200 border-base-300 hover:border-primary/20 h-full border transition-all duration-[var(--duration-moderate)] hover:shadow-lg">
         <div className="card-body p-6">
           {/* Header with technology badge */}
-          <div className="mb-4 flex items-start justify-between">
+          <div className="mb-3 flex items-start justify-between">
             <div className="flex-1">
-              <div className="bg-base-300 text-primary rounded px-2 py-1 text-sm font-medium mb-2 inline-block">
+              <div className="bg-base-300 text-primary rounded px-2 py-1 text-sm font-medium mb-1 inline-block">
                 {item.name}
               </div>
               <h3 className="text-primary group-hover:text-primary/80 mb-2 text-xl font-semibold transition-colors duration-[var(--duration-fast)]">
                 {item.fullname}
               </h3>
-              <Badge variant="outlined" size="sm" className="mb-3">
+              <Badge variant="outlined" size="sm">
                 {item.technology}
               </Badge>
             </div>
@@ -31,7 +31,7 @@ export default function MaterialCard({ item }: MaterialCardProps) {
 
           {/* Description */}
           {item.description && (
-            <p className="text-base-content/80 mb-4 line-clamp-3 text-sm leading-relaxed">
+            <p className="text-base-content/80 mb-4 mt-3 line-clamp-3 text-sm leading-relaxed">
               {item.description}
             </p>
           )}

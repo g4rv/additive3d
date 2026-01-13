@@ -1,6 +1,6 @@
 import { getCurrentUserWithProfile } from '@/lib/supabase/queries';
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
+import ButtonLink from '@/components/ui/button-link';
 import { ArrowLeft, User, Mail, Lock, Shield, Check, X } from 'lucide-react';
 import ProfileForm from './ProfileForm';
 import EmailChangeForm from './EmailChangeForm';
@@ -27,20 +27,21 @@ export default async function UserSettingsPage() {
       <div className="w-full max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link
+          <ButtonLink
             href={ROUTES.dashboard}
-            className="inline-flex items-center gap-2 text-sm text-base-content/70 hover:text-primary transition-colors mb-4"
+            variant="string"
+            startAdornment={<ArrowLeft className="w-4 h-4" />}
+            className="mb-4"
           >
-            <ArrowLeft className="w-4 h-4" />
             Назад до профілю
-          </Link>
+          </ButtonLink>
           <h1 className="text-4xl font-bold mb-2">Налаштування профілю</h1>
           <p className="text-base-content/70">Керуйте своєю особистою інформацією та безпекою</p>
         </div>
 
-        {/* Settings Grid */}
+        {/* Settings Grid - 2x2 Layout */}
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Profile Information Card */}
+          {/* Top Left: Profile Information Card */}
           <div className="bg-base-200 rounded-box p-6 shadow-lg">
             <div className="flex items-center gap-3 mb-6">
               <div className="bg-primary/10 p-2.5 rounded-lg">
@@ -54,8 +55,24 @@ export default async function UserSettingsPage() {
             <ProfileForm profile={profile} />
           </div>
 
-          {/* Email Change Card */}
-          <div className="bg-base-200 rounded-box p-6 shadow-lg">
+          {/* Top Right: Privacy & Consent Card */}
+          <div className="bg-base-200 rounded-box p-6 shadow-lg flex flex-col">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-primary/10 p-2.5 rounded-lg">
+                <Shield className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold">Налаштування конфіденційності</h2>
+                <p className="text-sm text-base-content/70">
+                  Згода на обробку та передачу файлів
+                </p>
+              </div>
+            </div>
+            <ConsentForm profile={profile} />
+          </div>
+
+          {/* Bottom Left: Email Change Card */}
+          <div className="bg-base-200 rounded-box flex flex-col p-6 shadow-lg">
             <div className="flex items-center gap-3 mb-6">
               <div className="bg-primary/10 p-2.5 rounded-lg">
                 <Mail className="w-5 h-5 text-primary" />
@@ -65,11 +82,11 @@ export default async function UserSettingsPage() {
                 <p className="text-sm text-base-content/70">Змініть адресу електронної пошти</p>
               </div>
             </div>
-            <EmailChangeForm currentEmail={email} />
+            <EmailChangeForm currentEmail={email} className='grow' />
           </div>
 
-          {/* Password Change Card */}
-          <div className="bg-base-200 rounded-box p-6 shadow-lg lg:col-span-2">
+          {/* Bottom Right: Password Change Card */}
+          <div className="bg-base-200 rounded-box p-6 shadow-lg flex flex-col">
             <div className="flex items-center gap-3 mb-6">
               <div className="bg-primary/10 p-2.5 rounded-lg">
                 <Lock className="w-5 h-5 text-primary" />
@@ -80,23 +97,6 @@ export default async function UserSettingsPage() {
               </div>
             </div>
             <PasswordChangeForm />
-          </div>
-
-          {/* Privacy & Consent Card */}
-          <div className="bg-base-200 rounded-box p-6 shadow-lg lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="bg-primary/10 p-2.5 rounded-lg">
-                <Shield className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Налаштування конфіденційності</h2>
-                <p className="text-sm text-base-content/70">
-                  Згода на обробку та передачу файлів для виконання замовлень
-                </p>
-              </div>
-            </div>
-
-            <ConsentForm profile={profile} />
           </div>
         </div>
       </div>

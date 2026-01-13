@@ -12,7 +12,7 @@ export default function SubmitButton({ text, pendingText, ...rest }: Props) {
   const { pending } = useFormStatus();
 
   return (
-    <ButtonLink disabled={pending} type="submit" {...rest}>
+    <ButtonLink disabled={pending} variant='secondary' type="submit" {...rest}>
       {pending ? pendingText : text}
     </ButtonLink>
   );

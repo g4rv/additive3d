@@ -45,12 +45,14 @@ const DesktopNavigation = ({ navItems, user }: DesktopNavigationProps) => {
                   className="inline-flex items-center gap-2"
                   onMouseOver={resetFocus}
                   onClick={resetFocus}
+                  endAdornment={
+                    <ChevronDownIcon
+                      size={16}
+                      className="group-hover:text-primary -mb-1 text-current transition-all duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
+                    />
+                  }
                 >
                   {item.label}
-                  <ChevronDownIcon
-                    size={16}
-                    className="group-hover:text-primary text-current transition-all duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
-                  />
                 </ButtonLink>
 
                 {/* Enhanced Dropdown Menu */}

@@ -2,11 +2,12 @@
 
 import { useActionState, useEffect, useState, Suspense } from 'react';
 import BgPattern from '@/components/ui/bg-pattern';
-import { Lock, Shield, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Shield, AlertCircle, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { resetPassword } from './actions';
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
+import PasswordInput from '@/components/ui/password-input/PasswordInput';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
@@ -163,69 +164,29 @@ function ResetPasswordForm() {
           )}
 
           {/* New Password Input */}
-          <div>
-            <label htmlFor="password" className="text-base-content mb-2 block text-sm font-medium">
-              Новий пароль
-            </label>
-            <div className="relative">
-              <Lock className="text-base-content/50 absolute left-3 top-1/2 -translate-y-1/2 size-5" />
-              <input
-                type="password"
-                id="password"
-                name="password"
-                autoComplete="new-password"
-                required
-                aria-invalid={state?.fieldErrors?.password ? 'true' : 'false'}
-                aria-describedby={state?.fieldErrors?.password ? 'password-error' : undefined}
-                className={`bg-base-200 text-base-content placeholder-base-content/50 w-full rounded-lg border pl-10 pr-4 py-3 text-[16px] transition-all duration-[var(--duration-normal)] focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                  state?.fieldErrors?.password
-                    ? 'border-error focus:border-error'
-                    : 'border-base-300 focus:border-primary'
-                }`}
-                placeholder="Введіть новий пароль"
-              />
-            </div>
-            {state?.fieldErrors?.password && (
-              <div id="password-error" className="text-error mt-2 flex items-center gap-2 text-sm">
-                <AlertCircle size={14} />
-                <span>{state.fieldErrors.password}</span>
-              </div>
-            )}
-          </div>
+          <PasswordInput
+            id="password"
+            name="password"
+            label="Новий пароль"
+            autoComplete="new-password"
+            placeholder="Введіть новий пароль"
+            error={state?.fieldErrors?.password}
+            required
+          />
 
           {/* Confirm Password Input */}
-          <div>
-            <label htmlFor="confirm_password" className="text-base-content mb-2 block text-sm font-medium">
-              Підтвердіть пароль
-            </label>
-            <div className="relative">
-              <Lock className="text-base-content/50 absolute left-3 top-1/2 -translate-y-1/2 size-5" />
-              <input
-                type="password"
-                id="confirm_password"
-                name="confirm_password"
-                autoComplete="new-password"
-                required
-                aria-invalid={state?.fieldErrors?.confirm_password ? 'true' : 'false'}
-                aria-describedby={state?.fieldErrors?.confirm_password ? 'confirm-password-error' : undefined}
-                className={`bg-base-200 text-base-content placeholder-base-content/50 w-full rounded-lg border pl-10 pr-4 py-3 text-[16px] transition-all duration-[var(--duration-normal)] focus:outline-none focus:ring-2 focus:ring-primary/20 ${
-                  state?.fieldErrors?.confirm_password
-                    ? 'border-error focus:border-error'
-                    : 'border-base-300 focus:border-primary'
-                }`}
-                placeholder="Введіть пароль ще раз"
-              />
-            </div>
-            {state?.fieldErrors?.confirm_password && (
-              <div id="confirm-password-error" className="text-error mt-2 flex items-center gap-2 text-sm">
-                <AlertCircle size={14} />
-                <span>{state.fieldErrors.confirm_password}</span>
-              </div>
-            )}
-          </div>
+          <PasswordInput
+            id="confirm_password"
+            name="confirm_password"
+            label="Підтвердіть пароль"
+            autoComplete="new-password"
+            placeholder="Введіть пароль ще раз"
+            error={state?.fieldErrors?.confirm_password}
+            required
+          />
 
           <SubmitButton
-            variant="primary"
+            variant="secondary"
             size="large"
             className="w-full"
             text="Оновити пароль"
@@ -251,7 +212,7 @@ function ResetPasswordForm() {
         <div className="text-base-content/50 mt-8 text-center text-sm">
           <p>
             Пам'ятаєте пароль?{' '}
-            <Link href="/auth/login" className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)]">
+            <Link href="/auth/login" className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)] cursor-pointer">
               Увійти
             </Link>
           </p>

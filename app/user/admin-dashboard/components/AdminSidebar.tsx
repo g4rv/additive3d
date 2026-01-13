@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import ButtonLink from '@/components/ui/button-link';
 import { usePathname } from 'next/navigation';
 import { Users, Package, Shield } from 'lucide-react';
 import { ROUTES } from '@/lib/constants';
@@ -44,8 +44,9 @@ const AdminSidebar = () => {
 
             return (
               <li key={item.href}>
-                <Link
+                <ButtonLink
                   href={item.href}
+                  variant={active ? 'secondary' : 'string'}
                   className={cn(
                     'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200',
                     active
@@ -55,7 +56,7 @@ const AdminSidebar = () => {
                 >
                   <Icon className="w-5 h-5" />
                   <span>{item.label}</span>
-                </Link>
+                </ButtonLink>
               </li>
             );
           })}
@@ -64,12 +65,14 @@ const AdminSidebar = () => {
 
       {/* Back to Dashboard Link */}
       <div className="mt-8 pt-8 border-t border-base-300">
-        <Link
+        <ButtonLink
           href={ROUTES.dashboard}
-          className="flex items-center gap-2 text-sm text-base-content/70 hover:text-primary transition-colors"
+          variant="string"
+          size="small"
+          className="flex items-center gap-2"
         >
           ← Назад до профілю
-        </Link>
+        </ButtonLink>
       </div>
     </aside>
   );

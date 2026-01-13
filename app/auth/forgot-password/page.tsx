@@ -138,7 +138,7 @@ function ForgotPasswordForm() {
                       ? 'border-error focus:border-error'
                       : 'border-base-300 focus:border-primary'
                   }`}
-                  placeholder="ivan@company.com"
+                  placeholder="email@company.com"
                 />
               </div>
               {state?.fieldErrors?.email && (
@@ -150,7 +150,7 @@ function ForgotPasswordForm() {
             </div>
 
             <SubmitButton
-              variant="primary"
+              variant="secondary"
               size="large"
               className="w-full"
               text="Надіслати безпечне посилання"
@@ -193,18 +193,20 @@ function ForgotPasswordForm() {
             <div className="space-y-3">
               <ButtonLink
                 href="/auth/login"
-                variant="primary"
+                variant="secondary"
                 className="w-full justify-center py-3"
               >
                 Повернутися до входу
               </ButtonLink>
 
-              <button
+              <ButtonLink
+                href="/auth/forgot-password"
+                variant="outlined"
                 onClick={handleReset}
-                className="text-base-content/70 hover:text-base-content w-full rounded-lg px-6 py-2 text-sm transition-colors duration-[var(--duration-fast)]"
+                className="w-full justify-center py-3"
               >
                 Надіслати на іншу адресу
-              </button>
+              </ButtonLink>
             </div>
           </div>
         )}
@@ -215,14 +217,14 @@ function ForgotPasswordForm() {
             Не отримали лист? Перевірте папку спам або{' '}
             <button
               onClick={isSubmitted ? handleReset : undefined}
-              className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)]"
+              className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)] cursor-pointer"
             >
               спробуйте знову
             </button>
           </p>
           <p className="mt-2">
             Для негайної допомоги зв&apos;яжіться з нашою{' '}
-            <Link href="/contact" className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)]">
+            <Link href="/contact" className="text-primary hover:text-primary/80 transition-colors duration-[var(--duration-fast)] cursor-pointer">
               службою підтримки
             </Link>
           </p>
@@ -235,7 +237,7 @@ function ForgotPasswordForm() {
             Нагадування про безпеку
           </h3>
           <ul className="text-base-content/70 space-y-1 text-xs">
-            <li>• Посилання для скидання пароля застарівають через 30 хвилин для безпеки</li>
+            <li>• Посилання для скидання пароля дійсне лише 30 хвилин</li>
             <li>• Посилання можна використати лише один раз</li>
             <li>• Ми ніколи не зберігаємо і не надсилаємо існуючі паролі</li>
             <li>• Завжди перевіряйте, що ви на сайті additive3d.com</li>

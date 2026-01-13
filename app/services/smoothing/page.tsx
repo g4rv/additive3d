@@ -1,7 +1,22 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import Image from 'next/image';
-import { Zap, CheckCircle, Shield, Clock, Info, FileText, Search } from 'lucide-react';
+import {
+  Zap,
+  CheckCircle,
+  Shield,
+  Droplets,
+  Gauge,
+  Sparkles,
+  Lightbulb,
+  Target,
+  Leaf,
+  TrendingUp,
+  DollarSign,
+  AlertCircle,
+  ClipboardCheck,
+  Search as SearchIcon,
+} from 'lucide-react';
 
 export const metadata = {
   title: 'Хімічне згладжування | Additive3D',
@@ -18,22 +33,22 @@ export default function SteamIroningPage() {
         description="Інноваційна технологія для підвищення міцності та зносостійкості пластикових деталей. Підвищення щільності та стабілізація розмірів."
       />
 
-      <div className="custom-container py-12">
+      <div className="custom-container py-12 md:py-16">
         {/* Service Overview */}
-        <div className="mb-16">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            <div>
-              <h2 className="text-primary mb-6 text-3xl font-bold">
+        <div className="mb-12 md:mb-16">
+          <div className="grid grid-cols-1 items-center gap-8 md:gap-12 lg:grid-cols-2">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-primary mb-4 md:mb-6 text-2xl md:text-3xl font-bold text-balance">
                 Ми спеціалізуємося на згладжуванні поверхні деталей парами розчинника
               </h2>
-              <p className="text-base-content/80 mb-8 text-lg leading-relaxed">
+              <p className="text-base-content/80 mb-6 md:mb-8 text-base md:text-lg leading-relaxed max-w-prose">
                 Інноваційна технологія для підвищення міцності та зносостійкості пластикових
                 деталей. Підвищення щільності та стабілізація розмірів.
               </p>
-              <div className="mb-8 flex gap-4">
-                <div className="badge badge-primary badge-lg">Підвищення міцності</div>
-                <div className="badge badge-secondary badge-lg">Зменшення шорсткості</div>
-                <div className="badge badge-outline badge-lg">FDM та MJF</div>
+              <div className="mb-8 flex flex-wrap gap-2 md:gap-4">
+                <div className="badge badge-primary badge-md md:badge-lg">Підвищення міцності</div>
+                <div className="badge badge-secondary badge-md md:badge-lg">Зменшення шорсткості</div>
+                <div className="badge badge-outline badge-md md:badge-lg">FDM та MJF</div>
               </div>
             </div>
             <div className="relative">
@@ -49,30 +64,20 @@ export default function SteamIroningPage() {
         </div>
 
         {/* Process Benefits */}
-        <div className="mb-16">
-          <h2 className="text-primary mb-12 text-center text-3xl font-bold">
+        <div className="mb-12 md:mb-16">
+          <h2 className="text-primary mb-8 md:mb-12 text-center text-2xl md:text-3xl font-bold text-balance">
             Переваги хімічного згладжування
           </h2>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="card bg-base-200 border-primary/20 hover:border-primary/40 border transition-all duration-300">
-              <div className="card-body p-6 text-center">
-                <div className="bg-primary/20 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-primary h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
+              <div className="card-body p-4 md:p-6 text-center">
+                <div className="bg-primary/20 mx-auto mb-3 md:mb-4 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <Droplets className="text-primary h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-3 text-lg font-bold">Герметизація поверхні</h3>
+                <h3 className="text-primary mb-2 md:mb-3 text-base md:text-lg font-bold text-balance">
+                  Герметизація поверхні
+                </h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
                   Усунення пористості та мікротріщин поверхні полімерних деталей
                 </p>
@@ -80,23 +85,13 @@ export default function SteamIroningPage() {
             </div>
 
             <div className="card bg-base-200 border-primary/20 hover:border-primary/40 border transition-all duration-300">
-              <div className="card-body p-6 text-center">
-                <div className="bg-primary/20 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-primary h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+              <div className="card-body p-4 md:p-6 text-center">
+                <div className="bg-primary/20 mx-auto mb-3 md:mb-4 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <Shield className="text-primary h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-3 text-lg font-bold">Хімічна стійкість</h3>
+                <h3 className="text-primary mb-2 md:mb-3 text-base md:text-lg font-bold text-balance">
+                  Хімічна стійкість
+                </h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
                   Створює захисний бар&apos;єр, який покращує стійкість до хімічних речовин, води та
                   масел.
@@ -105,23 +100,13 @@ export default function SteamIroningPage() {
             </div>
 
             <div className="card bg-base-200 border-primary/20 hover:border-primary/40 border transition-all duration-300">
-              <div className="card-body p-6 text-center">
-                <div className="bg-primary/20 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-primary h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a6 6 0 00-3-5.197M9 3h6a2 2 0 012 2v4a6 6 0 01-3 5.197M9 3v6a6 6 0 003 5.197"
-                    />
-                  </svg>
+              <div className="card-body p-4 md:p-6 text-center">
+                <div className="bg-primary/20 mx-auto mb-3 md:mb-4 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <Gauge className="text-primary h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-3 text-lg font-bold">Підвищення міцності</h3>
+                <h3 className="text-primary mb-2 md:mb-3 text-base md:text-lg font-bold text-balance">
+                  Підвищення міцності
+                </h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
                   Додає міцний захисний шар, який може покращити механічні властивості деталі
                 </p>
@@ -129,23 +114,13 @@ export default function SteamIroningPage() {
             </div>
 
             <div className="card bg-base-200 border-primary/20 hover:border-primary/40 border transition-all duration-300">
-              <div className="card-body p-6 text-center">
-                <div className="bg-primary/20 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-primary h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m0-6l-3 3m6 0l-3-3m-6 0l-3-3"
-                    />
-                  </svg>
+              <div className="card-body p-4 md:p-6 text-center">
+                <div className="bg-primary/20 mx-auto mb-3 md:mb-4 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <Sparkles className="text-primary h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-3 text-lg font-bold">Покращення поверхні</h3>
+                <h3 className="text-primary mb-2 md:mb-3 text-base md:text-lg font-bold text-balance">
+                  Покращення поверхні
+                </h3>
                 <p className="text-base-content/80 text-sm leading-relaxed">
                   Створення гладкої та однорідної поверхні без видимих дефектів
                 </p>
@@ -368,77 +343,49 @@ export default function SteamIroningPage() {
         </div>
 
         {/* Quality Control */}
-        <div className="mb-16">
-          <h2 className="text-primary mb-12 text-center text-3xl font-bold">Контроль якості</h2>
+        <div className="mb-12 md:mb-16">
+          <h2 className="text-primary mb-8 md:mb-12 text-center text-2xl md:text-3xl font-bold text-balance">
+            Контроль якості
+          </h2>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:gap-8 md:grid-cols-3">
             <div className="card bg-base-100 border-base-300 hover:border-primary/30 border transition-all duration-300">
-              <div className="card-body p-8 text-center">
-                <div className="bg-success/20 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-success h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+              <div className="card-body p-6 md:p-8 text-center">
+                <div className="bg-success/20 mx-auto mb-4 md:mb-6 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <CheckCircle className="text-success h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-4 text-xl font-bold">Вхідний контроль</h3>
-                <p className="text-base-content/80 leading-relaxed">
+                <h3 className="text-primary mb-3 md:mb-4 text-lg md:text-xl font-bold text-balance">
+                  Вхідний контроль
+                </h3>
+                <p className="text-base-content/80 text-sm md:text-base leading-relaxed">
                   Перевірка вихідних параметрів 3D-друку перед обробкою
                 </p>
               </div>
             </div>
 
             <div className="card bg-base-100 border-base-300 hover:border-primary/30 border transition-all duration-300">
-              <div className="card-body p-8 text-center">
-                <div className="bg-success/20 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-success h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+              <div className="card-body p-6 md:p-8 text-center">
+                <div className="bg-success/20 mx-auto mb-4 md:mb-6 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <AlertCircle className="text-success h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-4 text-xl font-bold">Процесний моніторинг</h3>
-                <p className="text-base-content/80 leading-relaxed">
+                <h3 className="text-primary mb-3 md:mb-4 text-lg md:text-xl font-bold text-balance">
+                  Процесний моніторинг
+                </h3>
+                <p className="text-base-content/80 text-sm md:text-base leading-relaxed">
                   Контроль температури та часу обробки в реальному часі
                 </p>
               </div>
             </div>
 
             <div className="card bg-base-100 border-base-300 hover:border-primary/30 border transition-all duration-300">
-              <div className="card-body p-8 text-center">
-                <div className="bg-success/20 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
-                  <svg
-                    className="text-success h-8 w-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h2m0 0a2 2 0 002 2v5a2 2 0 002-2V7a2 2 0 00-2-2H9z"
-                    />
-                  </svg>
+              <div className="card-body p-6 md:p-8 text-center">
+                <div className="bg-success/20 mx-auto mb-4 md:mb-6 flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full">
+                  <ClipboardCheck className="text-success h-7 w-7 md:h-8 md:w-8" />
                 </div>
-                <h3 className="text-primary mb-4 text-xl font-bold">Вихідний контроль</h3>
-                <p className="text-base-content/80 leading-relaxed">
+                <h3 className="text-primary mb-3 md:mb-4 text-lg md:text-xl font-bold text-balance">
+                  Вихідний контроль
+                </h3>
+                <p className="text-base-content/80 text-sm md:text-base leading-relaxed">
                   Вимірювання розмірів та перевірка відповідності технічним вимогам
                 </p>
               </div>
@@ -447,80 +394,52 @@ export default function SteamIroningPage() {
         </div>
 
         {/* Advantages */}
-        <div className="mb-16">
-          <h2 className="text-primary mb-12 text-center text-3xl font-bold">Переваги технології</h2>
+        <div className="mb-12 md:mb-16">
+          <h2 className="text-primary mb-8 md:mb-12 text-center text-2xl md:text-3xl font-bold text-balance">
+            Переваги технології
+          </h2>
 
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-2">
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
-                  <svg
-                    className="text-primary h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="bg-primary/20 flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-lg">
+                  <Lightbulb className="text-primary h-5 w-5 md:h-6 md:w-6" />
                 </div>
-                <div>
-                  <h4 className="text-primary mb-2 text-lg font-bold">Інноваційний підхід</h4>
-                  <p className="text-base-content/80 leading-relaxed">
+                <div className="flex-1">
+                  <h4 className="text-primary mb-1 md:mb-2 text-base md:text-lg font-bold text-balance">
+                    Інноваційний підхід
+                  </h4>
+                  <p className="text-base-content/80 text-sm md:text-base leading-relaxed max-w-prose">
                     Використання сучасних технологій для досягнення максимальної ефективності
                     процесу зварювання.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
-                  <svg
-                    className="text-primary h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="bg-primary/20 flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-lg">
+                  <Target className="text-primary h-5 w-5 md:h-6 md:w-6" />
                 </div>
-                <div>
-                  <h4 className="text-primary mb-2 text-lg font-bold">Висока точність</h4>
-                  <p className="text-base-content/80 leading-relaxed">
+                <div className="flex-1">
+                  <h4 className="text-primary mb-1 md:mb-2 text-base md:text-lg font-bold text-balance">
+                    Висока точність
+                  </h4>
+                  <p className="text-base-content/80 text-sm md:text-base leading-relaxed max-w-prose">
                     Стабільні результати з мінімальними відхиленнями розмірів та властивостей
                     матеріалу.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
-                  <svg
-                    className="text-primary h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m0-6l-3 3m6 0l-3-3m-6 0l-3-3"
-                    />
-                  </svg>
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="bg-primary/20 flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-lg">
+                  <Leaf className="text-primary h-5 w-5 md:h-6 md:w-6" />
                 </div>
-                <div>
-                  <h4 className="text-primary mb-2 text-lg font-bold">Екологічність</h4>
-                  <p className="text-base-content/80 leading-relaxed">
+                <div className="flex-1">
+                  <h4 className="text-primary mb-1 md:mb-2 text-base md:text-lg font-bold text-balance">
+                    Екологічність
+                  </h4>
+                  <p className="text-base-content/80 text-sm md:text-base leading-relaxed max-w-prose">
                     Відсутність хімічних речовин та безпечність для використання у різних галузях.
                   </p>
                 </div>
@@ -528,49 +447,29 @@ export default function SteamIroningPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
-                  <svg
-                    className="text-primary h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a6 6 0 00-3-5.197M9 3h6a2 2 0 012 2v4a6 6 0 01-3 5.197M9 3v6a6 6 0 003 5.197"
-                    />
-                  </svg>
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="bg-primary/20 flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-lg">
+                  <TrendingUp className="text-primary h-5 w-5 md:h-6 md:w-6" />
                 </div>
-                <div>
-                  <h4 className="text-primary mb-2 text-lg font-bold">Надійність</h4>
-                  <p className="text-base-content/80 leading-relaxed">
+                <div className="flex-1">
+                  <h4 className="text-primary mb-1 md:mb-2 text-base md:text-lg font-bold text-balance">
+                    Надійність
+                  </h4>
+                  <p className="text-base-content/80 text-sm md:text-base leading-relaxed max-w-prose">
                     Прогнозовані результати з гарантованою якістю та стабільністю характеристик.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="bg-primary/20 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
-                  <svg
-                    className="text-primary h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
+              <div className="flex items-start gap-3 md:gap-4">
+                <div className="bg-primary/20 flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-lg">
+                  <DollarSign className="text-primary h-5 w-5 md:h-6 md:w-6" />
                 </div>
-                <div>
-                  <h4 className="text-primary mb-2 text-lg font-bold">Економічна ефективність</h4>
-                  <p className="text-base-content/80 leading-relaxed">
+                <div className="flex-1">
+                  <h4 className="text-primary mb-1 md:mb-2 text-base md:text-lg font-bold text-balance">
+                    Економічна ефективність
+                  </h4>
+                  <p className="text-base-content/80 text-sm md:text-base leading-relaxed max-w-prose">
                     Оптимізація виробничих процесів та зменшення витрат на додаткову обробку.
                   </p>
                 </div>

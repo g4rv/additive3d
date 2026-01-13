@@ -1,11 +1,11 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import { ChevronDown, User, LogOut, LayoutDashboard, Shield } from 'lucide-react';
-import ButtonLink from '../ui/button-link';
-import { ROUTES } from '@/lib/constants';
 import { signOut } from '@/app/auth/logout/actions';
+import { ROUTES } from '@/lib/constants';
 import { cn } from '@/utils/cn';
+import { ChevronDown, LayoutDashboard, LogOut, Shield, User } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import ButtonLink from '../ui/button-link';
 
 interface ProfileBarProps {
   firstName: string;
@@ -15,7 +15,13 @@ interface ProfileBarProps {
   isAdmin?: boolean;
 }
 
-const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAdmin = false }: ProfileBarProps) => {
+const ProfileBar = ({
+  firstName,
+  lastName,
+  variant = 'desktop',
+  onNavigate,
+  isAdmin = false,
+}: ProfileBarProps) => {
   const pathname = usePathname();
   const fullName = `${firstName} ${lastName}`;
 
@@ -29,8 +35,8 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAd
     return (
       <div className="border-base-300 border-t pt-6">
         <div className="mb-4 px-2">
-          <div className="flex items-center gap-2 text-base-content/70 mb-2">
-            <User className="w-4 h-4" />
+          <div className="text-base-content/70 mb-2 flex items-center gap-2">
+            <User className="h-4 w-4" />
             <span className="text-sm font-medium">{fullName}</span>
           </div>
         </div>
@@ -39,10 +45,10 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAd
           <ButtonLink
             href={ROUTES.dashboard}
             variant="secondary"
-            className="w-full py-3 text-base justify-start gap-2"
+            className="w-full justify-center gap-2 py-3 text-base"
             onClick={onNavigate}
+            startAdornment={<LayoutDashboard className="h-4 w-4" />}
           >
-            <LayoutDashboard className="w-4 h-4" />
             Панель керування
           </ButtonLink>
 
@@ -50,22 +56,23 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAd
             <ButtonLink
               href={ROUTES.adminDashboard}
               variant="secondary"
-              className="w-full py-3 text-base justify-start gap-2"
+              className="w-full items-center justify-center gap-2 py-3 text-base"
               onClick={onNavigate}
+              startAdornment={<Shield className="h-4 w-4" />}
             >
-              <Shield className="w-4 h-4" />
               Адмін панель
             </ButtonLink>
           )}
 
           <form action={handleSignOut} className="w-full">
-            <button
+            <ButtonLink
               type="submit"
-              className="btn btn-outline btn-error w-full py-3 text-base justify-start gap-2"
+              variant="outlined"
+              className="text-error w-full justify-center gap-2 border-current py-3 text-base"
+              startAdornment={<LogOut className="h-4 w-4" />}
             >
-              <LogOut className="w-4 h-4" />
               Вийти
-            </button>
+            </ButtonLink>
           </form>
         </div>
       </div>
@@ -85,23 +92,24 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAd
 
   return (
     <div className="group focus-within relative">
-      <button
+      <ButtonLink
+        variant="primary"
         className={cn(
-          'inline-flex items-center gap-2 px-4 py-2 rounded-lg',
-          'text-base-content font-medium',
-          'hover:bg-base-200 transition-all duration-200',
-          'focus-visible:ring focus-visible:ring-base-content focus-visible:ring-offset-2 focus-visible:outline-none'
+          'inline-flex items-center gap-2 px-4 py-2',
+          'hover:bg-base-200 transition-all duration-200'
         )}
         onMouseOver={resetFocus}
         onClick={resetFocus}
+        endAdornment={
+          <ChevronDown
+            size={16}
+            className="group-hover:text-primary text-current transition-all duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
+          />
+        }
       >
-        <User className="w-4 h-4" />
+        <User className="h-4 w-4" />
         {fullName}
-        <ChevronDown
-          size={16}
-          className="group-hover:text-primary text-current transition-all duration-300 group-focus-within:rotate-180 group-hover:rotate-180"
-        />
-      </button>
+      </ButtonLink>
 
       {/* Dropdown Menu */}
       <div className="invisible absolute top-full right-0 z-50 pt-2 opacity-0 transition-all duration-300 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
@@ -109,11 +117,11 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAd
           <ButtonLink
             href={ROUTES.dashboard}
             active={pathname === ROUTES.dashboard}
-            className="hover:bg-base-200 p-3 text-left transition-all duration-200 flex items-center gap-2"
+            className="hover:bg-base-200 flex items-center gap-2 p-3 text-left transition-all duration-200"
             onMouseOver={resetFocus}
             onClick={resetFocus}
           >
-            <LayoutDashboard className="w-4 h-4" />
+            <LayoutDashboard className="h-4 w-4" />
             Панель керування
           </ButtonLink>
 
@@ -121,26 +129,26 @@ const ProfileBar = ({ firstName, lastName, variant = 'desktop', onNavigate, isAd
             <ButtonLink
               href={ROUTES.adminDashboard}
               active={pathname === ROUTES.adminDashboard}
-              className="hover:bg-base-200 p-3 text-left transition-all duration-200 flex items-center gap-2"
+              className="hover:bg-base-200 flex items-center gap-2 p-3 text-left transition-all duration-200"
               onMouseOver={resetFocus}
               onClick={resetFocus}
             >
-              <Shield className="w-4 h-4" />
+              <Shield className="h-4 w-4" />
               Адмін панель
             </ButtonLink>
           )}
 
-          <div className="border-base-300 border-t my-1" />
+          <div className="border-base-300 my-1 border-t" />
 
           <form action={handleSignOut} className="w-full">
-            <button
+            <ButtonLink
               type="submit"
-              className="hover:bg-error/10 text-error hover:text-error w-full p-3 text-left transition-all duration-200 rounded-lg flex items-center gap-2 font-medium"
+              className="hover:bg-error/10 text-error hover:text-error flex w-full items-center gap-2 rounded-lg p-3 text-left font-medium transition-all duration-200"
               onMouseOver={resetFocus}
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="h-4 w-4" />
               Вийти
-            </button>
+            </ButtonLink>
           </form>
         </div>
       </div>

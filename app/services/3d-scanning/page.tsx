@@ -22,6 +22,7 @@ import {
   Camera,
 } from 'lucide-react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: '3D-сканування | Additive3D',
@@ -176,10 +177,13 @@ export default function ThreeDScanningPage() {
             {/* Structured Light Scanner */}
             <div className="card bg-base-100 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
-                <img
+                <Image
                   src="/Services/3d-scanning/engineer-using-structured-light-scanner.jpg"
                   alt="Інженер використовує структурований світловий сканер Zeiss"
+                  width={1280}
+                  height={720}
                   className="h-full w-full object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </figure>
               <div className="card-body p-6">
@@ -196,10 +200,13 @@ export default function ThreeDScanningPage() {
             {/* 3D Mesh Wireframe */}
             <div className="card bg-base-100 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
-                <img
+                <Image
                   src="/Services/3d-scanning/3d-mesh-wireframe-model.png"
                   alt="3D модел у вигляді каркасної сітки"
+                  width={1280}
+                  height={720}
                   className="h-full w-full object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </figure>
               <div className="card-body p-6">
@@ -372,10 +379,13 @@ export default function ThreeDScanningPage() {
             {/* Metal Cast Part Scanning */}
             <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
-                <img
+                <Image
                   src="/Services/3d-scanning/3d-laser-scanning-of-cast-metal-part.jpg"
                   alt="3D лазерне сканування литої металевої деталі"
+                  width={1280}
+                  height={720}
                   className="h-full w-full object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </figure>
               <div className="card-body p-6">
@@ -393,10 +403,13 @@ export default function ThreeDScanningPage() {
             {/* Surface Detail Scanning */}
             <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
-                <img
+                <Image
                   src="/Services/3d-scanning/3d-surface-scan-model-detail.png"
                   alt="Детальне сканування поверхні моделі"
+                  width={1280}
+                  height={720}
                   className="h-full w-full object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </figure>
               <div className="card-body p-6">
@@ -414,10 +427,13 @@ export default function ThreeDScanningPage() {
             {/* Portable Scanner */}
             <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
-                <img
+                <Image
                   src="/Services/3d-scanning/portable-3d-scanner-vehicle-inspection.jpg"
                   alt="Переносний 3D сканер для інспекції транспортного засобу"
+                  width={1280}
+                  height={720}
                   className="h-full w-full object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </figure>
               <div className="card-body p-6">

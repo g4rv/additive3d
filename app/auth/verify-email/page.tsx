@@ -1,5 +1,5 @@
 import { Mail, CheckCircle2 } from 'lucide-react';
-import Link from 'next/link';
+import ButtonLink from '@/components/ui/button-link';
 import { ROUTES } from '@/lib/constants';
 import { getCurrentUser } from '@/lib/supabase/queries';
 import { createMetadata } from '@/lib/metadata';
@@ -81,12 +81,9 @@ export default async function VerifyEmailPage() {
 
             {/* Back to Login */}
             <div className="text-center">
-              <Link
-                href={ROUTES.login}
-                className="text-sm text-primary hover:text-primary-focus transition-colors"
-              >
+              <ButtonLink href={ROUTES.login} variant="string" size="small">
                 Повернутися до входу
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </div>

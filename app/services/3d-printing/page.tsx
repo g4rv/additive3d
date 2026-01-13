@@ -171,7 +171,7 @@ export default function ThreeDPrintingPage() {
                     </p>
                     <ul className="space-y-2">
                       {tech.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start gap-2">
+                        <li key={featureIndex} className="flex items-center gap-2">
                           <div className="bg-primary/20 text-primary mt-0.5 size-1.5 rounded-full shrink-0" />
                           <span className="text-base-content/80 text-xs">{feature}</span>
                         </li>

@@ -1,9 +1,10 @@
 'use client';
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
-import { AlertCircle, CheckCircle2, Lock, Shield } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Shield } from 'lucide-react';
 import { useActionState } from 'react';
 import { changePassword } from './actions';
+import PasswordInput from '@/components/ui/password-input/PasswordInput';
 
 export default function PasswordChangeForm() {
   const initial = {
@@ -32,111 +33,73 @@ export default function PasswordChangeForm() {
         </div>
       )}
 
-      {/* Security Notice */}
-      <div className="bg-base-300 rounded-lg p-4 border border-base-content/10">
-        <div className="flex items-start gap-3">
-          <Shield className="text-primary mt-0.5 size-5 flex-shrink-0" />
-          <div>
-            <h3 className="text-base-content font-semibold text-sm mb-1">Вимоги до пароля</h3>
-            <ul className="text-base-content/70 space-y-1 text-xs">
-              <li>• Мінімум 8 символів</li>
-              <li>• Хоча б одна велика літера (A-Z)</li>
-              <li>• Хоча б одна мала літера (a-z)</li>
-              <li>• Хоча б одна цифра (0-9)</li>
-            </ul>
+      {/* Password Requirements Notice */}
+      <div className="mb-5">
+        <div className="bg-base-300 rounded-lg p-4 border border-base-content/10">
+          <div className="flex items-start gap-2.5 mb-3">
+            <Shield className="text-primary size-5 flex-shrink-0" />
+            <h3 className="text-base-content font-semibold text-sm">Вимоги до пароля</h3>
           </div>
+          <ul className="text-base-content/80 space-y-1.5 text-xs grid grid-cols-2 gap-2">
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <span>Мінімум 8 символів</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <span>Велика літера (A-Z)</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <span>Мала літера (a-z)</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <span>Цифра (0-9)</span>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        {/* Current Password */}
-        <div className="flex flex-col gap-2">
-          <label htmlFor="current_password" className="text-sm font-medium">
-            Поточний пароль
-          </label>
-          <div className="relative">
-            <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
-              <Lock className="h-5 w-5" />
-            </div>
-            <input
-              type="password"
-              id="current_password"
-              name="current_password"
-              autoComplete="current-password"
-              className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
-                state?.fieldErrors?.current_password
-                  ? 'border-error focus:border-error'
-                  : 'focus:border-primary border-transparent'
-              }`}
-              placeholder="Введіть поточний пароль"
-            />
-          </div>
-          {state?.fieldErrors?.current_password && (
-            <p className="text-error text-xs">{state.fieldErrors.current_password}</p>
-          )}
-        </div>
+      {/* Password Inputs */}
+      <div className="space-y-5">
+        <PasswordInput
+          id="current_password"
+          name="current_password"
+          label="Поточний пароль"
+          autoComplete="current-password"
+          placeholder="Введіть поточний пароль"
+          error={state?.fieldErrors?.current_password}
+          required
+        />
 
-        {/* New Password */}
-        <div className="flex flex-col gap-2">
-          <label htmlFor="password" className="text-sm font-medium">
-            Новий пароль
-          </label>
-          <div className="relative">
-            <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
-              <Lock className="h-5 w-5" />
-            </div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              autoComplete="new-password"
-              className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
-                state?.fieldErrors?.password
-                  ? 'border-error focus:border-error'
-                  : 'focus:border-primary border-transparent'
-              }`}
-              placeholder="Введіть новий пароль"
-            />
-          </div>
-          {state?.fieldErrors?.password && (
-            <p className="text-error text-xs">{state.fieldErrors.password}</p>
-          )}
-        </div>
+        <PasswordInput
+          id="password"
+          name="password"
+          label="Новий пароль"
+          autoComplete="new-password"
+          placeholder="Введіть новий пароль"
+          error={state?.fieldErrors?.password}
+          required
+        />
 
-        {/* Confirm New Password */}
-        <div className="flex flex-col gap-2">
-          <label htmlFor="confirm_password" className="text-sm font-medium">
-            Підтвердіть новий пароль
-          </label>
-          <div className="relative">
-            <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
-              <Lock className="h-5 w-5" />
-            </div>
-            <input
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              autoComplete="new-password"
-              className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
-                state?.fieldErrors?.confirm_password
-                  ? 'border-error focus:border-error'
-                  : 'focus:border-primary border-transparent'
-              }`}
-              placeholder="Підтвердіть новий пароль"
-            />
-          </div>
-          {state?.fieldErrors?.confirm_password && (
-            <p className="text-error text-xs">{state.fieldErrors.confirm_password}</p>
-          )}
-        </div>
+        <PasswordInput
+          id="confirm_password"
+          name="confirm_password"
+          label="Підтвердіть новий пароль"
+          autoComplete="new-password"
+          placeholder="Підтвердіть новий пароль"
+          error={state?.fieldErrors?.confirm_password}
+          required
+        />
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end">
+      <div className="mt-6">
         <SubmitButton
           text="Змінити пароль"
           pendingText="Зміна пароля..."
-          className="w-full lg:w-auto lg:min-w-48"
+          className="w-full"
         />
       </div>
     </form>

@@ -3,6 +3,8 @@
 import { cn } from '@/utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import ButtonLink from '@/components/ui/button-link';
+import { ChevronDown } from 'lucide-react';
 import type { FAQProps } from './FAQ.types';
 
 /**
@@ -37,43 +39,35 @@ export default function FAQ({ title, description, items, className }: FAQProps) 
     <section className={cn('py-8 lg:py-12', className)}>
       <div className="custom-container">
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h2 className="text-primary text-2xl font-bold lg:text-3xl">{title}</h2>
-          {description && <p className="text-base-content/80 mt-2 lg:text-lg">{description}</p>}
+        <div className="mb-8 text-center px-4">
+          <h2 className="text-primary text-xl sm:text-2xl lg:text-3xl font-bold">{title}</h2>
+          {description && <p className="text-base-content/80 mt-2 text-sm sm:text-base lg:text-lg">{description}</p>}
         </div>
 
         {/* FAQ Items */}
-        <div className="mx-auto max-w-4xl space-y-4">
+        <div className="mx-auto max-w-4xl space-y-3 sm:space-y-4 px-4">
           {items.map((item) => (
-            <div key={item.id} className="card bg-base-200 border-base-300 border p-0 shadow-sm">
-              <div className="card-body p-0 lg:p-6">
-                <button
+            <div key={item.id} className="card bg-base-200 border-base-300 border shadow-sm">
+              <div className="card-body p-0">
+                <ButtonLink
                   onClick={() => toggleItem(item.id)}
-                  className="hover:text-primary focus-visible:ring-offset-base-200 focus:text-primary -m-2 flex w-full items-start justify-between rounded-lg p-6 text-left transition-colors duration-300 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none"
+                  className="hover:text-primary focus-visible:ring-offset-base-200 focus:text-primary flex w-full items-start justify-between rounded-lg p-4 sm:p-6 text-left transition-colors duration-300 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none"
                   aria-expanded={openItems.has(item.id)}
                   aria-controls={`faq-answer-${item.id}`}
+                  endAdornment={
+                    <ChevronDown
+                      size={24}
+                      className={cn(
+                        'text-primary shrink-0 transition-transform duration-200',
+                        openItems.has(item.id) && 'rotate-180'
+                      )}
+                    />
+                  }
                 >
-                  <h3 className="text-base-content pr-4 text-lg leading-tight font-medium">
+                  <h3 className="text-base-content pr-4 text-base sm:text-lg leading-snug font-medium">
                     {item.question}
                   </h3>
-                  <div className="shrink-0">
-                    <motion.svg
-                      className="text-primary size-6"
-                      animate={{ rotate: openItems.has(item.id) ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </motion.svg>
-                  </div>
-                </button>
+                </ButtonLink>
 
                 <AnimatePresence initial={false}>
                   {openItems.has(item.id) && (
@@ -85,8 +79,8 @@ export default function FAQ({ title, description, items, className }: FAQProps) 
                       transition={{ duration: 0.2, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="pt-4">
-                        <p className="text-base-content/90 leading-relaxed">{item.answer}</p>
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                        <p className="text-base-content/90 text-sm sm:text-base leading-relaxed">{item.answer}</p>
                       </div>
                     </motion.div>
                   )}

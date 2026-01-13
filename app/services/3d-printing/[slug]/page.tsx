@@ -2,6 +2,7 @@ import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
 import { SlugPageProps } from '@/lib/types';
+import { cn } from '@/utils/cn';
 import isTechnologySlug from '@/utils/isTechnologySlug';
 import {
   Award,
@@ -17,8 +18,8 @@ import {
   Wrench,
   Zap,
 } from 'lucide-react';
-import Image from 'next/image';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 // Metadata for each technology
@@ -422,7 +423,7 @@ export default async function Page({ params }: SlugPageProps) {
             </p>
           </div>
 
-          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl gap-4 sm:gap-6 md:grid-cols-2">
             {tech.features.map((feature, index) => {
               const Icon = feature.icon;
               return (
@@ -430,14 +431,14 @@ export default async function Page({ params }: SlugPageProps) {
                   key={index}
                   className="card bg-base-200 border-base-300 shadow-sm transition-all duration-[var(--duration-moderate)] hover:shadow-md"
                 >
-                  <div className="card-body p-6">
-                    <div className="mb-4 flex items-center gap-3">
-                      <div className="bg-primary/10 text-primary rounded-lg p-3">
-                        <Icon className="size-6" />
+                  <div className="card-body p-4 sm:p-6">
+                    <div className="mb-4 flex items-start gap-3">
+                      <div className="bg-primary/10 text-primary rounded-lg p-2 sm:p-3 flex-shrink-0">
+                        <Icon className="size-5 sm:size-6" />
                       </div>
-                      <h3 className="text-primary text-lg font-semibold">{feature.title}</h3>
+                      <h3 className="text-primary text-base sm:text-lg font-semibold leading-snug">{feature.title}</h3>
                     </div>
-                    <p className="text-base-content/80 text-sm leading-relaxed">
+                    <p className="text-base-content/80 text-sm sm:text-base leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -463,10 +464,10 @@ export default async function Page({ params }: SlugPageProps) {
                   {tech.specs.map((spec, index) => (
                     <div
                       key={index}
-                      className="border-base-200 flex justify-between border-b pb-3 last:border-b-0"
+                      className="border-base-200 flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4 border-b pb-3 last:border-b-0"
                     >
-                      <span className="text-base-content/70 font-medium">{spec.label}</span>
-                      <span className="text-base-content font-medium">{spec.value}</span>
+                      <span className="text-base-content/70 font-medium text-sm sm:text-base">{spec.label}</span>
+                      <span className="text-base-content font-medium text-sm sm:text-base sm:text-right break-words">{spec.value}</span>
                     </div>
                   ))}
                 </div>
@@ -488,7 +489,7 @@ export default async function Page({ params }: SlugPageProps) {
             </p>
           </div>
 
-          <div className="mx-auto max-w-5xl space-y-6">
+          <div className="mx-auto max-w-5xl space-y-4 sm:space-y-6">
             {tech.process.map((step) => {
               const Icon = step.icon;
               return (
@@ -496,19 +497,19 @@ export default async function Page({ params }: SlugPageProps) {
                   key={step.step}
                   className="card bg-base-200 border-base-300 shadow-sm transition-all duration-[var(--duration-moderate)] hover:shadow-md"
                 >
-                  <div className="card-body p-6 lg:p-8">
-                    <div className="flex gap-6">
+                  <div className="card-body p-4 sm:p-6 lg:p-8">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                       <div className="flex-shrink-0">
                         <div className="bg-primary/10 flex size-12 items-center justify-center rounded-lg">
                           <span className="text-primary text-xl font-bold">{step.step}</span>
                         </div>
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <div className="mb-3 flex items-center gap-3">
-                          <Icon className="text-primary size-5" />
-                          <h3 className="text-primary text-lg font-semibold">{step.title}</h3>
+                          <Icon className="text-primary size-5 flex-shrink-0" />
+                          <h3 className="text-primary text-base sm:text-lg font-semibold">{step.title}</h3>
                         </div>
-                        <p className="text-base-content/90 leading-relaxed">{step.description}</p>
+                        <p className="text-base-content/90 text-sm sm:text-base leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   </div>
@@ -553,7 +554,7 @@ export default async function Page({ params }: SlugPageProps) {
           <BgPattern pattern="dots" opacity={0.05} className="absolute inset-0" />
 
           <div className="custom-container relative z-10">
-            <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+            <div className="mx-auto grid max-w-6xl gap-8 lg:max-w-[600px]">
               {tech.images.slice(3).map((image, index) => (
                 <div
                   key={index}
@@ -565,7 +566,7 @@ export default async function Page({ params }: SlugPageProps) {
                       alt={`${tech.title} - додаткове зображення ${index + 1}`}
                       width={600}
                       height={400}
-                      className="h-full w-full object-cover"
+                      className={cn("h-full w-full object-cover", slug === 'fdm' && 'object-contain')}
                     />
                   </figure>
                 </div>
