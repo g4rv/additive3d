@@ -4,6 +4,7 @@ import { sendOrderConfirmationEmail } from '@/lib/email/send-order-email';
 import { checkFileSizeLimit, formatRateLimitError, recordFileSizeUsage } from '@/lib/rate-limit';
 import { createClient } from '@/lib/supabase/server';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { revalidatePath } from 'next/cache';
 
 // Configure Cloudflare R2 client
@@ -50,6 +51,105 @@ export interface UploadOrderError {
   success: false;
   error: string;
   details?: string;
+}
+
+export interface PresignedUploadResult {
+  success: true;
+  uploadUrl: string;
+  key: string;
+  publicUrl: string;
+}
+
+export interface PresignedUploadError {
+  success: false;
+  error: string;
+}
+
+/**
+ * Generate a presigned URL for direct upload to R2 from browser
+ * This bypasses Vercel's 4.5MB server action payload limit
+ */
+export async function generateUploadUrl(
+  fileName: string,
+  fileSize: number
+): Promise<PresignedUploadResult | PresignedUploadError> {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return {
+        success: false,
+        error: 'Не авторизовано',
+      };
+    }
+
+    console.log('[generateUploadUrl] File:', fileName.toLowerCase(), 'Size:', fileSize)
+
+    // Validate file type
+    if (!fileName.toLowerCase().endsWith('.stl')) {
+      return {
+        success: false,
+        error: `Невірний тип файлу: "${fileName}". Дозволені лише файли .stl`,
+      };
+    }
+
+    // Validate file size
+    const MAX_FILE_SIZE = 200 * 1024 * 1024; // 200MB
+    if (fileSize > MAX_FILE_SIZE) {
+      return {
+        success: false,
+        error: `Розмір файлу перевищує ${MAX_FILE_SIZE / (1024 * 1024)} МБ`,
+      };
+    }
+
+    // Check rate limiting for file uploads
+    const rateLimitResult = await checkFileSizeLimit(user.id, fileSize);
+    if (!rateLimitResult.allowed) {
+      return {
+        success: false,
+        error: formatRateLimitError(rateLimitResult, 'order_submission'),
+      };
+    }
+
+    // Generate unique key for the file
+    const timestamp = Date.now();
+    const key = `orders/${user.id}/${timestamp}/${fileName}`;
+
+    // Create presigned URL command (valid for 60 seconds)
+    const command = new PutObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: key,
+      ContentType: 'model/stl',
+      Metadata: {
+        uploadedBy: user.id,
+        uploadedAt: new Date().toISOString(),
+      },
+    });
+
+    // Generate presigned URL
+    const uploadUrl = await getSignedUrl(r2Client, command, {
+      expiresIn: 60, // URL expires in 60 seconds
+    });
+
+    const publicUrl = `${process.env.CLOUDFLARE_R2_PUBLIC_URL}/${key}`;
+
+    return {
+      success: true,
+      uploadUrl,
+      key,
+      publicUrl,
+    };
+  } catch (error) {
+    console.error('Error generating presigned URL:', error);
+    return {
+      success: false,
+      error: 'Не вдалося згенерувати URL для завантаження',
+    };
+  }
 }
 
 export async function uploadOrder(
@@ -265,6 +365,164 @@ export async function uploadOrder(
       success: false,
       error: 'Failed to process order',
       details: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+}
+
+/**
+ * Submit an order with files that have already been uploaded to R2
+ * This is used after direct browser uploads with presigned URLs
+ */
+export async function submitOrderWithUploadedFiles(
+  orderData: UploadOrderData,
+  uploadedFiles: Array<{ fileName: string; url: string; size: number }>
+): Promise<UploadOrderResult | UploadOrderError> {
+  try {
+    // Verify user is authenticated
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return {
+        success: false,
+        error: 'Не авторизовано',
+        details: 'Увійдіть, щоб оформити замовлення',
+      };
+    }
+
+    if (!uploadedFiles || uploadedFiles.length === 0) {
+      return {
+        success: false,
+        error: 'Файли не надано',
+      };
+    }
+
+    // Calculate total size for rate limit tracking
+    const totalSize = uploadedFiles.reduce((sum, file) => sum + file.size, 0);
+
+    // Check if user has given consent for file sharing
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('agree_to_share_files, has_not_signed_nda')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (profileError || !profile) {
+      return {
+        success: false,
+        error: 'Профіль не знайдено',
+        details: 'Заповніть свій профіль перед оформленням замовлень',
+      };
+    }
+
+    if (!profile.agree_to_share_files || !profile.has_not_signed_nda) {
+      return {
+        success: false,
+        error: 'consent_required',
+        details: 'Користувач повинен дати згоду на обмін файлами перед оформленням замовлень',
+      };
+    }
+
+    // Validate file sizes
+    const MAX_FILE_SIZE = 200 * 1024 * 1024; // 200MB
+    if (totalSize > MAX_FILE_SIZE) {
+      return {
+        success: false,
+        error: `Загальний розмір файлів перевищує ${MAX_FILE_SIZE / (1024 * 1024)} МБ`,
+      };
+    }
+
+    // Generate order number - get next sequential number
+    const { count, error: countError } = await supabase
+      .from('orders')
+      .select('*', { count: 'exact', head: true });
+
+    if (countError) {
+      console.error('Error getting order count:', countError);
+      return {
+        success: false,
+        error: 'Не вдалося згенерувати номер замовлення',
+        details: countError.message,
+      };
+    }
+
+    const orderNumber = `${(count || 0) + 1}`;
+
+    // Merge uploaded file URLs with order metadata
+    const filesWithUrls = orderData.files.map((fileData, index) => ({
+      ...fileData,
+      url: uploadedFiles[index].url,
+      fileSize: uploadedFiles[index].size,
+    }));
+
+    // Save order to Supabase
+    const { data: order, error: dbError } = await supabase
+      .from('orders')
+      .insert({
+        user_id: user.id,
+        order_number: orderNumber,
+        status: 'pending',
+        total_price: orderData.totalPrice,
+        total_weight: orderData.totalWeight,
+        files: filesWithUrls,
+        metadata: {
+          priceMultiplier: orderData.priceMultiplier,
+          submittedAt: new Date().toISOString(),
+        },
+      })
+      .select()
+      .single();
+
+    if (dbError) {
+      console.error('Error saving order to Supabase:', dbError);
+      return {
+        success: false,
+        error: 'Не вдалося зберегти замовлення',
+        details: dbError.message,
+      };
+    }
+
+    // Send confirmation email
+    try {
+      await sendOrderConfirmationEmail({
+        orderNumber: order.order_number,
+        userEmail: user.email!,
+        userName: user.user_metadata?.full_name || user.user_metadata?.name,
+        totalPrice: order.total_price,
+        totalWeight: order.total_weight,
+        files: filesWithUrls,
+        priceMultiplier: orderData.priceMultiplier,
+      });
+    } catch (emailError) {
+      // Log error but don't fail the request - order is already saved
+      console.error('Failed to send confirmation email:', emailError);
+    }
+
+    // Revalidate any paths that might display orders
+    revalidatePath('/user/orders');
+
+    // Record successful order submission (tracks file size usage)
+    await recordFileSizeUsage(user.id, totalSize);
+
+    return {
+      success: true,
+      order: {
+        id: order.id,
+        orderNumber: order.order_number,
+        totalPrice: order.total_price,
+        totalWeight: order.total_weight,
+        files: uploadedFiles,
+      },
+    };
+  } catch (error) {
+    console.error('Error processing order:', error);
+    return {
+      success: false,
+      error: 'Не вдалося обробити замовлення',
+      details: error instanceof Error ? error.message : 'Невідома помилка',
     };
   }
 }

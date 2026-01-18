@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, AlertCircle, CheckCircle, AlertTriangle, Info } from 'lucide-react';
 
 export type PopupType = 'success' | 'error' | 'warning' | 'info' | 'confirm';
@@ -79,7 +80,7 @@ export function Popup({
     confirm: <AlertCircle className="w-5 h-5 text-warning" />,
   };
 
-  return (
+  const content = (
     <>
       {/* Backdrop */}
       <div
@@ -168,6 +169,8 @@ export function Popup({
       </div>
     </>
   );
+
+  return createPortal(content, document.body);
 }
 
 // Hook for managing popup state

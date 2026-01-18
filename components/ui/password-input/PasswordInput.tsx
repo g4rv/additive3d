@@ -12,6 +12,7 @@ interface PasswordInputProps {
   error?: string;
   required?: boolean;
   className?: string;
+  showRequiredAsterisk?:  boolean;
 }
 
 export default function PasswordInput({
@@ -22,6 +23,7 @@ export default function PasswordInput({
   autoComplete = 'current-password',
   error,
   required = false,
+  showRequiredAsterisk = true,
   className = '',
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +32,7 @@ export default function PasswordInput({
     <div className={`flex flex-col gap-2 ${className}`}>
       <label htmlFor={id} className="text-sm font-medium">
         {label}
-        {required && <span className="text-error"> *</span>}
+        {required && showRequiredAsterisk && <span className="text-error"> *</span>}
       </label>
       <div className="relative w-full">
         <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">

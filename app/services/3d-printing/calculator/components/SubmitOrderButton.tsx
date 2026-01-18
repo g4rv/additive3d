@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useCalculator } from '../context/CalculatorContext';
 import { Send } from 'lucide-react';
-import { uploadOrder } from '../actions';
+import { generateUploadUrl, submitOrderWithUploadedFiles } from '../actions';
 import { Popup, usePopup } from '@/components/ui/popup';
 import { useToast } from '@/components/ui/toast';
 import ConsentModal from '@/components/ConsentModal';
@@ -39,13 +39,41 @@ export default function SubmitOrderButton() {
       const totalPrice = state.files.reduce((sum, f) => sum + f.totalPrice, 0);
       const totalWeight = state.files.reduce((sum, f) => sum + f.modelWeight * f.quantity, 0);
 
-      // Create FormData with all files and order metadata
-      const formData = new FormData();
-      state.files.forEach((stlFile) => {
-        formData.append('files', stlFile.file);
-      });
+      // Upload each file directly to R2 using presigned URLs
+      const uploadedFiles: Array<{ fileName: string; url: string; size: number }> = [];
 
-      // Add order metadata
+      for (const stlFile of state.files) {
+        // Step 1: Get presigned URL from server
+        // Use original file.name (includes .stl extension) not stlFile.name (without extension)
+        const presignedResult = await generateUploadUrl(stlFile.file.name, stlFile.file.size);
+
+        if (!presignedResult.success) {
+          throw new Error(presignedResult.error || 'Failed to get upload URL');
+        }
+
+        const { uploadUrl, publicUrl } = presignedResult;
+
+        // Step 2: Upload file directly to R2 (bypasses Vercel's 4.5MB limit)
+        const uploadResponse = await fetch(uploadUrl, {
+          method: 'PUT',
+          body: stlFile.file,
+          headers: {
+            'Content-Type': 'model/stl',
+          },
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error(`Failed to upload ${stlFile.name} to R2`);
+        }
+
+        uploadedFiles.push({
+          fileName: stlFile.name,
+          url: publicUrl,
+          size: stlFile.file.size,
+        });
+      }
+
+      // Step 3: Submit order with uploaded file URLs
       const orderMetadata = {
         totalPrice,
         totalWeight,
@@ -59,10 +87,8 @@ export default function SubmitOrderButton() {
           totalPrice: f.totalPrice,
         })),
       };
-      formData.append('orderData', JSON.stringify(orderMetadata));
 
-      // Upload to Cloudflare R2 via Server Action
-      const result = await uploadOrder(formData);
+      const result = await submitOrderWithUploadedFiles(orderMetadata, uploadedFiles);
 
       if (!result.success) {
         // Check if consent is required
@@ -71,7 +97,7 @@ export default function SubmitOrderButton() {
           setIsUploading(false);
           return;
         }
-        throw new Error(result.error || 'Failed to upload files');
+        throw new Error(result.error || 'Failed to submit order');
       }
 
       // Success - Clear files and show detailed popup with order info

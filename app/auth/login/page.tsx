@@ -80,6 +80,7 @@ function LoginForm() {
               name="password"
               label="Пароль"
               placeholder="Введіть ваш пароль"
+              showRequiredAsterisk={false}
               error={state?.fieldErrors?.password}
               required
             />
