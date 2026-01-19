@@ -2,12 +2,13 @@ import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { COMPANY_NAME, CONTACT_INFO, NAVIGATION } from '@/lib/constants';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { createMetadata } from '@/lib/metadata';
+import { Mail, MapPin, Phone, Send } from 'lucide-react';
 
 export const metadata = createMetadata({
-  title: 'Контакти - Зв\'яжіться з нами',
-  description: 'Телефони, email, адреса виробництва Additive3D. Відповідаємо протягом 2-4 годин у робочі дні. Миттєвий розрахунок вартості 3D друку онлайн.',
+  title: "Контакти - Зв'яжіться з нами",
+  description:
+    'Телефони, email, адреса виробництва Additive3D. Відповідаємо протягом 2-4 годин у робочі дні. Миттєвий розрахунок вартості 3D друку онлайн.',
   path: '/contact',
 });
 
@@ -30,24 +31,30 @@ export default function ContactPage() {
             <div className="mb-16 grid gap-8 2xl:grid-cols-3">
               {/* Phone */}
               <div className="bg-base-200 group border-base-300 hover:border-primary/50 rounded-lg border p-8 transition-all duration-(--duration-moderate) hover:shadow-lg">
-                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-6 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-(--duration-fast)">
-                  <Phone className="h-8 w-8" />
-                </div>
+                <div className="mb-4 flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-(--duration-fast)">
+                    <Phone className="h-8 w-8" />
+                  </div>
 
-                <h3 className="text-primary mb-4 text-2xl font-bold">Телефон</h3>
+                  <h3 className="text-primary text-2xl font-bold">Телефон</h3>
+                </div>
 
                 <p className="text-base-content/70 mb-6 leading-relaxed">
                   Зателефонуйте для термінових питань та консультацій
                 </p>
 
                 <div className="space-y-3">
-                  <ButtonLink href={CONTACT_INFO.phone.link} variant="string" className="text-base text-start">
+                  <ButtonLink
+                    href={CONTACT_INFO.phone.link}
+                    variant="string"
+                    className="text-start text-base"
+                  >
                     {CONTACT_INFO.phone.label}
                   </ButtonLink>
                   <ButtonLink
                     href={CONTACT_INFO.phone2.link}
                     variant="string"
-                    className="text-base text-start"
+                    className="text-start text-base"
                   >
                     {CONTACT_INFO.phone2.label}
                   </ButtonLink>
@@ -56,11 +63,13 @@ export default function ContactPage() {
 
               {/* Email */}
               <div className="bg-base-200 group border-base-300 hover:border-primary/50 rounded-lg border p-8 transition-all duration-(--duration-moderate) hover:shadow-lg">
-                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-6 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-(--duration-fast)">
-                  <Mail className="h-8 w-8" />
-                </div>
+                <div className="mb-4 flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-(--duration-fast)">
+                    <Mail className="h-8 w-8" />
+                  </div>
 
-                <h3 className="text-primary mb-4 text-2xl font-bold">Email</h3>
+                  <h3 className="text-primary text-2xl font-bold">Email</h3>
+                </div>
 
                 <p className="text-base-content/70 mb-6 leading-relaxed">
                   Надішліть технічну документацію та деталі проєкту
@@ -69,7 +78,7 @@ export default function ContactPage() {
                 <ButtonLink
                   href={CONTACT_INFO.email.link}
                   variant="string"
-                  className="text-base break-all text-start"
+                  className="text-start text-base break-all"
                 >
                   {CONTACT_INFO.email.label}
                 </ButtonLink>
@@ -77,11 +86,13 @@ export default function ContactPage() {
 
               {/* Location */}
               <div className="bg-base-200 group border-base-300 hover:border-primary/50 rounded-lg border p-8 transition-all duration-(--duration-moderate) hover:shadow-lg">
-                <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-6 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-(--duration-fast)">
-                  <MapPin className="h-8 w-8" />
-                </div>
+                <div className="mb-4 flex items-center gap-4">
+                  <div className="bg-primary/10 text-primary group-hover:bg-primary/20 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-(--duration-fast)">
+                    <MapPin className="h-8 w-8" />
+                  </div>
 
-                <h3 className="text-primary mb-4 text-2xl font-bold">Адреса</h3>
+                  <h3 className="text-primary text-2xl font-bold">Адреса</h3>
+                </div>
 
                 <p className="text-base-content/70 mb-6 leading-relaxed">
                   Відвідайте наше виробництво за попереднім записом
@@ -90,7 +101,7 @@ export default function ContactPage() {
                 <ButtonLink
                   href={CONTACT_INFO.address.link}
                   variant="string"
-                  className="text-base text-start"
+                  className="text-start text-base"
                 >
                   {CONTACT_INFO.address.label}
                 </ButtonLink>

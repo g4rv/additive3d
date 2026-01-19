@@ -1,18 +1,18 @@
-import { Metadata } from 'next';
-import {
-  Zap,
-  Settings,
-  Award,
-  Target,
-  Layers,
-  BarChart3,
-  Package,
-  Users,
-  CheckCircle,
-} from 'lucide-react';
+import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
+import {
+  Award,
+  BarChart3,
+  CheckCircle,
+  Layers,
+  Package,
+  Settings,
+  Target,
+  Users,
+  Zap,
+} from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
@@ -25,7 +25,8 @@ export default function ThreeDPrintingPage() {
   const technologies = [
     {
       title: 'MJF (Multi Jet Fusion)',
-      description: 'Високотехнологічний метод 3D-друку від HP для серійного виробництва з надзвичайною деталізацією та однорідними механічними властивостями.',
+      description:
+        'Високотехнологічний метод 3D-друку від HP для серійного виробництва з надзвичайною деталізацією та однорідними механічними властивостями.',
       icon: Zap,
       features: [
         'Висока швидкість друку (до 5058 см³/год)',
@@ -37,7 +38,8 @@ export default function ThreeDPrintingPage() {
     },
     {
       title: 'FDM (Fused Deposition Modeling)',
-      description: 'Надійна технологія адитивного виробництва для створення функціональних прототипів та складних технічних деталей.',
+      description:
+        'Надійна технологія адитивного виробництва для створення функціональних прототипів та складних технічних деталей.',
       icon: Settings,
       features: [
         'Висока точність та повторюваність',
@@ -49,7 +51,8 @@ export default function ThreeDPrintingPage() {
     },
     {
       title: 'LFAM (Large Format Additive Manufacturing)',
-      description: 'Промислова платформа великоформатного адитивного виробництва для виготовлення великих та складних полімерних деталей.',
+      description:
+        'Промислова платформа великоформатного адитивного виробництва для виготовлення великих та складних полімерних деталей.',
       icon: Package,
       features: [
         'Розміри робочої зони: 3000 × 1500 × 1000 мм',
@@ -134,11 +137,10 @@ export default function ThreeDPrintingPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-12 text-center">
-            <h2 className="text-primary text-3xl font-bold lg:text-4xl">
-              Технології 3D-друку
-            </h2>
+            <h2 className="text-primary text-3xl font-bold lg:text-4xl">Технології 3D-друку</h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed">
-              Використовуємо сучасні технології 3D-друку для вирішення найскладніших інженерних завдань
+              Використовуємо сучасні технології 3D-друку для вирішення найскладніших інженерних
+              завдань
             </p>
           </div>
 
@@ -166,13 +168,13 @@ export default function ThreeDPrintingPage() {
                       </div>
                       <h3 className="text-primary text-xl font-semibold">{tech.title}</h3>
                     </div>
-                    <p className="text-base-content/90 mb-4 leading-relaxed text-sm">
+                    <p className="text-base-content/90 mb-4 text-sm leading-relaxed">
                       {tech.description}
                     </p>
                     <ul className="space-y-2">
                       {tech.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center gap-2">
-                          <div className="bg-primary/20 text-primary mt-0.5 size-1.5 rounded-full shrink-0" />
+                          <div className="bg-primary/20 text-primary mt-0.5 size-1.5 shrink-0 rounded-full" />
                           <span className="text-base-content/80 text-xs">{feature}</span>
                         </li>
                       ))}
@@ -191,9 +193,7 @@ export default function ThreeDPrintingPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-12 text-center">
-            <h2 className="text-primary text-3xl font-bold lg:text-4xl">
-              Матеріали та технології
-            </h2>
+            <h2 className="text-primary text-3xl font-bold lg:text-4xl">Матеріали та технології</h2>
             <p className="text-base-content/80 mx-auto mt-4 max-w-3xl text-lg leading-relaxed">
               Широкий вибір інженерних термопластиків для різних технологій друку
             </p>
@@ -203,9 +203,7 @@ export default function ThreeDPrintingPage() {
             {materials.map((material, index) => (
               <div key={index} className="card bg-base-100 border-base-300 shadow-sm">
                 <div className="card-body p-6">
-                  <h3 className="text-primary mb-3 text-xl font-semibold">
-                    {material.technology}
-                  </h3>
+                  <h3 className="text-primary mb-3 text-xl font-semibold">{material.technology}</h3>
                   <div className="mb-4">
                     <h4 className="text-base-content mb-2 font-medium">Матеріали:</h4>
                     <div className="flex flex-wrap gap-2">
@@ -243,7 +241,7 @@ export default function ThreeDPrintingPage() {
 
         <div className="custom-container relative z-10">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <Image
                   src="/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-with-build-unit.png"
@@ -255,7 +253,7 @@ export default function ThreeDPrintingPage() {
               </figure>
             </div>
 
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <Image
                   src="/Technology/LFAM/HERON 300 HV/heron-300-hv-printing-3.jpg"
@@ -267,7 +265,7 @@ export default function ThreeDPrintingPage() {
               </figure>
             </div>
 
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <Image
                   src="/Technology/FDM/Fortus 250/fortus-250-printing.jpg"
@@ -279,7 +277,7 @@ export default function ThreeDPrintingPage() {
               </figure>
             </div>
 
-            <div className="card bg-base-200 border-base-300 shadow-sm overflow-hidden">
+            <div className="card bg-base-200 border-base-300 overflow-hidden shadow-sm">
               <figure className="aspect-video">
                 <Image
                   src="/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-process.jpg"
@@ -317,12 +315,12 @@ export default function ThreeDPrintingPage() {
                   className="card bg-base-100 border-base-300 shadow-sm transition-all duration-[var(--duration-moderate)] hover:shadow-md"
                 >
                   <div className="card-body p-6">
-                    <div className="bg-primary/10 text-primary mb-4 inline-flex size-12 items-center justify-center rounded-lg">
-                      <Icon className="size-6" />
+                    <div className='flex items-center gap-6 mb-2'>
+                      <div className="bg-primary/10 text-primary   inline-flex size-12 items-center justify-center rounded-lg">
+                        <Icon className="size-6" />
+                      </div>
+                      <h3 className="text-primary   text-lg font-semibold">{advantage.title}</h3>
                     </div>
-                    <h3 className="text-primary mb-2 text-lg font-semibold">
-                      {advantage.title}
-                    </h3>
                     <p className="text-base-content/80 text-sm leading-relaxed">
                       {advantage.description}
                     </p>
@@ -343,13 +341,15 @@ export default function ThreeDPrintingPage() {
             <div className="card bg-base-200 border-base-300 shadow-sm">
               <div className="card-body p-8 lg:p-12">
                 <div className="mb-6">
-                  <div className="bg-primary/10 text-primary mb-4 inline-flex size-12 items-center justify-center rounded-lg">
-                    <Users className="size-6" />
+                  <div className="flex items-center gap-6">
+                    <div className="bg-primary/10 text-primary mb-4 inline-flex size-12 items-center justify-center rounded-lg">
+                      <Users className="size-6" />
+                    </div>
+                    <h2 className="text-primary mb-4 text-2xl font-semibold lg:text-3xl">
+                      Галузі застосування
+                    </h2>
                   </div>
-                  <h2 className="text-primary mb-4 text-2xl font-semibold lg:text-3xl">
-                    Галузі застосування
-                  </h2>
-                  <p className="text-base-content/90 leading-relaxed text-lg">
+                  <p className="text-base-content/90 text-lg leading-relaxed">
                     Наші технології 3D-друку використовуються у різних галузях промисловості
                   </p>
                 </div>
@@ -376,33 +376,43 @@ export default function ThreeDPrintingPage() {
             <div className="card bg-primary/5 border-primary/20 border shadow-sm">
               <div className="card-body p-8 lg:p-12">
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 text-primary rounded-lg p-3">
-                    <Award className="size-8" />
-                  </div>
                   <div className="flex-1">
-                    <h3 className="text-primary mb-4 text-2xl font-bold">
-                      Гарантія якості
-                    </h3>
-                    <div className="space-y-4 text-base-content/90 leading-relaxed text-lg">
+                    <div className="mb-4 flex items-center gap-6">
+                      <div className="bg-primary/10 text-primary rounded-lg p-3">
+                        <Award className="size-8" />
+                      </div>
+                      <h3 className="text-primary text-2xl font-bold">Гарантія якості</h3>
+                    </div>
+                    <div className="text-base-content/90 space-y-4 text-lg leading-relaxed">
                       <p>
-                        Ми забезпечуємо точність виготовлення, підбір оптимального матеріалу під ваші задачі та високу якість готових виробів. Готові до співпраці як з інженерами, так і з дизайнерами — від прототипу до готової продукції.
+                        Ми забезпечуємо точність виготовлення, підбір оптимального матеріалу під
+                        ваші задачі та високу якість готових виробів. Готові до співпраці як з
+                        інженерами, так і з дизайнерами — від прототипу до готової продукції.
                       </p>
                       <div className="grid gap-4 md:grid-cols-2">
                         <div className="flex items-center gap-3">
                           <CheckCircle className="text-primary size-5 flex-shrink-0" />
-                          <span className="text-base-content/80">Контроль якості на всіх етапах</span>
+                          <span className="text-base-content/80">
+                            Контроль якості на всіх етапах
+                          </span>
                         </div>
                         <div className="flex items-center gap-3">
                           <CheckCircle className="text-primary size-5 flex-shrink-0" />
-                          <span className="text-base-content/80">Відповідність технічним вимогам</span>
+                          <span className="text-base-content/80">
+                            Відповідність технічним вимогам
+                          </span>
                         </div>
                         <div className="flex items-center gap-3">
                           <CheckCircle className="text-primary size-5 flex-shrink-0" />
-                          <span className="text-base-content/80">Документовані параметри якості</span>
+                          <span className="text-base-content/80">
+                            Документовані параметри якості
+                          </span>
                         </div>
                         <div className="flex items-center gap-3">
                           <CheckCircle className="text-primary size-5 flex-shrink-0" />
-                          <span className="text-base-content/80">Індивідуальний підхід до кожного проєкту</span>
+                          <span className="text-base-content/80">
+                            Індивідуальний підхід до кожного проєкту
+                          </span>
                         </div>
                       </div>
                     </div>

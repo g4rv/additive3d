@@ -1,10 +1,11 @@
 'use client';
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
-import { AlertCircle, CheckCircle2, Mail, Info } from 'lucide-react';
-import { useActionState } from 'react';
+import { AlertCircle, Mail, Info } from 'lucide-react';
+import { useActionState, useEffect, useState } from 'react';
 import { changeEmail } from './actions';
 import { cn } from '@/utils/cn';
+import { useToast } from '@/components/ui/toast';
 
 interface EmailChangeFormProps {
   currentEmail: string;
@@ -19,24 +20,28 @@ export default function EmailChangeForm({ currentEmail, className }: EmailChange
     success: undefined as string | undefined,
   };
   const [state, formAction] = useActionState(changeEmail, initial);
+  const { success: showToast, ToastContainer } = useToast();
+  const [newEmail, setNewEmail] = useState('');
+
+  // Show toast on success
+  useEffect(() => {
+    if (state?.success) {
+      showToast(state.success);
+      setNewEmail(''); // Clear the input after successful email change
+    }
+  }, [state?.success, showToast]);
 
   return (
-    <form action={formAction} className={cn("flex flex-col gap-5", className)}>
-      {/* Success Message */}
-      {state?.success && (
-        <div className="alert alert-success">
-          <CheckCircle2 className="h-5 w-5" />
-          <span>{state.success}</span>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {state?.error && !state?.success && (
-        <div className="alert alert-error">
-          <AlertCircle className="h-5 w-5" />
-          <span>{state.error}</span>
-        </div>
-      )}
+    <>
+      <ToastContainer />
+      <form action={formAction} className={cn("flex flex-col gap-5", className)}>
+        {/* Error Message */}
+        {state?.error && (
+          <div className="alert alert-error">
+            <AlertCircle className="h-5 w-5" />
+            <span>{state.error}</span>
+          </div>
+        )}
 
       {/* Info Notice */}
       <div className="bg-base-300 rounded-lg p-4 border border-base-content/10">
@@ -83,6 +88,8 @@ export default function EmailChangeForm({ currentEmail, className }: EmailChange
             type="email"
             id="new_email"
             name="new_email"
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
             autoComplete="email"
             className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
               state?.fieldErrors?.new_email
@@ -97,14 +104,16 @@ export default function EmailChangeForm({ currentEmail, className }: EmailChange
         )}
       </div>
 
-      {/* Submit Button */}
-      <div className="flex justify-end mt-auto">
-        <SubmitButton
-          text="Змінити електронну пошту"
-          pendingText="Зміна адреси..."
-          className="w-full"
-        />
-      </div>
-    </form>
+        {/* Submit Button */}
+        <div className="flex justify-end mt-auto">
+          <SubmitButton
+            text="Змінити електронну пошту"
+            pendingText="Зміна адреси..."
+            className="w-full"
+            disabled={!newEmail.trim() || newEmail.trim().toLowerCase() === currentEmail.toLowerCase()}
+          />
+        </div>
+      </form>
+    </>
   );
 }

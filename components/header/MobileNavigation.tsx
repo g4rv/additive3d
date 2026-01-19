@@ -184,7 +184,7 @@ const MobileNavigation = forwardRef<MobileNavigationRef, MobileNavigationProps>(
                             'border-base-300 focus-visible:ring-base-content flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 p-3.5 text-left text-base font-medium transition-colors duration-300 focus-visible:ring focus-visible:ring-offset-2 focus-visible:outline-none',
                             isOpen
                               ? 'bg-base-200 text-base-content'
-                              : 'text-base-content/70 hover:text-base-content hover:bg-base-200'
+                              : 'text-base-content hover:text-base-content hover:bg-base-200'
                           )}
                           aria-expanded={isOpen}
                           aria-haspopup="true"

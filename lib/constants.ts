@@ -117,6 +117,19 @@ const NAVIGATION = {
     parent: null,
     order: 1,
   },
+  // Legal pages
+  privacyPolicy: {
+    label: 'Політика конфіденційності',
+    href: '/privacy-policy',
+    parent: null,
+    order: 100,
+  },
+  termsAndConditions: {
+    label: 'Умови використання',
+    href: '/terms-and-conditions',
+    parent: null,
+    order: 101,
+  },
   // Authentication pages
   login: {
     label: 'Увійти',
@@ -534,6 +547,10 @@ export const ROUTES = {
   materials: NAVIGATION.materials.href,
   equipment: NAVIGATION.equipment.href,
   contact: NAVIGATION.contact.href,
+
+  // Legal
+  privacyPolicy: NAVIGATION.privacyPolicy.href,
+  termsAndConditions: NAVIGATION.termsAndConditions.href,
 
   // Auth
   login: NAVIGATION.login.href,

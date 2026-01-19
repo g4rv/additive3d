@@ -2,11 +2,12 @@
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
 import type { Profile } from '@/lib/types/auth';
-import { AlertCircle, Building2, CheckCircle2, Phone, User } from 'lucide-react';
-import { useActionState } from 'react';
+import { AlertCircle, Building2, Phone, User } from 'lucide-react';
+import { useActionState, useEffect, useState } from 'react';
 import { updateProfile } from './actions';
 import type { ProfileFormData } from '@/lib/validation/schemas';
 import type { FormState } from '@/lib/validation/utils';
+import { useToast } from '@/components/ui/toast';
 
 interface ProfileFormProps {
   profile: Profile;
@@ -19,24 +20,41 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
     values: {},
   };
   const [state, formAction] = useActionState(updateProfile, initial);
+  const { success: showToast, ToastContainer } = useToast();
+
+  // Track form values for change detection
+  const [formValues, setFormValues] = useState({
+    first_name: profile.first_name,
+    last_name: profile.last_name,
+    phone_number: profile.phone_number,
+    organization_name: profile.organization_name || '',
+  });
+
+  // Check if form has changed
+  const hasChanged =
+    formValues.first_name !== profile.first_name ||
+    formValues.last_name !== profile.last_name ||
+    formValues.phone_number !== profile.phone_number ||
+    formValues.organization_name !== (profile.organization_name || '');
+
+  // Show toast on success
+  useEffect(() => {
+    if (state?.success) {
+      showToast(state.success);
+    }
+  }, [state?.success, showToast]);
 
   return (
-    <form action={formAction} className="flex flex-col gap-5">
-      {/* Success Message */}
-      {state?.success && (
-        <div className="alert alert-success">
-          <CheckCircle2 className="h-5 w-5" />
-          <span>{state.success}</span>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {state?.error && !state?.success && (
-        <div className="alert alert-error">
-          <AlertCircle className="h-5 w-5" />
-          <span>{state.error}</span>
-        </div>
-      )}
+    <>
+      <ToastContainer />
+      <form action={formAction} className="flex flex-col gap-5">
+        {/* Error Message */}
+        {state?.error && (
+          <div className="alert alert-error">
+            <AlertCircle className="h-5 w-5" />
+            <span>{state.error}</span>
+          </div>
+        )}
 
       <p className="text-sm text-base-content/70">
         Оновіть вашу контактну інформацію та дані організації
@@ -57,7 +75,8 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
               type="text"
               id="first_name"
               name="first_name"
-              defaultValue={state?.values?.first_name || profile.first_name}
+              value={formValues.first_name}
+              onChange={(e) => setFormValues({ ...formValues, first_name: e.target.value })}
               className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
                 state?.fieldErrors?.first_name
                   ? 'border-error focus:border-error'
@@ -84,7 +103,8 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
               type="text"
               id="last_name"
               name="last_name"
-              defaultValue={state?.values?.last_name || profile.last_name}
+              value={formValues.last_name}
+              onChange={(e) => setFormValues({ ...formValues, last_name: e.target.value })}
               className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
                 state?.fieldErrors?.last_name
                   ? 'border-error focus:border-error'
@@ -112,7 +132,8 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
             type="tel"
             id="phone_number"
             name="phone_number"
-            defaultValue={state?.values?.phone_number || profile.phone_number}
+            value={formValues.phone_number}
+            onChange={(e) => setFormValues({ ...formValues, phone_number: e.target.value })}
             className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
               state?.fieldErrors?.phone_number
                 ? 'border-error focus:border-error'
@@ -139,7 +160,8 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
             type="text"
             id="organization_name"
             name="organization_name"
-            defaultValue={state?.values?.organization_name || profile.organization_name}
+            value={formValues.organization_name}
+            onChange={(e) => setFormValues({ ...formValues, organization_name: e.target.value })}
             className={`bg-base-300 w-full rounded border py-3 pr-4 pl-12 transition-colors focus:outline-none ${
               state?.fieldErrors?.organization_name
                 ? 'border-error focus:border-error'
@@ -153,8 +175,9 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
         )}
       </div>
 
-      {/* Submit Button */}
-      <SubmitButton text="Зберегти зміни" pendingText="Збереження..." />
-    </form>
+        {/* Submit Button */}
+        <SubmitButton text="Зберегти зміни" pendingText="Збереження..." disabled={!hasChanged} />
+      </form>
+    </>
   );
 }

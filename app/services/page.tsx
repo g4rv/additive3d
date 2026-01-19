@@ -1,37 +1,35 @@
-import { Metadata } from 'next';
+import CTA from '@/components/cta';
+import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
+import BgPattern from '@/components/ui/bg-pattern';
 import {
-  Printer,
-  Scan,
-  Box,
-  Ruler,
-  Droplet,
-  Wind,
-  Wrench,
-  Zap,
-  Target,
-  Award,
-  CheckCircle,
-  Settings,
-  Package,
-  Users,
   ArrowRight,
-  Sparkles,
-  Shield,
-  Rocket,
+  Award,
+  Box,
+  Building,
   Car,
-  Plane,
+  CheckCircle,
+  Droplet,
+  Factory,
   GraduationCap,
   HeadphonesIcon,
   MessageCircle,
-  Building,
-  Factory,
-  Palette,
+  Package,
+  Plane,
+  Printer,
+  Ruler,
+  Scan,
+  Settings,
+  Shield,
+  Sparkles,
+  Target,
+  Users,
+  Wind,
+  Wrench,
+  Zap,
 } from 'lucide-react';
-import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
-import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
-import Link from 'next/link';
+import { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Послуги | Additive3D',
@@ -59,7 +57,7 @@ export default function ServicesPage() {
     {
       title: '3D-сканування',
       description:
-        'Високоточне оцифрування об\'єктів за технологією фотограмметрії та лазерного сканування',
+        "Високоточне оцифрування об'єктів за технологією фотограмметрії та лазерного сканування",
       icon: Scan,
       href: '/services/3d-scanning',
       features: [
@@ -73,8 +71,7 @@ export default function ServicesPage() {
     },
     {
       title: '3D-моделювання',
-      description:
-        'Створення точних CAD-моделей для конструкторських розробок та дизайну',
+      description: 'Створення точних CAD-моделей для конструкторських розробок та дизайну',
       icon: Box,
       href: '/services/3d-modeling',
       features: [
@@ -92,14 +89,13 @@ export default function ServicesPage() {
     {
       title: 'Реверс-інжиніринг',
       description:
-        'Відновлення технічної документації та створення CAD-моделей на основі фізичних об\'єктів',
+        "Відновлення технічної документації та створення CAD-моделей на основі фізичних об'єктів",
       icon: Wrench,
       href: '/services/reverse-engineering',
     },
     {
       title: 'Інспекція геометрії',
-      description:
-        'Точний контроль відповідності виготовлених деталей технічній документації',
+      description: 'Точний контроль відповідності виготовлених деталей технічній документації',
       icon: Ruler,
       href: '/services/geometry-inspection',
     },
@@ -112,8 +108,7 @@ export default function ServicesPage() {
     },
     {
       title: 'Парове прасування',
-      description:
-        'Покращення механічних властивостей та зовнішнього вигляду деталей',
+      description: 'Покращення механічних властивостей та зовнішнього вигляду деталей',
       icon: Wind,
       href: '/services/smoothing',
     },
@@ -128,20 +123,17 @@ export default function ServicesPage() {
     },
     {
       title: 'Високі стандарти якості',
-      description:
-        'Контроль якості на всіх етапах виробництва з документуванням результатів',
+      description: 'Контроль якості на всіх етапах виробництва з документуванням результатів',
       icon: Award,
     },
     {
       title: 'Швидке виконання',
-      description:
-        'Оперативне виробництво завдяки сучасному обладнанню та налагодженим процесам',
+      description: 'Оперативне виробництво завдяки сучасному обладнанню та налагодженим процесам',
       icon: Zap,
     },
     {
       title: 'Точність виготовлення',
-      description:
-        'Висока точність друку та вимірювань для найвимогливіших інженерних завдань',
+      description: 'Висока точність друку та вимірювань для найвимогливіших інженерних завдань',
       icon: Target,
     },
     {
@@ -152,8 +144,7 @@ export default function ServicesPage() {
     },
     {
       title: 'Гнучкість виробництва',
-      description:
-        'Від одиничних прототипів до серійних партій з можливістю швидких змін',
+      description: 'Від одиничних прототипів до серійних партій з можливістю швидких змін',
       icon: Settings,
     },
   ];
@@ -213,26 +204,24 @@ export default function ServicesPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-16 text-center">
-            <h2 className="text-primary text-4xl font-bold lg:text-5xl">
-              Основні послуги
-            </h2>
+            <h2 className="text-primary text-4xl font-bold lg:text-5xl">Основні послуги</h2>
             <p className="text-base-content/70 mx-auto mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl">
-              Професійні технології адитивного виробництва для вирішення найскладніших
-              інженерних завдань
+              Професійні технології адитивного виробництва для вирішення найскладніших інженерних
+              завдань
             </p>
           </div>
 
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-2 2xl:grid-cols-3">
               {coreServices.map((service, index) => {
                 const Icon = service.icon;
                 return (
                   <div
                     key={index}
-                    className="card bg-base-200 group h-full overflow-hidden border-base-300 shadow-lg transition-all duration-[var(--duration-moderate)] hover:-translate-y-2 hover:shadow-2xl"
+                    className="card bg-base-200 group border-base-300 h-full overflow-hidden shadow-lg transition-all duration-[var(--duration-moderate)] hover:-translate-y-2 hover:shadow-2xl"
                   >
                     {/* Image with Stats Overlay */}
-                    <figure className="relative aspect-[4/3] overflow-hidden">
+                    <figure className="relative aspect-[16/9] md:aspect-[4/3] overflow-hidden">
                       <Image
                         src={service.image}
                         alt={service.title}
@@ -242,16 +231,16 @@ export default function ServicesPage() {
                         priority={index === 0}
                       />
                       {/* Gradient Overlay for Better Text Readability */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-base-300/90 via-base-300/20 to-transparent" />
+                      <div className="from-base-300/90 via-base-300/20 absolute inset-0 bg-gradient-to-t to-transparent" />
 
                       {/* Stats Badge */}
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="bg-primary rounded-lg px-4 py-3 shadow-lg backdrop-blur-sm">
+                      <div className="absolute right-4 bottom-4 left-4">
+                        <div className="bg-primary rounded-lg px-4 py-1 shadow-lg backdrop-blur-sm">
                           <div className="flex items-baseline justify-between gap-2">
-                            <span className="text-base-100 text-3xl font-bold">
+                            <span className="text-base-100 text-xl font-bold">
                               {service.stats.value}
                             </span>
-                            <span className="text-base-100/90 text-sm font-medium uppercase tracking-wide">
+                            <span className="text-base-100/90 text-xl font-bold tracking-wide uppercase">
                               {service.stats.label}
                             </span>
                           </div>
@@ -262,12 +251,10 @@ export default function ServicesPage() {
                     {/* Card Content */}
                     <div className="card-body p-8">
                       <div className="mb-4 flex items-center gap-3">
-                        <div className="bg-primary/10 text-primary rounded-xl p-3 transition-all duration-[var(--duration-moderate)] group-hover:bg-primary group-hover:text-base-100">
+                        <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-base-100 rounded-xl p-3 transition-all duration-[var(--duration-moderate)]">
                           <Icon className="size-7" />
                         </div>
-                        <h3 className="text-primary text-2xl font-bold">
-                          {service.title}
-                        </h3>
+                        <h3 className="text-primary text-lg 3xl:text-2xl font-bold">{service.title}</h3>
                       </div>
 
                       <p className="text-base-content/80 mb-6 min-h-[3rem] leading-relaxed">
@@ -309,53 +296,41 @@ export default function ServicesPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-16 text-center">
-            <h2 className="text-primary text-4xl font-bold lg:text-5xl">
-              Як ми працюємо
-            </h2>
+            <h2 className="text-primary text-4xl font-bold lg:text-5xl">Як ми працюємо</h2>
             <p className="text-base-content/70 mx-auto mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl">
               Прозорий процес від ідеї до готового виробу
             </p>
           </div>
 
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {workflow.map((step) => {
+            <div className="grid gap-6 md:grid-cols-2 4xl:grid-cols-4">
+              {workflow.map((step, idx) => {
                 const Icon = step.icon;
                 return (
                   <div
                     key={step.number}
-                    className="card bg-base-100 group relative h-full border-base-300 shadow-md transition-all duration-[var(--duration-moderate)] hover:shadow-xl"
+                    className="card bg-base-100 pt-2 group border-base-300 relative h-full shadow-md transition-all duration-[var(--duration-moderate)] hover:shadow-xl"
                   >
                     <div className="card-body p-8">
-                      {/* Step Number Badge */}
-                      <div className="bg-primary mb-4 inline-flex size-16 items-center justify-center rounded-xl shadow-lg">
-                        <span className="text-base-100 text-3xl font-bold">
-                          {step.number}
-                        </span>
-                      </div>
-
                       {/* Icon */}
-                      <div className="text-primary mb-4 transition-transform duration-[var(--duration-moderate)] group-hover:scale-110">
-                        <Icon className="size-10" />
+                      <div className="flex items-center gap-4">
+                        <div className="text-primary mb-4 transition-transform duration-[var(--duration-moderate)] group-hover:scale-110">
+                          <Icon className="size-10" />
+                        </div>
+                        <h3 className="text-primary mb-3 text-xl font-bold">{step.title}</h3>
                       </div>
 
                       {/* Content */}
-                      <h3 className="text-primary mb-3 text-xl font-bold">
-                        {step.title}
-                      </h3>
+
                       <p className="text-base-content/70 text-sm leading-relaxed">
                         {step.description}
                       </p>
                     </div>
 
                     {/* Connector Arrow (Desktop Only) */}
-                    {step.number < workflow.length && (
-                      <div className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 lg:block">
-                        <div className="bg-base-200 rounded-full p-1">
-                          <ArrowRight className="text-primary size-5" />
-                        </div>
-                      </div>
-                    )}
+                    <div className="bg-base-200 text-accent absolute top-2 right-2 z-10 flex size-10 items-center justify-center rounded-full textarea-lg font-bold">
+                      <span>{idx + 1}</span>
+                    </div>
                   </div>
                 );
               })}
@@ -370,9 +345,7 @@ export default function ServicesPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-16 text-center">
-            <h2 className="text-primary text-4xl font-bold lg:text-5xl">
-              Додаткові послуги
-            </h2>
+            <h2 className="text-primary text-4xl font-bold lg:text-5xl">Додаткові послуги</h2>
             <p className="text-base-content/70 mx-auto mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl">
               Комплексні рішення для повного циклу виробництва
             </p>
@@ -386,18 +359,16 @@ export default function ServicesPage() {
                   <Link
                     key={index}
                     href={service.href}
-                    className="card bg-base-200 group h-full border-base-300 shadow-md transition-all duration-[var(--duration-moderate)] hover:-translate-y-2 hover:shadow-xl"
+                    className="card bg-base-200 group border-base-300 h-full shadow-md transition-all duration-[var(--duration-moderate)] hover:-translate-y-2 hover:shadow-xl"
                   >
                     <div className="card-body p-6 text-center">
                       {/* Icon */}
-                      <div className="bg-primary/10 text-primary mx-auto mb-4 inline-flex size-20 items-center justify-center rounded-2xl transition-all duration-[var(--duration-moderate)] group-hover:scale-110 group-hover:bg-primary group-hover:text-base-100">
+                      <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-base-100 mx-auto mb-4 inline-flex size-20 items-center justify-center rounded-2xl transition-all duration-[var(--duration-moderate)] group-hover:scale-110">
                         <Icon className="size-10" />
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-primary mb-3 text-lg font-bold">
-                        {service.title}
-                      </h3>
+                      <h3 className="text-primary mb-3 text-lg font-bold">{service.title}</h3>
 
                       {/* Description */}
                       <p className="text-base-content/70 mb-4 min-h-[4rem] text-sm leading-relaxed">
@@ -424,9 +395,7 @@ export default function ServicesPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-16 text-center">
-            <h2 className="text-primary text-4xl font-bold lg:text-5xl">
-              Наші переваги
-            </h2>
+            <h2 className="text-primary text-4xl font-bold lg:text-5xl">Наші переваги</h2>
             <p className="text-base-content/70 mx-auto mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl">
               Чому професіонали обирають Additive3D
             </p>
@@ -442,12 +411,10 @@ export default function ServicesPage() {
                     className="card bg-base-100 group border-base-300 shadow-md transition-all duration-[var(--duration-moderate)] hover:shadow-xl"
                   >
                     <div className="card-body p-6">
-                      <div className="bg-primary/10 text-primary mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-all duration-[var(--duration-moderate)] group-hover:bg-primary group-hover:text-base-100">
+                      <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-base-100 mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-all duration-[var(--duration-moderate)]">
                         <Icon className="size-7" />
                       </div>
-                      <h3 className="text-primary mb-3 text-lg font-bold">
-                        {advantage.title}
-                      </h3>
+                      <h3 className="text-primary mb-3 text-lg font-bold">{advantage.title}</h3>
                       <p className="text-base-content/70 text-sm leading-relaxed">
                         {advantage.description}
                       </p>
@@ -466,9 +433,7 @@ export default function ServicesPage() {
 
         <div className="custom-container relative z-10">
           <div className="mb-16 text-center">
-            <h2 className="text-primary text-4xl font-bold lg:text-5xl">
-              Галузі застосування
-            </h2>
+            <h2 className="text-primary text-4xl font-bold lg:text-5xl">Галузі застосування</h2>
             <p className="text-base-content/70 mx-auto mt-6 max-w-3xl text-lg leading-relaxed lg:text-xl">
               Наші технології використовуються у різних галузях промисловості
             </p>
@@ -484,10 +449,10 @@ export default function ServicesPage() {
                     className="card bg-base-200 group border-base-300 shadow-sm transition-all duration-[var(--duration-moderate)] hover:shadow-md"
                   >
                     <div className="card-body items-center p-6 text-center">
-                      <div className="bg-primary/10 text-primary mb-3 inline-flex size-12 items-center justify-center rounded-xl transition-all duration-[var(--duration-moderate)] group-hover:bg-primary group-hover:text-base-100">
+                      <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-base-100 mb-3 inline-flex size-12 items-center justify-center rounded-xl transition-all duration-[var(--duration-moderate)]">
                         <Icon className="size-6" />
                       </div>
-                      <span className="text-base-content/80 text-sm font-medium leading-tight">
+                      <span className="text-base-content/80 text-sm leading-tight font-medium">
                         {industry.name}
                       </span>
                     </div>
@@ -505,7 +470,7 @@ export default function ServicesPage() {
 
         <div className="custom-container relative z-10">
           <div className="mx-auto max-w-5xl">
-            <div className="card bg-gradient-to-br from-primary/15 via-primary/5 to-transparent border-primary/30 overflow-hidden border-2 shadow-2xl">
+            <div className="card from-primary/15 via-primary/5 border-primary/30 overflow-hidden border-2 bg-gradient-to-br to-transparent shadow-2xl">
               <div className="card-body p-10 lg:p-16">
                 <div className="mb-8 text-center">
                   <div className="bg-primary mx-auto mb-6 inline-flex size-20 items-center justify-center rounded-2xl shadow-lg">
@@ -516,9 +481,9 @@ export default function ServicesPage() {
                   </h2>
                   <p className="text-base-content/80 mx-auto max-w-3xl text-lg leading-relaxed">
                     Ми забезпечуємо високу якість виконання на всіх етапах виробництва.
-                    Використовуємо лише сертифіковані матеріали та професійне обладнання
-                    провідних світових виробників. Кожен проєкт супроводжується
-                    контролем якості та технічною підтримкою наших фахівців.
+                    Використовуємо лише сертифіковані матеріали та професійне обладнання провідних
+                    світових виробників. Кожен проєкт супроводжується контролем якості та технічною
+                    підтримкою наших фахівців.
                   </p>
                 </div>
 
@@ -533,13 +498,13 @@ export default function ServicesPage() {
                     return (
                       <div
                         key={index}
-                        className="card bg-base-100/80 group backdrop-blur-sm border-base-300 shadow-md transition-all duration-[var(--duration-moderate)] hover:shadow-lg"
+                        className="card bg-base-100/80 group border-base-300 shadow-md backdrop-blur-sm transition-all duration-[var(--duration-moderate)] hover:shadow-lg"
                       >
                         <div className="card-body items-center p-6 text-center">
-                          <div className="bg-primary/10 text-primary mb-3 inline-flex size-14 items-center justify-center rounded-xl transition-all duration-[var(--duration-moderate)] group-hover:bg-primary group-hover:text-base-100">
+                          <div className="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-base-100 mb-3 inline-flex size-14 items-center justify-center rounded-xl transition-all duration-[var(--duration-moderate)]">
                             <Icon className="size-7" />
                           </div>
-                          <span className="text-base-content/90 text-sm font-semibold leading-tight">
+                          <span className="text-base-content/90 text-sm leading-tight font-semibold">
                             {item.text}
                           </span>
                         </div>

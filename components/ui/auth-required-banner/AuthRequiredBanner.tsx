@@ -42,12 +42,13 @@ const AuthRequiredBanner = ({
           </p>
 
           {/* Action Buttons */}
-          <div className="mb-16 flex flex-col gap-4 sm:flex-row sm:justify-center">
+          <div className="mb-16 flex flex-col gap-4 md:flex-row sm:justify-center">
             <ButtonLink
               href={ROUTES.login}
               variant="secondary"
               size="large"
               startAdornment={<LogIn className="h-6 w-6" />}
+              className='justify-center'
             >
               Увійти в систему
             </ButtonLink>
@@ -58,6 +59,7 @@ const AuthRequiredBanner = ({
                 variant="outlined"
                 size="large"
                 startAdornment={<UserPlus className="h-6 w-6" />}
+                className='justify-center'
               >
                 Створити обліковий запис
               </ButtonLink>

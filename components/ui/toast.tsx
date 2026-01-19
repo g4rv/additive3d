@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 
@@ -113,34 +113,39 @@ export function useToast() {
     setMounted(true);
   }, []);
 
-  const show = (config: ToastConfig) => {
+  const show = useCallback((config: ToastConfig) => {
     const id = config.id || `toast-${++toastId}`;
     setToasts((prev) => [...prev, { ...config, id }]);
-  };
+  }, []);
 
-  const success = (message: string, description?: string, duration?: number) => {
+  const success = useCallback((message: string, description?: string, duration?: number) => {
     show({ message, description, type: 'success', duration });
-  };
+  }, [show]);
 
-  const error = (message: string, description?: string, duration?: number) => {
+  const error = useCallback((message: string, description?: string, duration?: number) => {
     show({ message, description, type: 'error', duration: duration ?? 6000 });
-  };
+  }, [show]);
 
-  const warning = (message: string, description?: string, duration?: number) => {
+  const warning = useCallback((message: string, description?: string, duration?: number) => {
     show({ message, description, type: 'warning', duration });
-  };
+  }, [show]);
 
-  const info = (message: string, description?: string, duration?: number) => {
+  const info = useCallback((message: string, description?: string, duration?: number) => {
     show({ message, description, type: 'info', duration });
-  };
+  }, [show]);
 
-  const close = (id: string) => {
+  const close = useCallback((id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  };
+  }, []);
 
-  const closeAll = () => {
+  const closeAll = useCallback(() => {
     setToasts([]);
-  };
+  }, []);
+
+  const ToastContainerComponent = useMemo(
+    () => (mounted ? () => <ToastContainer toasts={toasts} onClose={close} /> : () => null),
+    [mounted, toasts, close]
+  );
 
   return {
     toasts,
@@ -151,6 +156,6 @@ export function useToast() {
     info,
     close,
     closeAll,
-    ToastContainer: mounted ? () => <ToastContainer toasts={toasts} onClose={close} /> : () => null,
+    ToastContainer: ToastContainerComponent,
   };
 }

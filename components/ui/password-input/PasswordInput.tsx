@@ -12,6 +12,8 @@ interface PasswordInputProps {
   error?: string;
   required?: boolean;
   className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function PasswordInput({
@@ -23,6 +25,8 @@ export default function PasswordInput({
   error,
   required = false,
   className = '',
+  value,
+  onChange,
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,6 +45,8 @@ export default function PasswordInput({
           id={id}
           name={name}
           autoComplete={autoComplete}
+          value={value}
+          onChange={onChange}
           className={`bg-base-300 w-full rounded border py-3 pr-12 pl-12 transition-colors focus:outline-none ${
             error
               ? 'border-error focus:border-error'

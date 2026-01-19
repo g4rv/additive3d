@@ -96,7 +96,7 @@ export default function FileUpload() {
                 onChange={onFileInputChange}
                 disabled={isUploading}
               />
-              або оберіть з комп'ютера
+              або оберіть з пристрою
             </label>
           </div>
 

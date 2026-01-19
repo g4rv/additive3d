@@ -1,8 +1,8 @@
 'use client';
 
-import { useCalculator } from '../context/CalculatorContext';
-import * as XLSX from 'xlsx-js-style';
 import { FileDown } from 'lucide-react';
+import * as XLSX from 'xlsx-js-style';
+import { useCalculator } from '../context/CalculatorContext';
 
 export default function ExportButton() {
   const { state } = useCalculator();
@@ -156,7 +156,7 @@ export default function ExportButton() {
       className="btn btn-primary gap-2"
     >
       <FileDown className="h-5 w-5" />
-      Вивантажити .EXCEL
+       Розрахунку .EXCEL
     </button>
   );
 }

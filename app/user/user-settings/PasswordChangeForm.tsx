@@ -1,10 +1,11 @@
 'use client';
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
-import { AlertCircle, CheckCircle2, Shield } from 'lucide-react';
-import { useActionState } from 'react';
+import { AlertCircle, Shield } from 'lucide-react';
+import { useActionState, useEffect, useState } from 'react';
 import { changePassword } from './actions';
 import PasswordInput from '@/components/ui/password-input/PasswordInput';
+import { useToast } from '@/components/ui/toast';
 
 export default function PasswordChangeForm() {
   const initial = {
@@ -14,24 +15,37 @@ export default function PasswordChangeForm() {
     success: undefined as string | undefined,
   };
   const [state, formAction] = useActionState(changePassword, initial);
+  const { success: showToast, ToastContainer } = useToast();
+
+  // Track password fields for change detection
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Check if all fields are filled
+  const hasAllFields = currentPassword.trim() && newPassword.trim() && confirmPassword.trim();
+
+  // Show toast on success and clear fields
+  useEffect(() => {
+    if (state?.success) {
+      showToast(state.success);
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    }
+  }, [state?.success, showToast]);
 
   return (
-    <form action={formAction} className="flex flex-col gap-5">
-      {/* Success Message */}
-      {state?.success && (
-        <div className="alert alert-success">
-          <CheckCircle2 className="h-5 w-5" />
-          <span>{state.success}</span>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {state?.error && !state?.success && (
-        <div className="alert alert-error">
-          <AlertCircle className="h-5 w-5" />
-          <span>{state.error}</span>
-        </div>
-      )}
+    <>
+      <ToastContainer />
+      <form action={formAction} className="flex flex-col gap-5">
+        {/* Error Message */}
+        {state?.error && (
+          <div className="alert alert-error">
+            <AlertCircle className="h-5 w-5" />
+            <span>{state.error}</span>
+          </div>
+        )}
 
       {/* Password Requirements Notice */}
       <div className="mb-5">
@@ -61,47 +75,55 @@ export default function PasswordChangeForm() {
         </div>
       </div>
 
-      {/* Password Inputs */}
-      <div className="space-y-5">
-        <PasswordInput
-          id="current_password"
-          name="current_password"
-          label="Поточний пароль"
-          autoComplete="current-password"
-          placeholder="Введіть поточний пароль"
-          error={state?.fieldErrors?.current_password}
-          required
-        />
+        {/* Password Inputs */}
+        <div className="space-y-5">
+          <PasswordInput
+            id="current_password"
+            name="current_password"
+            label="Поточний пароль"
+            autoComplete="current-password"
+            placeholder="Введіть поточний пароль"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            error={state?.fieldErrors?.current_password}
+            required
+          />
 
-        <PasswordInput
-          id="password"
-          name="password"
-          label="Новий пароль"
-          autoComplete="new-password"
-          placeholder="Введіть новий пароль"
-          error={state?.fieldErrors?.password}
-          required
-        />
+          <PasswordInput
+            id="password"
+            name="password"
+            label="Новий пароль"
+            autoComplete="new-password"
+            placeholder="Введіть новий пароль"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            error={state?.fieldErrors?.password}
+            required
+          />
 
-        <PasswordInput
-          id="confirm_password"
-          name="confirm_password"
-          label="Підтвердіть новий пароль"
-          autoComplete="new-password"
-          placeholder="Підтвердіть новий пароль"
-          error={state?.fieldErrors?.confirm_password}
-          required
-        />
-      </div>
+          <PasswordInput
+            id="confirm_password"
+            name="confirm_password"
+            label="Підтвердіть новий пароль"
+            autoComplete="new-password"
+            placeholder="Підтвердіть новий пароль"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={state?.fieldErrors?.confirm_password}
+            required
+          />
+        </div>
 
-      {/* Submit Button */}
-      <div className="mt-6">
-        <SubmitButton
-          text="Змінити пароль"
-          pendingText="Зміна пароля..."
-          className="w-full"
-        />
-      </div>
-    </form>
+        {/* Submit Button */}
+        <div className="mt-6">
+          <SubmitButton
+            text="Змінити пароль"
+            pendingText="Зміна пароля..."
+            className="w-full"
+            disabled={!hasAllFields}
+          />
+        </div>
+      </form>
+    </>
   );
 }

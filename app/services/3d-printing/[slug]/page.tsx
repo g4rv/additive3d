@@ -432,7 +432,7 @@ export default async function Page({ params }: SlugPageProps) {
                   className="card bg-base-200 border-base-300 shadow-sm transition-all duration-[var(--duration-moderate)] hover:shadow-md"
                 >
                   <div className="card-body p-4 sm:p-6">
-                    <div className="mb-4 flex items-start gap-3">
+                    <div className="mb-4 flex items-center gap-3">
                       <div className="bg-primary/10 text-primary rounded-lg p-2 sm:p-3 flex-shrink-0">
                         <Icon className="size-5 sm:size-6" />
                       </div>
@@ -498,8 +498,8 @@ export default async function Page({ params }: SlugPageProps) {
                   className="card bg-base-200 border-base-300 shadow-sm transition-all duration-[var(--duration-moderate)] hover:shadow-md"
                 >
                   <div className="card-body p-4 sm:p-6 lg:p-8">
-                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                      <div className="flex-shrink-0">
+                    <div className="flex gap-4 sm:gap-6">
+                      <div className="flex-shrink-0 my-auto">
                         <div className="bg-primary/10 flex size-12 items-center justify-center rounded-lg">
                           <span className="text-primary text-xl font-bold">{step.step}</span>
                         </div>

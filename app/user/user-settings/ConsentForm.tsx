@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { CheckCircle2, AlertCircle, Shield, FileText } from 'lucide-react';
+import { AlertCircle, Shield, FileText } from 'lucide-react';
 import { updateUserConsent } from './actions';
+import { useToast } from '@/components/ui/toast';
 
 interface ConsentFormProps {
   profile: {
@@ -13,11 +14,19 @@ interface ConsentFormProps {
 }
 
 export default function ConsentForm({ profile }: ConsentFormProps) {
-  const [agreeToShare, setAgreeToShare] = useState(profile.agree_to_share_files ?? false);
-  const [hasNotSignedNda, setHasNotSignedNda] = useState(profile.has_not_signed_nda ?? false);
+  // Store initial values
+  const initialAgreeToShare = profile.agree_to_share_files ?? false;
+  const initialHasNotSignedNda = profile.has_not_signed_nda ?? false;
+
+  const [agreeToShare, setAgreeToShare] = useState(initialAgreeToShare);
+  const [hasNotSignedNda, setHasNotSignedNda] = useState(initialHasNotSignedNda);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const { success: showToast, ToastContainer } = useToast();
+
+  // Check if form has changed
+  const hasChanged =
+    agreeToShare !== initialAgreeToShare || hasNotSignedNda !== initialHasNotSignedNda;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,8 +38,7 @@ export default function ConsentForm({ profile }: ConsentFormProps) {
       if (!result.success) {
         throw new Error(result.error || 'Failed to update consent');
       }
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 3000);
+      showToast('Зміни успішно збережено!');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Помилка при збереженні згоди');
     } finally {
@@ -41,22 +49,16 @@ export default function ConsentForm({ profile }: ConsentFormProps) {
   const hasGivenConsent = agreeToShare && hasNotSignedNda;
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5 grow">
-      {/* Success Message */}
-      {success && (
-        <div className="alert alert-success">
-          <CheckCircle2 className="h-5 w-5" />
-          <span>Зміни успішно збережено!</span>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {error && !success && (
-        <div className="alert alert-error">
-          <AlertCircle className="h-5 w-5" />
-          <span>{error}</span>
-        </div>
-      )}
+    <>
+      <ToastContainer />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 grow">
+        {/* Error Message */}
+        {error && (
+          <div className="alert alert-error">
+            <AlertCircle className="h-5 w-5" />
+            <span>{error}</span>
+          </div>
+        )}
 
       {/* Info Box */}
       <div className="bg-base-300 rounded-lg p-4 border border-base-content/10">
@@ -115,22 +117,23 @@ export default function ConsentForm({ profile }: ConsentFormProps) {
         </label>
       </div>
 
-      {/* Submit Button */}
-      <div className="mt-auto">
-        <button type="submit" disabled={isSubmitting} className="btn btn-primary w-full">
-          {isSubmitting ? (
-            <>
-              <span className="loading loading-spinner loading-sm"></span>
-              Збереження...
-            </>
-          ) : (
-            <>
-              <Shield className="w-4 h-4" />
-              Зберегти зміни
-            </>
-          )}
-        </button>
-      </div>
-    </form>
+        {/* Submit Button */}
+        <div className="mt-auto">
+          <button type="submit" disabled={isSubmitting || !hasChanged} className="btn btn-primary w-full">
+            {isSubmitting ? (
+              <>
+                <span className="loading loading-spinner loading-sm"></span>
+                Збереження...
+              </>
+            ) : (
+              <>
+                <Shield className="w-4 h-4" />
+                Зберегти зміни
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+    </>
   );
 }

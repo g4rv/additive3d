@@ -1,6 +1,6 @@
 'use client';
 
-import { COMPANY_NAME, CONTACT_INFO, MAIN_NAVIGATION_LIST } from '@/lib/constants';
+import { COMPANY_NAME, CONTACT_INFO, MAIN_NAVIGATION_LIST, NAVIGATION } from '@/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -64,7 +64,7 @@ export default function Footer() {
           </nav>
 
           <div className="col-end-2 flex w-fit flex-col">
-            <p className="text-primary mb-1 font-semibold">Контакти</p>
+            <ButtonLink href={NAVIGATION.contact.href} variant="string" className='w-fit mb-2 underline'>Контакти</ButtonLink>
             <ul className="flex flex-col gap-1">
               <li>
                 <ButtonLink variant="subtle" href={CONTACT_INFO.email.link}>
@@ -92,9 +92,29 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="text-base-content/50 border-base-300 border-t py-4 text-center text-sm">
-          © {new Date().getFullYear()} {COMPANY_NAME}. Всі права захищені.
-        </p>
+        <div className="border-base-300 border-t py-4">
+          <div className="mb-3 flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <ButtonLink
+              href={NAVIGATION.privacyPolicy.href}
+              variant="subtle"
+              className="text-xs"
+              active={pathname === NAVIGATION.privacyPolicy.href}
+            >
+              {NAVIGATION.privacyPolicy.label}
+            </ButtonLink>
+            <ButtonLink
+              href={NAVIGATION.termsAndConditions.href}
+              variant="subtle"
+              className="text-xs"
+              active={pathname === NAVIGATION.termsAndConditions.href}
+            >
+              {NAVIGATION.termsAndConditions.label}
+            </ButtonLink>
+          </div>
+          <p className="text-base-content/50 text-center text-sm">
+            © {new Date().getFullYear()} {COMPANY_NAME}. Всі права захищені.
+          </p>
+        </div>
       </div>
     </footer>
   );

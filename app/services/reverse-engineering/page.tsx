@@ -1,18 +1,18 @@
-import { Metadata } from 'next';
-import {
-  Scan,
-  Box,
-  Settings,
-  CheckCircle,
-  Layers,
-  Target,
-  Wrench,
-  FileSearch,
-  Cpu,
-} from 'lucide-react';
+import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import CTA from '@/components/cta';
+import {
+  Box,
+  CheckCircle,
+  Cpu,
+  FileSearch,
+  Layers,
+  Scan,
+  Settings,
+  Target,
+  Wrench,
+} from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
 export const metadata: Metadata = {
@@ -152,7 +152,7 @@ export default function ReverseEngineeringPage() {
             </p>
           </div>
 
-          <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl gap-8 xl:grid-cols-2">
             {/* Manual Approach */}
             <div className="card bg-base-100 border-base-300 shadow-sm">
               <div className="card-body p-8">
@@ -265,13 +265,7 @@ export default function ReverseEngineeringPage() {
                 >
                   <div className="card-body p-6 lg:p-8">
                     <div className="flex gap-6">
-                      <div className="flex-shrink-0">
-                        <div className="bg-primary/10 flex size-12 items-center justify-center rounded-lg">
-                          <span className="text-primary text-xl font-bold">
-                            {step.number}
-                          </span>
-                        </div>
-                      </div>
+   
                       <div className="flex-1">
                         <div className="mb-3 flex items-center gap-3">
                           <Icon className="text-primary size-5" />

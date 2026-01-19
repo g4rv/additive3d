@@ -11,6 +11,7 @@ import PriceMultiplier from './components/PriceMultiplier';
 import ExportButton from './components/ExportButton';
 import SubmitOrderButton from './components/SubmitOrderButton';
 import { requireAuth } from '@/lib/auth/route-protection';
+import { cn } from '@/utils/cn';
 
 export const metadata: Metadata = {
   title: 'Калькулятор 3D-друку | Additive3D',
@@ -45,14 +46,15 @@ export default async function CalculatorPage() {
             {/* Controls */}
             <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
               <PriceMultiplier userRole={userRole} />
-              <div className="flex gap-4">
-                <ExportButton />
+
+              <div className={cn("flex flex-col gap-4", userRole === 'user' && 'mx-auto')}>
                 <SubmitOrderButton />
+                <ExportButton />
               </div>
             </div>
 
             {/* Summary Stats */}
-            <div className="mb-12">
+            <div className="mb-12 flex justify-center">
               <CalculatorSummary />
             </div>
 

@@ -186,8 +186,8 @@ export default function DyeingPage() {
                 відповідність технічним вимогам.
               </p>
 
-              <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-                <div className="space-y-6">
+              <div className="grid gap-12 2xl:grid-cols-2">
+                <div className="flex flex-col gap-4 space-y-6 xl:flex-row xl:justify-between 2xl:flex-col 2xl:justify-start">
                   <div>
                     <h4 className="text-primary mb-4 text-xl font-bold">
                       Контроль якості покриття
@@ -207,9 +207,7 @@ export default function DyeingPage() {
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="bg-success mt-2 h-2 w-2 flex-shrink-0 rounded-full"></div>
-                        <span className="text-base-content/80">
-                          Контроль відповідності кольору
-                        </span>
+                        <span className="text-base-content/80">Контроль відповідності кольору</span>
                       </div>
                     </div>
                   </div>
@@ -240,15 +238,15 @@ export default function DyeingPage() {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div className="card bg-base-100 border-base-300 border">
-                      <div className="card-body p-6">
+                      <div className="card-body p-6 text-center md:text-start">
                         <Image
                           src="/Services/post-processing/dyeing-mjf.jpg"
                           alt="MJF фарбування"
                           width={250}
                           height={200}
-                          className="mb-4 rounded-lg"
+                          className="mx-auto mb-4 rounded-lg"
                         />
                         <h5 className="text-primary mb-2 font-bold">Обидва методи гарантують</h5>
                         <p className="text-base-content/80 text-sm">
@@ -259,13 +257,13 @@ export default function DyeingPage() {
                     </div>
 
                     <div className="card bg-base-100 border-base-300 border">
-                      <div className="card-body p-6">
+                      <div className="card-body p-6 text-center md:text-start">
                         <Image
                           src="/Services/post-processing/mjf-dyeing-comparison.jpg"
                           alt="Порівняння кольорів"
                           width={250}
                           height={200}
-                          className="mb-4 rounded-lg"
+                          className="mx-auto mb-4 rounded-lg"
                         />
                         <h5 className="text-primary mb-2 font-bold">Індивідуальний підхід</h5>
                         <p className="text-base-content/80 text-sm">
