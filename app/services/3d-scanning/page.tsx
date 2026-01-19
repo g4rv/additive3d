@@ -23,12 +23,14 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: '3D-сканування | Additive3D',
+export const metadata = createMetadata({
+  title: '3D-сканування',
   description:
     "Високоточне 3D-сканування об'єктів за технологією оптичного структурного сканування (Zeiss GOM Scan 1) та лазерного сканування (Zeiss T-SCAN Hawk 2). Точність до 0,02 мм для промислових застосувань.",
-};
+  path: '/services/3d-scanning',
+});
 
 export default function ThreeDScanningPage() {
   const equipment = [

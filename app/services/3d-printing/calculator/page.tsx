@@ -12,12 +12,15 @@ import ExportButton from './components/ExportButton';
 import SubmitOrderButton from './components/SubmitOrderButton';
 import { requireAuth } from '@/lib/auth/route-protection';
 import { cn } from '@/utils/cn';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Калькулятор 3D-друку | Additive3D',
+export const metadata = createMetadata({
+  title: 'Калькулятор 3D-друку',
   description:
     'Розрахуйте вартість вашого 3D-друку онлайн. Миттєва оцінка з можливістю завантаження моделі.',
-};
+  path: '/services/3d-printing/calculator',
+  noIndex: true,
+});
 
 export default async function CalculatorPage() {
   // Fetch user data including PPG and role

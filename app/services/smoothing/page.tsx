@@ -2,7 +2,6 @@ import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import Image from 'next/image';
 import {
-  Zap,
   CheckCircle,
   Shield,
   Droplets,
@@ -15,14 +14,15 @@ import {
   DollarSign,
   AlertCircle,
   ClipboardCheck,
-  Search as SearchIcon,
 } from 'lucide-react';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata = {
-  title: 'Хімічне згладжування | Additive3D',
+export const metadata = createMetadata({
+  title: 'Хімічне згладжування',
   description:
     'Професійне хімічне згладжування для підвищення міцності та зносостійкості 3D-друкованих деталей. Підвищення щільності та стабілізація розмірів.',
-};
+  path: '/services/smoothing',
+});
 
 export default function SteamIroningPage() {
   return (

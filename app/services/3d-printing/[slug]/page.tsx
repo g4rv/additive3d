@@ -21,23 +21,27 @@ import {
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { createMetadata } from '@/lib/metadata';
 
 // Metadata for each technology
 const TECHNOLOGY_METADATA = {
   mjf: {
-    title: 'MJF 3D-друк | Additive3D',
+    title: 'MJF 3D-друк',
     description:
       'HP Multi Jet Fusion 5200: високошвидкісний 3D-друк для серійного виробництва. Точність ±0.2 мм, робоча камера 380×284×380 мм.',
+    path: '/services/3d-printing/mjf',
   },
   fdm: {
-    title: 'FDM 3D-друк | Additive3D',
+    title: 'FDM 3D-друк',
     description:
       'Fortus 400mc і 250: надійна FDM технологія для міцних термопластичних деталей. Інженерні матеріали: ABS, PC, Ultem.',
+    path: '/services/3d-printing/fdm',
   },
   lfam: {
-    title: 'LFAM 3D-друк | Additive3D',
+    title: 'LFAM 3D-друк',
     description:
       'HERON 300 HV: великоформатний 3D-друк для виробництва великогабаритних деталей. Об\'єм побудови: 3000×2000×1000 мм.',
+    path: '/services/3d-printing/lfam',
   },
 };
 
@@ -51,22 +55,16 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
   const { slug } = await params;
 
   if (!isTechnologySlug(slug)) {
-    return {
-      title: 'Технологія не знайдена | Additive3D',
-    };
+    return createMetadata({
+      title: 'Технологія не знайдена',
+      description: 'Запитувану технологію 3D-друку не знайдено.',
+      path: `/services/3d-printing/${slug}`,
+      noIndex: true,
+    });
   }
 
   const metadata = TECHNOLOGY_METADATA[slug as keyof typeof TECHNOLOGY_METADATA];
-  return {
-    title: metadata.title,
-    description: metadata.description,
-    openGraph: {
-      title: metadata.title,
-      description: metadata.description,
-      locale: 'uk_UA',
-      type: 'website',
-    },
-  };
+  return createMetadata(metadata);
 }
 
 export default async function Page({ params }: SlugPageProps) {

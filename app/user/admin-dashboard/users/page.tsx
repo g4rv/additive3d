@@ -2,10 +2,14 @@ import { getAllUsers } from '@/lib/supabase/queries';
 import { createClient } from '@/lib/supabase/server';
 import UsersTable from './UsersTable';
 import { Metadata } from 'next';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Управління користувачами | Additive3D',
-};
+export const metadata = createMetadata({
+  title: 'Управління користувачами',
+  description: 'Адміністративна панель для перегляду та редагування даних користувачів системи Additive3D.',
+  path: '/user/admin-dashboard/users',
+  noIndex: true,
+});
 
 export default async function UsersPage() {
   // Fetch all users

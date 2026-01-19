@@ -4,12 +4,14 @@ import BgPattern from '@/components/ui/bg-pattern';
 import { Box, Lightbulb, RefreshCw, Sparkles, Workflow } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: '3D-моделювання | Additive3D',
+export const metadata = createMetadata({
+  title: '3D-моделювання',
   description:
     'Професійне 3D-моделювання: цифрове відтворення об`єкту. Параметричне CAD-моделювання, реверс-інжиніринг, дизайнерське моделювання.',
-};
+  path: '/services/3d-modeling',
+});
 
 export default function ThreeDModelingPage() {
   const modelingDirections = [

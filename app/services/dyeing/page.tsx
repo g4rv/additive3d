@@ -1,12 +1,14 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import Image from 'next/image';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata = {
-  title: 'Фарбування 3D-друкованих деталей | Additive3D',
+export const metadata = createMetadata({
+  title: 'Фарбування 3D-друкованих деталей',
   description:
     'Високоякісне фарбування деталей, надрукованих на FDM та MJF обладнанні. Глибоке просочення фарбою та розпилення за палітрою RAL.',
-};
+  path: '/services/dyeing',
+});
 
 export default function DyeingPage() {
   return (

@@ -6,10 +6,14 @@ import { signOut } from '@/app/auth/logout/actions';
 import { ROUTES } from '@/lib/constants';
 import OrdersList from './OrdersList';
 import { Metadata } from 'next';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Мій профіль | Additive3D',
-};
+export const metadata = createMetadata({
+  title: 'Мій профіль',
+  description: 'Керуйте своїм профілем, переглядайте замовлення та налаштовуйте параметри акаунту на платформі Additive3D.',
+  path: '/user/profile',
+  noIndex: true,
+});
 
 export default async function DashboardPage() {
   const userData = await getCurrentUserWithProfile();

@@ -14,12 +14,14 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Реверс-інжиніринг | Additive3D',
+export const metadata = createMetadata({
+  title: 'Реверс-інжиніринг',
   description:
     'Реверс-інжиніринг: відтворення цифрової моделі на основі фізичного об\'єкта. Zeiss Reverse Engineering для точної конвертації scan-to-CAD.',
-};
+  path: '/services/reverse-engineering',
+});
 
 export default function ReverseEngineeringPage() {
   const processSteps = [

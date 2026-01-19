@@ -18,6 +18,7 @@ import {
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { createMetadata } from '@/lib/metadata';
 
 // Technology titles
 const TECHNOLOGY_TITLES: Record<string, { title: string; description: string }> = {
@@ -45,17 +46,21 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
   const { slug } = await params;
 
   if (!isTechnologySlug(slug)) {
-    return {
-      title: 'Технологія не знайдена | Additive3D',
-    };
+    return createMetadata({
+      title: 'Технологія не знайдена',
+      description: 'Запитувану технологію не знайдено.',
+      path: `/equipment/${slug}`,
+      noIndex: true,
+    });
   }
 
   const tech = TECHNOLOGY_TITLES[slug.toLowerCase()];
 
-  return {
-    title: `Обладнання ${tech.title} | Additive3D`,
+  return createMetadata({
+    title: `Обладнання ${tech.title}`,
     description: tech.description,
-  };
+    path: `/equipment/${slug}`,
+  });
 }
 
 export default async function EquipmentTechnologyPage({ params }: SlugPageProps) {

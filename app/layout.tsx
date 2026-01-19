@@ -17,6 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://additive3d.com.ua'),
   title: 'Additive3D - Промисловий 3D Друк',
   description: 'Професійні послуги 3D друку та моделювання для бізнесу',
   // Open Graph / Facebook

@@ -13,12 +13,14 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Інспекція геометрії | Additive3D',
+export const metadata = createMetadata({
+  title: 'Інспекція геометрії',
   description:
     'Інспекція відсканованих деталей: контроль точності у цифровому виробництві. Zeiss GOM Inspect для порівняння з CAD-моделлю та виявлення відхилень.',
-};
+  path: '/services/geometry-inspection',
+});
 
 export default function GeometryInspectionPage() {
   const processSteps = [

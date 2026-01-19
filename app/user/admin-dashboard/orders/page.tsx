@@ -1,10 +1,14 @@
 import { getOrdersByStatus } from '@/lib/supabase/queries';
 import OrdersTable from './OrdersTable';
 import { Metadata } from 'next';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Управління замовленнями | Additive3D',
-};
+export const metadata = createMetadata({
+  title: 'Управління замовленнями',
+  description: 'Адміністративна панель для перегляду та обробки всіх замовлень 3D-друку в системі.',
+  path: '/user/admin-dashboard/orders',
+  noIndex: true,
+});
 
 interface OrdersPageProps {
   searchParams: Promise<{ status?: string }>;

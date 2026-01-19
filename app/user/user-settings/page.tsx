@@ -8,10 +8,14 @@ import PasswordChangeForm from './PasswordChangeForm';
 import ConsentForm from './ConsentForm';
 import { ROUTES } from '@/lib/constants';
 import { Metadata } from 'next';
+import { createMetadata } from '@/lib/metadata';
 
-export const metadata: Metadata = {
-  title: 'Налаштування профілю | Additive3D',
-};
+export const metadata = createMetadata({
+  title: 'Налаштування профілю',
+  description: 'Налаштуйте свій профіль: оновіть особисту інформацію, змініть пароль, керуйте конфіденційністю та безпекою акаунту.',
+  path: '/user/user-settings',
+  noIndex: true,
+});
 
 export default async function UserSettingsPage() {
   const userData = await getCurrentUserWithProfile();
