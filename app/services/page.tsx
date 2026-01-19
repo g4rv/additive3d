@@ -1,6 +1,8 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateServiceSchema, StructuredData } from '@/lib/structured-data';
+import { createMetadata } from '@/lib/metadata';
 import {
   ArrowRight,
   Award,
@@ -31,13 +33,42 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: 'Послуги | Additive3D',
+export const metadata = createMetadata({
+  title: 'Послуги адитивного виробництва та 3D друку',
   description:
-    'Повний спектр послуг адитивного виробництва: 3D-друк (MJF, FDM, LFAM), 3D-сканування, моделювання, реверс-інжиніринг, інспекція геометрії та постобробка.',
-};
+    'Повний спектр послуг 3D друку в Україні: MJF, FDM, LFAM технології, 3D сканування, моделювання, реверс-інжиніринг, інспекція геометрії. Професійне обладнання HP, Stratasys, HERON ⚡',
+  path: '/services',
+  keywords: [
+    'послуги 3D друку',
+    '3D друк послуги',
+    'адитивне виробництво',
+    '3D сканування',
+    '3D моделювання',
+    'реверс інжиніринг',
+    'інспекція геометрії',
+    'постобробка 3D',
+    'фарбування 3D друку',
+    'MJF послуги',
+    'FDM послуги',
+    'LFAM послуги',
+  ],
+});
 
 export default function ServicesPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: 'Послуги адитивного виробництва та 3D друку',
+    description:
+      'Повний спектр послуг 3D друку: MJF, FDM, LFAM технології, 3D сканування, моделювання, реверс-інжиніринг',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: 'Additive Manufacturing Services',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services',
+  });
+
   const coreServices = [
     {
       title: '3D-друк',
@@ -193,6 +224,7 @@ export default function ServicesPage() {
 
   return (
     <>
+      <StructuredData data={serviceSchema} />
       <HeroFancy
         title="Послуги"
         description="Повний спектр послуг адитивного виробництва для професійних завдань"

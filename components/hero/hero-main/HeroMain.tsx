@@ -43,7 +43,7 @@ export default function HeroMain() {
               href={NAVIGATION.services.href}
               variant="outlined"
               className="min-w-[200px]"
-              aria-label="Переглянути наші послуги"
+              aria-label="Переглянути послуги"
             >
               Переглянути послуги
             </ButtonLink>

@@ -3,18 +3,50 @@ import BgPattern from '@/components/ui/bg-pattern';
 import ButtonLink from '@/components/ui/button-link';
 import { COMPANY_NAME, CONTACT_INFO, NAVIGATION } from '@/lib/constants';
 import { createMetadata } from '@/lib/metadata';
+import { generateLocalBusinessSchema, StructuredData } from '@/lib/structured-data';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 
 export const metadata = createMetadata({
-  title: "Контакти - Зв'яжіться з нами",
+  title: "Контакти - Зв'яжіться з Additive3D",
   description:
-    'Телефони, email, адреса виробництва Additive3D. Відповідаємо протягом 2-4 годин у робочі дні. Миттєвий розрахунок вартості 3D друку онлайн.',
+    'Контакти Additive3D в Києві: ☎️ +38 (063) 886 20 47, info@additive.com.ua. Професійні послуги 3D друку в Україні. Відповідаємо протягом 2-4 годин. Замовити консультацію 3D друку.',
   path: '/contact',
+  keywords: [
+    'контакти Additive3D',
+    '3D друк Київ контакти',
+    'замовити 3D друк',
+    'консультація 3D друк',
+    'адреса 3D друку',
+    'телефон 3D друк Україна',
+    'Additive3D Київ',
+    '3D printing contacts Ukraine',
+  ],
 });
 
 export default function ContactPage() {
+  // Generate LocalBusiness schema for contact page SEO
+  const localBusinessSchema = generateLocalBusinessSchema({
+    name: 'Additive3D',
+    description:
+      'Професійні послуги 3D друку, моделювання, сканування та реверс-інжинірингу в Україні',
+    url: 'https://additive3d.com.ua',
+    logo: 'https://additive3d.com.ua/logo.png',
+    contactPhone: '+380638862047',
+    contactEmail: 'info@additive.com.ua',
+    address: {
+      streetAddress: '',
+      addressLocality: 'Київ',
+      addressRegion: 'Київська область',
+      postalCode: '',
+      addressCountry: 'UA',
+    },
+    priceRange: '$$',
+    sameAs: [],
+  });
+
   return (
     <>
+      <StructuredData data={localBusinessSchema} />
       <HeroFancy
         title="Зв'яжіться з"
         highlight={COMPANY_NAME}

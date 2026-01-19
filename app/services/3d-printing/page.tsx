@@ -1,6 +1,8 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateServiceSchema, StructuredData } from '@/lib/structured-data';
+import { createMetadata } from '@/lib/metadata';
 import {
   Award,
   BarChart3,
@@ -15,13 +17,42 @@ import {
 import { Metadata } from 'next';
 import Image from 'next/image';
 
-export const metadata: Metadata = {
-  title: '3D-друк | Additive3D',
+export const metadata = createMetadata({
+  title: '3D друк: MJF, FDM, LFAM технології',
   description:
-    'Професійний 3D-друк: MJF, FDM, LFAM технології. Виготовлення прототипів, серійне виробництво, великогабаритні деталі.',
-};
+    'Професійний 3D друк в Україні на обладнанні HP, Stratasys, HERON. MJF, FDM, LFAM технології для прототипів і серійного виробництва. Точність до ±0.1мм ⚡ Замовити 3D друк в Києві',
+  path: '/services/3d-printing',
+  keywords: [
+    '3D друк',
+    'MJF друк',
+    'FDM друк',
+    'LFAM друк',
+    'промисловий 3D друк',
+    '3D друк Київ',
+    'серійний 3D друк',
+    'прототипування 3D',
+    'HP Multi Jet Fusion',
+    'великогабаритний 3D друк',
+    'замовити 3D друк',
+    '3D printing Ukraine',
+  ],
+});
 
 export default function ThreeDPrintingPage() {
+  // Generate Service schema for 3D printing
+  const serviceSchema = generateServiceSchema({
+    name: 'Послуги 3D друку: MJF, FDM, LFAM',
+    description:
+      'Професійний 3D друк на обладнанні HP, Stratasys, HERON. MJF, FDM, LFAM технології для прототипування та серійного виробництва',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: '3D Printing Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/3d-printing',
+  });
+
   const technologies = [
     {
       title: 'MJF (Multi Jet Fusion)',
@@ -126,6 +157,7 @@ export default function ThreeDPrintingPage() {
 
   return (
     <>
+      <StructuredData data={serviceSchema} />
       <HeroFancy
         title="3D-друк"
         description="Професійні технології адитивного виробництва для прототипування та серійного виробництва"

@@ -1,5 +1,6 @@
 import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
+import { generateOrganizationSchema, StructuredData } from '@/lib/structured-data';
 import { cn } from '@/utils/cn';
 import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
@@ -64,8 +65,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Generate Organization structured data for SEO
+  const organizationSchema = generateOrganizationSchema({
+    name: 'Additive3D',
+    description:
+      'Професійні послуги 3D друку, моделювання, сканування та реверс-інжинірингу в Україні',
+    url: 'https://additive3d.com.ua',
+    logo: 'https://additive3d.com.ua/logo.png',
+    contactPhone: '+380638862047',
+    contactEmail: 'info@additive.com.ua',
+    address: {
+      streetAddress: '',
+      addressLocality: 'Київ',
+      addressRegion: 'Київська область',
+      postalCode: '',
+      addressCountry: 'UA',
+    },
+    sameAs: [
+      // Add your social media URLs here when available
+      // 'https://www.facebook.com/additive3d',
+      // 'https://www.linkedin.com/company/additive3d',
+      // 'https://www.instagram.com/additive3d',
+    ],
+  });
+
   return (
-    <html lang="uk" className='h-full'>
+    <html lang="uk" className="h-full">
+      <head>
+        <StructuredData data={organizationSchema} />
+      </head>
       <body
         className={cn(
           montserrat.variable,

@@ -6,6 +6,11 @@ interface CreateMetadataParams {
   path: string;
   ogImage?: string;
   noIndex?: boolean;
+  keywords?: string[];
+  alternates?: {
+    canonical?: string;
+    languages?: Record<string, string>;
+  };
 }
 
 /**
@@ -15,6 +20,8 @@ interface CreateMetadataParams {
  * @param path - Page path (e.g., "/services")
  * @param ogImage - Open Graph image URL (defaults to /og-default.jpg)
  * @param noIndex - Set to true for pages that shouldn't be indexed (auth, user pages)
+ * @param keywords - Array of keywords for SEO (optional)
+ * @param alternates - Canonical URL and language alternates (optional)
  */
 export function createMetadata({
   title,
@@ -22,13 +29,20 @@ export function createMetadata({
   path,
   ogImage = '/og-default.jpg',
   noIndex = false,
+  keywords,
+  alternates,
 }: CreateMetadataParams): Metadata {
   const fullTitle = `${title} | Additive3D`;
-  const url = `https://additive3d.com${path}`;
+  const baseUrl = 'https://additive3d.com.ua';
+  const url = `${baseUrl}${path}`;
 
   const metadata: Metadata = {
     title: fullTitle,
     description,
+    keywords: keywords?.join(', '),
+    alternates: alternates || {
+      canonical: url,
+    },
     openGraph: {
       title,
       description,
