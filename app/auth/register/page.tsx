@@ -148,7 +148,7 @@ export default function RegisterPage() {
                       ? 'border-error focus:border-error'
                       : 'focus:border-primary border-transparent'
                   }`}
-                  placeholder="+38 (0XX) XXX-XX-XX"
+                  placeholder="+380 XX XXX XX XX"
                 />
               </div>
               {state?.fieldErrors?.phone_number && (

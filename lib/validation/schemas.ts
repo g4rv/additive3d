@@ -25,13 +25,21 @@ export const firstNameField = z
   .string()
   .min(1, ERROR_MESSAGES.FIRST_NAME_REQUIRED)
   .min(2, ERROR_MESSAGES.FIRST_NAME_MIN_LENGTH)
-  .max(50, ERROR_MESSAGES.FIRST_NAME_MAX_LENGTH);
+  .max(50, ERROR_MESSAGES.FIRST_NAME_MAX_LENGTH)
+  .refine((val) => !/\s/.test(val), { message: "Ім'я не може містити пробілів" })
+  .refine((val) => /^[\u0400-\u04FFa-zA-Z'-]+$/.test(val), {
+    message: "Ім'я може містити лише літери",
+  });
 
 export const lastNameField = z
   .string()
   .min(1, ERROR_MESSAGES.LAST_NAME_REQUIRED)
   .min(2, ERROR_MESSAGES.LAST_NAME_MIN_LENGTH)
-  .max(50, ERROR_MESSAGES.LAST_NAME_MAX_LENGTH);
+  .max(50, ERROR_MESSAGES.LAST_NAME_MAX_LENGTH)
+  .refine((val) => !/\s/.test(val), { message: 'Прізвище не може містити пробілів' })
+  .refine((val) => /^[\u0400-\u04FFa-zA-Z'-]+$/.test(val), {
+    message: 'Прізвище може містити лише літери',
+  });
 
 export const phoneField = z
   .string()
