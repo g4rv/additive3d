@@ -5,7 +5,7 @@ import { MetadataRoute } from 'next';
  * This helps search engines discover and index your pages
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://additive3d.com';
+  const baseUrl = 'https://additive3d.com.ua';
 
   // Public pages that should be indexed
   const publicPages = [

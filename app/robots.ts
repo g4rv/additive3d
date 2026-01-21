@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/auth/', '/user/'],
       },
     ],
-    sitemap: 'https://additive3d.com/sitemap.xml',
+    sitemap: 'https://additive3d.com.ua/sitemap.xml',
   };
 }
