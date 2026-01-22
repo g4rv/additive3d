@@ -239,7 +239,7 @@ export async function changeEmail(
   const headersList = await headers();
   const host = headersList.get('host');
   const protocol = headersList.get('x-forwarded-proto') || 'http';
-  const origin = `${protocol}://${host}`;
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
   const clientIp = getClientIp(headersList);
   const userAgent = headersList.get('user-agent') || 'Unknown';
 
