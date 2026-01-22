@@ -30,6 +30,11 @@ export async function GET(request: NextRequest) {
   // Validate and sanitize the next parameter to prevent open redirects
   const next = nextParam && isValidInternalUrl(nextParam) ? nextParam : ROUTES.dashboard;
 
+  // Get the correct origin for redirects (handles proxy headers from Coolify/nginx)
+  const protocol = request.headers.get('x-forwarded-proto') || 'https';
+  const host = request.headers.get('host');
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
+
   console.log('Callback params:', { token_hash, type, code, next });
 
   const supabase = await createClient();
@@ -43,13 +48,13 @@ export async function GET(request: NextRequest) {
 
     if (!error) {
       // Successfully verified recovery token, redirect to reset password page with recovery flag
-      return NextResponse.redirect(new URL(`${ROUTES.resetPassword}?recovery=true`, request.url));
+      return NextResponse.redirect(new URL(`${ROUTES.resetPassword}?recovery=true`, origin));
     }
 
     console.error('Password recovery verification error:', error);
     // If verification failed, redirect to forgot password with error
     return NextResponse.redirect(
-      new URL(`${ROUTES.forgotPassword}?error=Посилання для скидання пароля застаріло або недійсне`, request.url)
+      new URL(`${ROUTES.forgotPassword}?error=Посилання для скидання пароля застаріло або недійсне`, origin)
     );
   }
 
@@ -60,7 +65,7 @@ export async function GET(request: NextRequest) {
     if (!error && data.session) {
       console.log('Session exchanged successfully, redirecting to:', next);
       // Successfully verified email, redirect to intended destination
-      return NextResponse.redirect(new URL(next, request.url));
+      return NextResponse.redirect(new URL(next, origin));
     }
 
     console.error('Code exchange error:', error);
@@ -69,6 +74,6 @@ export async function GET(request: NextRequest) {
   // If there's an error or no valid parameters, redirect to login with error message
   console.log('No valid auth parameters, redirecting to login');
   return NextResponse.redirect(
-    new URL(`${ROUTES.login}?error=Помилка підтвердження`, request.url)
+    new URL(`${ROUTES.login}?error=Помилка підтвердження`, origin)
   );
 }
