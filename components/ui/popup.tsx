@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, AlertCircle, CheckCircle, AlertTriangle, Info } from 'lucide-react';
 
 export type PopupType = 'success' | 'error' | 'warning' | 'info' | 'confirm';
@@ -32,6 +33,11 @@ export function Popup({
   onCancel,
 }: PopupProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -70,6 +76,7 @@ export function Popup({
   };
 
   if (!isOpen && !isVisible) return null;
+  if (!isMounted) return null;
 
   const icons = {
     success: <CheckCircle className="w-5 h-5 text-success" />,
@@ -79,24 +86,22 @@ export function Popup({
     confirm: <AlertCircle className="w-5 h-5 text-warning" />,
   };
 
-  return (
+  const popupContent = (
     <>
-      {/* Backdrop */}
+      {/* Backdrop with scroll container */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-200 ${
+        className={`fixed inset-0 z-[9999] flex items-start justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-200 overflow-y-auto p-4 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={handleBackdropClick}
-      />
-
-      {/* Modal Dialog */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+      >
         <div
-          className={`pointer-events-auto w-full max-w-md transform transition-all duration-200 ${
+          className={`w-full max-w-md my-16 transform transition-all duration-200 ${
             isVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'
           }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div className="bg-base-200 rounded-lg shadow-xl border border-base-300 overflow-hidden">
+          <div className="bg-base-200 rounded-lg shadow-xl border border-base-content/10 overflow-hidden">
             {/* Header */}
             <div className="flex items-start justify-between p-6 pb-4 border-b border-base-300">
               <div className="flex items-start gap-3 flex-1 min-w-0">
@@ -168,6 +173,8 @@ export function Popup({
       </div>
     </>
   );
+
+  return createPortal(popupContent, document.body);
 }
 
 // Hook for managing popup state

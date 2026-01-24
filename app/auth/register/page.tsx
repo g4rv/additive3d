@@ -2,9 +2,10 @@
 
 import SubmitButton from '@/components/ui/submit-button/SubmitButton';
 import PasswordInput from '@/components/ui/password-input/PasswordInput';
+import { PhoneInput } from '@/components/ui/phone-input';
 import ButtonLink from '@/components/ui/button-link';
 import { ROUTES } from '@/lib/constants';
-import { Building2, Mail, Phone, ShieldCheck, User } from 'lucide-react';
+import { Building2, Mail, ShieldCheck, User } from 'lucide-react';
 import { useActionState } from 'react';
 import { signUp } from './actions';
 
@@ -130,35 +131,14 @@ export default function RegisterPage() {
             </div>
 
             {/* Phone Number */}
-            <div className="flex flex-col gap-2">
-              <label htmlFor="phone_number" className="text-sm font-medium">
-                Номер телефону <span className="text-error">*</span>
-              </label>
-              <div className="relative">
-                <div className="text-base-content/50 absolute top-1/2 left-4 -translate-y-1/2">
-                  <Phone className="size-5" />
-                </div>
-                <input
-                  type="tel"
-                  id="phone_number"
-                  name="phone_number"
-                  defaultValue={state?.values?.phone_number || ''}
-                  className={`bg-base-300 text-base-content placeholder:text-base-content/40 w-full rounded border py-3 pr-4 pl-12 transition-colors duration-[var(--duration-normal)] focus:outline-none ${
-                    state?.fieldErrors?.phone_number
-                      ? 'border-error focus:border-error'
-                      : 'focus:border-primary border-transparent'
-                  }`}
-                  placeholder="+380 XX XXX XX XX"
-                />
-              </div>
-              {state?.fieldErrors?.phone_number && (
-                <p className="text-error text-xs">{state.fieldErrors.phone_number}</p>
-              )}
-              <p className="text-base-content/60 text-xs">
-                Увага: переконайтеся, що номер введено правильно. Він буде використовуватися для
-                зв&apos;язку з вами щодо замовлень.
-              </p>
-            </div>
+            <PhoneInput
+              name="phone_number"
+              label="Номер телефону"
+              required
+              defaultValue={state?.values?.phone_number || ''}
+              error={state?.fieldErrors?.phone_number}
+              helperText="Увага: переконайтеся, що номер введено правильно. Він буде використовуватися для зв'язку з вами щодо замовлень."
+            />
 
             {/* Organization Name */}
             <div className="flex flex-col gap-2">

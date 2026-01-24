@@ -24,7 +24,7 @@ export const ERROR_MESSAGES = {
 
   // Phone
   PHONE_REQUIRED: "Номер телефону обов'язковий",
-  PHONE_INVALID: 'Невірний номер телефону. Приклад: +380671234567',
+  PHONE_INVALID: 'Невірний номер телефону. Формат: +380XXXXXXXXX',
 
   // Organization
   ORGANIZATION_REQUIRED: "Назва організації обов'язкова",

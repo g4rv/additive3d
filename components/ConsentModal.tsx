@@ -1,7 +1,8 @@
 'use client';
 
 import { AlertTriangle, Check, FileText, Shield } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ConsentModalProps {
   isOpen: boolean;
@@ -14,6 +15,24 @@ export default function ConsentModal({ isOpen, onClose, onConsent }: ConsentModa
   const [hasNotSignedNda, setHasNotSignedNda] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const handleSubmit = async () => {
     if (!agreeToShare || !hasNotSignedNda) {
@@ -34,10 +53,23 @@ export default function ConsentModal({ isOpen, onClose, onConsent }: ConsentModa
   };
 
   if (!isOpen) return null;
+  if (!isMounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="bg-base-100 w-full max-w-2xl rounded-lg shadow-xl">
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget && !isSubmitting) {
+      onClose();
+    }
+  };
+
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[9999] flex items-start justify-center bg-black/50 p-4 overflow-y-auto"
+      onClick={handleBackdropClick}
+    >
+      <div
+        className="bg-base-100 w-full max-w-2xl my-16 rounded-lg shadow-xl border border-base-content/10"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="border-b-base-300 border-b p-6">
           <div className="flex items-start gap-4">
@@ -170,4 +202,6 @@ export default function ConsentModal({ isOpen, onClose, onConsent }: ConsentModa
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

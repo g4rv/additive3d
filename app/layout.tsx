@@ -1,5 +1,6 @@
 import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
+import ScrollToTop from '@/components/ui/scroll-to-top';
 import { generateOrganizationSchema, StructuredData } from '@/lib/structured-data';
 import { cn } from '@/utils/cn';
 import type { Metadata } from 'next';
@@ -109,6 +110,7 @@ export default function RootLayout({
         >
           До головного контенту
         </a>
+        <ScrollToTop />
         <Header />
         <main className="grow" id="main-content">
           {children}

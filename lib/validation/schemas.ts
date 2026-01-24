@@ -23,6 +23,7 @@ export const strongPasswordField = z
 
 export const firstNameField = z
   .string()
+  .trim()
   .min(1, ERROR_MESSAGES.FIRST_NAME_REQUIRED)
   .min(2, ERROR_MESSAGES.FIRST_NAME_MIN_LENGTH)
   .max(50, ERROR_MESSAGES.FIRST_NAME_MAX_LENGTH)
@@ -33,6 +34,7 @@ export const firstNameField = z
 
 export const lastNameField = z
   .string()
+  .trim()
   .min(1, ERROR_MESSAGES.LAST_NAME_REQUIRED)
   .min(2, ERROR_MESSAGES.LAST_NAME_MIN_LENGTH)
   .max(50, ERROR_MESSAGES.LAST_NAME_MAX_LENGTH)
