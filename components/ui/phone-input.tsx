@@ -140,7 +140,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
             ref={ref}
             type="tel"
             id={inputId}
-            name={isControlled ? name : undefined}
+            name={undefined}
             value={internalValue}
             onChange={handleInputChange}
             onFocus={handleFocus}
@@ -161,7 +161,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           />
 
           {/* Hidden input to store full phone number for form submission */}
-          {!isControlled && name && (
+          {name && (
             <input
               type="hidden"
               name={name}
