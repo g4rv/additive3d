@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import {
   Building2,
   CheckCircle,
@@ -33,6 +34,27 @@ export const metadata = createMetadata({
 });
 
 export default function ThreeDScanningPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: '3D-сканування',
+    description:
+      "Високоточне 3D-сканування об'єктів за технологією оптичного структурного сканування (Zeiss GOM Scan 1) та лазерного сканування (Zeiss T-SCAN Hawk 2). Точність до 0,02 мм для промислових застосувань.",
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: '3D Scanning Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/3d-scanning',
+  });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: '3D-сканування', url: 'https://additive3d.com.ua/services/3d-scanning' },
+  ]);
+
   const equipment = [
     {
       name: 'Zeiss GOM Scan 1',
@@ -158,6 +180,8 @@ export default function ThreeDScanningPage() {
 
   return (
     <>
+      <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy
         title="3D-сканування"
         description="Оцифрування об'єктів у високоточні цифрові 3D-моделі для промислових застосувань"

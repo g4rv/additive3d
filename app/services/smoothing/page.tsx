@@ -1,5 +1,6 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import Image from 'next/image';
 import {
   CheckCircle,
@@ -25,8 +26,31 @@ export const metadata = createMetadata({
 });
 
 export default function SteamIroningPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: 'Хімічне згладжування',
+    description:
+      'Професійне хімічне згладжування для підвищення міцності та зносостійкості 3D-друкованих деталей. Підвищення щільності та стабілізація розмірів.',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: 'Smoothing Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/smoothing',
+  });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: 'Парове прасування', url: 'https://additive3d.com.ua/services/smoothing' },
+  ]);
+
   return (
     <>
+      <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       {/* Hero Section */}
       <HeroFancy
         title="Хімічне згладжування"

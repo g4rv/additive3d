@@ -57,7 +57,7 @@ export default function HeroMain() {
             src="/Technology/MJF/HP Jet fusion 5200/hp-jet-fusion-5200-angle.png"
             className="relative z-20 scale-80"
             aria-hidden
-            alt="декоративна картинка"
+            alt="Промисловий 3D принтер HP Jet Fusion 5200"
             width={768}
             height={568}
           />

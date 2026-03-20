@@ -1,7 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import { generateServiceSchema, StructuredData } from '@/lib/structured-data';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import { createMetadata } from '@/lib/metadata';
 import {
   ArrowRight,
@@ -68,6 +68,12 @@ export default function ServicesPage() {
     areaServed: 'Ukraine',
     url: 'https://additive3d.com.ua/services',
   });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+  ]);
 
   const coreServices = [
     {
@@ -225,6 +231,7 @@ export default function ServicesPage() {
   return (
     <>
       <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy
         title="Послуги"
         description="Повний спектр послуг адитивного виробництва для професійних завдань"

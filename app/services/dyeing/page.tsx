@@ -1,5 +1,6 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import Image from 'next/image';
 import { createMetadata } from '@/lib/metadata';
 
@@ -11,8 +12,31 @@ export const metadata = createMetadata({
 });
 
 export default function DyeingPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: 'Фарбування 3D-друкованих деталей',
+    description:
+      'Високоякісне фарбування деталей, надрукованих на FDM та MJF обладнанні. Глибоке просочення фарбою та розпилення за палітрою RAL.',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: 'Dyeing Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/dyeing',
+  });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: 'Фарбування', url: 'https://additive3d.com.ua/services/dyeing' },
+  ]);
+
   return (
     <>
+      <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       {/* Hero Section */}
       <HeroFancy
         title="Фарбування 3D-друкованих деталей"

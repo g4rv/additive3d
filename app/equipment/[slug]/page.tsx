@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateBreadcrumbSchema, StructuredData } from '@/lib/structured-data';
 import { EQUIPMENT_DATA } from '@/lib/constants';
 import { SlugPageProps } from '@/lib/types';
 import isTechnologySlug from '@/utils/isTechnologySlug';
@@ -80,6 +81,13 @@ export default async function EquipmentTechnologyPage({ params }: SlugPageProps)
     notFound();
   }
 
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Обладнання', url: 'https://additive3d.com.ua/equipment' },
+    { name: techInfo.title, url: `https://additive3d.com.ua/equipment/${slug}` },
+  ]);
+
   const specificationIcons: Record<string, React.ComponentType<{ className?: string }>> = {
     buildChamber: Box,
     layerThickness: Layers,
@@ -104,6 +112,7 @@ export default async function EquipmentTechnologyPage({ params }: SlugPageProps)
 
   return (
     <>
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy title={techInfo.title} description={techInfo.description} />
 
       {/* Equipment List Section */}

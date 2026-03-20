@@ -27,7 +27,7 @@ export function createMetadata({
   title,
   description,
   path,
-  ogImage = '/og-default.jpg',
+  ogImage = '/logo.png',
   noIndex = false,
   keywords,
   alternates,

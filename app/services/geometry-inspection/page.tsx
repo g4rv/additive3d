@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import {
   BarChart3,
   CheckCircle,
@@ -23,6 +24,27 @@ export const metadata = createMetadata({
 });
 
 export default function GeometryInspectionPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: 'Інспекція геометрії',
+    description:
+      'Інспекція відсканованих деталей: контроль точності у цифровому виробництві. Zeiss GOM Inspect для порівняння з CAD-моделлю та виявлення відхилень.',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: 'Geometry Inspection Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/geometry-inspection',
+  });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: 'Інспекція геометрії', url: 'https://additive3d.com.ua/services/geometry-inspection' },
+  ]);
+
   const processSteps = [
     {
       number: 1,
@@ -79,6 +101,8 @@ export default function GeometryInspectionPage() {
 
   return (
     <>
+      <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy
         title="Інспекція геометрії"
         description="Контроль точності у цифровому виробництві"

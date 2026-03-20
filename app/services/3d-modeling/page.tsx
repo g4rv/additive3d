@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import { Box, Lightbulb, RefreshCw, Sparkles, Workflow } from 'lucide-react';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -14,6 +15,27 @@ export const metadata = createMetadata({
 });
 
 export default function ThreeDModelingPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: '3D-моделювання',
+    description:
+      'Професійне 3D-моделювання: цифрове відтворення об`єкту. Параметричне CAD-моделювання, реверс-інжиніринг, дизайнерське моделювання.',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: '3D Modeling Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/3d-modeling',
+  });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: '3D-моделювання', url: 'https://additive3d.com.ua/services/3d-modeling' },
+  ]);
+
   const modelingDirections = [
     {
       title: 'Інженерне моделювання (CAD)',
@@ -45,6 +67,8 @@ export default function ThreeDModelingPage() {
 
   return (
     <>
+      <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy title="3D-моделювання" description="Цифрове відтворення об'єкту" />
 
       {/* Visual Showcase Section */}

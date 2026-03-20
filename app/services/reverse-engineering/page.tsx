@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import {
   Box,
   CheckCircle,
@@ -24,6 +25,27 @@ export const metadata = createMetadata({
 });
 
 export default function ReverseEngineeringPage() {
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: 'Реверс-інжиніринг',
+    description:
+      'Реверс-інжиніринг: відтворення цифрової моделі на основі фізичного об\'єкта. Zeiss Reverse Engineering для точної конвертації scan-to-CAD.',
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: 'Reverse Engineering Service',
+    areaServed: 'Ukraine',
+    url: 'https://additive3d.com.ua/services/reverse-engineering',
+  });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: 'Реверс-інжиніринг', url: 'https://additive3d.com.ua/services/reverse-engineering' },
+  ]);
+
   const processSteps = [
     {
       number: 1,
@@ -65,6 +87,8 @@ export default function ReverseEngineeringPage() {
 
   return (
     <>
+      <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy
         title="Реверс-інжиніринг"
         description="Шлях від об'єкта до цифрової моделі"

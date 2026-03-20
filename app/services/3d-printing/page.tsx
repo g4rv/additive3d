@@ -1,7 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
-import { generateServiceSchema, StructuredData } from '@/lib/structured-data';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import { createMetadata } from '@/lib/metadata';
 import {
   Award,
@@ -52,6 +52,13 @@ export default function ThreeDPrintingPage() {
     areaServed: 'Ukraine',
     url: 'https://additive3d.com.ua/services/3d-printing',
   });
+
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: '3D друк', url: 'https://additive3d.com.ua/services/3d-printing' },
+  ]);
 
   const technologies = [
     {
@@ -158,6 +165,7 @@ export default function ThreeDPrintingPage() {
   return (
     <>
       <StructuredData data={serviceSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <HeroFancy
         title="3D-друк"
         description="Професійні технології адитивного виробництва для прототипування та серійного виробництва"

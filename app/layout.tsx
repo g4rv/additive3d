@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: 'Професійні послуги 3D друку та моделювання для бізнесу',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: 'Additive3D',
@@ -42,12 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Additive3D - Промисловий 3D Друк',
     description: 'Професійні послуги 3D друку та моделювання для бізнесу',
-    images: ['/og-image.jpg'],
-  },
-  // Additional meta tags
-  other: {
-    'facebook:domain_verification': 'your-facebook-verification-code',
-    'google-site-verification': 'your-google-verification-code',
+    images: ['/logo.png'],
   },
   // Icons and manifests
   icons: {
@@ -77,18 +72,13 @@ export default function RootLayout({
     contactPhone: '+380638862047',
     contactEmail: 'info@additive.com.ua',
     address: {
-      streetAddress: '',
+      streetAddress: 'вул. Пшенична',
       addressLocality: 'Київ',
       addressRegion: 'Київська область',
-      postalCode: '',
+      postalCode: '03134',
       addressCountry: 'UA',
     },
-    sameAs: [
-      // Add your social media URLs here when available
-      // 'https://www.facebook.com/additive3d',
-      // 'https://www.linkedin.com/company/additive3d',
-      // 'https://www.instagram.com/additive3d',
-    ],
+    sameAs: [],
   });
 
   return (

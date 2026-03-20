@@ -1,6 +1,7 @@
 import CTA from '@/components/cta';
 import HeroFancy from '@/components/hero/hero-fancy/HeroFancy';
 import BgPattern from '@/components/ui/bg-pattern';
+import { generateBreadcrumbSchema, generateServiceSchema, StructuredData } from '@/lib/structured-data';
 import { SlugPageProps } from '@/lib/types';
 import { cn } from '@/utils/cn';
 import isTechnologySlug from '@/utils/isTechnologySlug';
@@ -339,8 +340,31 @@ export default async function Page({ params }: SlugPageProps) {
   const tech = technologyData[slug as keyof typeof technologyData];
   if (!tech) return notFound();
 
+  // Generate Breadcrumb schema for SEO
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Головна', url: 'https://additive3d.com.ua' },
+    { name: 'Послуги', url: 'https://additive3d.com.ua/services' },
+    { name: '3D друк', url: 'https://additive3d.com.ua/services/3d-printing' },
+    { name: tech.title, url: `https://additive3d.com.ua/services/3d-printing/${slug}` },
+  ]);
+
+  // Generate Service schema for SEO
+  const serviceSchema = generateServiceSchema({
+    name: tech.title,
+    description: tech.description,
+    provider: {
+      name: 'Additive3D',
+      url: 'https://additive3d.com.ua',
+    },
+    serviceType: '3D Printing Service',
+    areaServed: 'Ukraine',
+    url: `https://additive3d.com.ua/services/3d-printing/${slug}`,
+  });
+
   return (
     <>
+      <StructuredData data={breadcrumbSchema} />
+      <StructuredData data={serviceSchema} />
       <HeroFancy title={tech.hero.title} description={tech.hero.description} />
 
       {/* Visual Showcase Section */}
